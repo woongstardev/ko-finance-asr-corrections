@@ -8,7 +8,8 @@ person-name pairs and source sentences are excluded).
 |---|---|---|
 | `wrong` | string | Misrecognized surface form as observed in YouTube auto-captions (e.g. `변합기`) |
 | `right` | string | Verified correction (e.g. `변압기`) |
-| `observed_count` | int | Times `wrong` was observed during candidate mining rounds |
+| `corpus_count` | int \| null | **Full-corpus frequency**: total matches of `wrong` across the entire caption corpus (521 videos at last export, growing; whitespace-flexible substring matching, same normalization as the production replacer). Produced upstream by ggulmuse an upstream pipeline task; null if the counts artifact was absent at export |
+| `observed_count` | int | Times `wrong` was observed during candidate mining rounds (small numbers by design — not the headline frequency, see `corpus_count`) |
 | `tier` | `"A"` \| `"B"` | Promotion tier. A = human-approved. B = `right` exists verbatim in an external registry (listed stocks / finance glossary) **and** both LLM auditors independently agreed |
 | `category` | `"stock"` \| `"term"` \| `"number"` \| `"other"` | Vocabulary kind. `stock`/`term` = verbatim registry/glossary match; `number` = amount/figure damage; `other` = domain colloquialisms, foreign companies outside the KRX registry, multi-word phrases |
 | `auditor_models` | string[] | Model identifiers of the independent auditors that agreed (empty for tier A pairs approved directly by a human) |
@@ -28,9 +29,10 @@ person-name pairs and source sentences are excluded).
 - `data/pairs.json` — canonical, full metadata
 - `data/pairs.csv` — flat convenience export (same rows)
 
-<!-- TODO(v0.1):
-  - Add `corpus_count`: full-corpus frequency (whole ~440-video caption scan). Current
-    `observed_count` only counts mining rounds (max ~6); the headline frequencies
-    (e.g. 펀더멘탈→펀더멘털 ×375) come from the corpus scan and must ship as a field.
-  - first_seen is empty for most rows — backfill from corpus scan or drop the field.
-  - Freeze field list, then version the schema. -->
+Top-level metadata in `pairs.json`: `exported_at`, `pair_count`, and `corpus`
+(`scanned_videos`, `counted_at`) describing the frequency scan the counts came from.
+
+`first_seen` was dropped before v0.1 — the production dictionary left it empty for most
+rows and backfilling from the corpus was not worth the cost.
+
+<!-- TODO(v0.1): freeze field list, then version the schema. -->

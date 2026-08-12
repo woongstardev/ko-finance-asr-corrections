@@ -17,8 +17,8 @@ archive. The pairs here are the byproduct of correcting real YouTube auto-captio
   KEBAP (2.5K pairs, error-type labels, frozen since 2023). No finance-domain resource exists.
 - **No public "confusion pair dictionary with observed frequencies" exists in any language**
   (as of our 2026-08 survey). Frequency is what makes a pair list actionable: it tells you
-  which errors dominate real traffic (e.g. `펀더멘탈→펀더멘털` ×375, `변합기→변압기` ×307,
-  `FMC→FOMC` ×253).
+  which errors dominate real traffic (e.g. `펀더멘탈→펀더멘털` ×414, `변합기→변압기` ×322,
+  `FMC→FOMC` ×261 — full scan of a 521-video caption corpus).
 - Every pair carries provenance: how it was mined, which auditor models independently agreed,
   and its promotion tier (human-approved / registry-verified).
 

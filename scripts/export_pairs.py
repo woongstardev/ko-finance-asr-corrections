@@ -26,14 +26,16 @@ from pipeline.correction_cycle import verified_kind  # noqa: E402
 from pipeline.correction_store import load_dictionary_rows  # noqa: E402
 from pipeline.registry import get_registry  # noqa: E402
 
+OSS_COUNTS_PATH = GGULMUSE / "pipeline" / "data" / "oss-corpus-counts.json"
+
 PUBLIC_FIELDS = [
     "wrong",
     "right",
+    "corpus_count",
     "observed_count",
     "tier",
     "category",
     "auditor_models",
-    "first_seen",
     "approved_at",
     "word_boundary",
     "apply_scope",
@@ -59,10 +61,23 @@ def load_exclusions() -> set[str]:
     }
 
 
+def load_corpus_counts() -> tuple[dict[str, int], dict]:
+    """ggulmuse an upstream pipeline task 산출물. 없으면 corpus_count는 null로 배포된다."""
+    if not OSS_COUNTS_PATH.exists():
+        return {}, {}
+    payload = json.loads(OSS_COUNTS_PATH.read_text(encoding="utf-8"))
+    meta = {
+        "scanned_videos": payload.get("scanned_videos"),
+        "counted_at": payload.get("generated_at"),
+    }
+    return payload.get("counts", {}), meta
+
+
 def main() -> None:
     registry = get_registry()
     rows = load_dictionary_rows()
     exclusions = load_exclusions()
+    corpus_counts, corpus_meta = load_corpus_counts()
 
     shipped: list[dict] = []
     dropped_person: list[str] = []
@@ -88,18 +103,20 @@ def main() -> None:
             {
                 "wrong": e.wrong,
                 "right": e.right,
+                "corpus_count": corpus_counts.get(e.wrong),
                 "observed_count": e.observed_count,
                 "tier": e.tier,
                 "category": category,
                 "auditor_models": list(e.auditor_models or []),
-                "first_seen": e.first_seen or None,
                 "approved_at": e.approved_at or None,
                 "word_boundary": e.word_boundary,
                 "apply_scope": e.apply_scope,
             }
         )
 
-    shipped.sort(key=lambda r: (-(r["observed_count"] or 0), r["wrong"]))
+    shipped.sort(
+        key=lambda r: (-(r["corpus_count"] or 0), -(r["observed_count"] or 0), r["wrong"])
+    )
 
     data_dir = REPO / "data"
     data_dir.mkdir(exist_ok=True)
@@ -107,6 +124,7 @@ def main() -> None:
         "dataset": "ko-finance-asr-corrections",
         "exported_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "pair_count": len(shipped),
+        "corpus": corpus_meta or None,
         "pairs": shipped,
     }
     (data_dir / "pairs.json").write_text(
