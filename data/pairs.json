@@ -1,0 +1,1210 @@
+{
+  "dataset": "ko-finance-asr-corrections",
+  "exported_at": "2026-08-12T14:00:36Z",
+  "pair_count": 89,
+  "pairs": [
+    {
+      "wrong": "엔트로픽",
+      "right": "앤트로픽",
+      "observed_count": 4,
+      "tier": "A",
+      "category": "other",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:38:44.255+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "K뷰T",
+      "right": "K뷰티",
+      "observed_count": 3,
+      "tier": "A",
+      "category": "other",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:39:16.004+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "기적 분석",
+      "right": "기술적 분석",
+      "observed_count": 3,
+      "tier": "A",
+      "category": "other",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:39:36.122+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "블랙락",
+      "right": "블랙록",
+      "observed_count": 3,
+      "tier": "A",
+      "category": "other",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:38:55.418+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "업항",
+      "right": "업황",
+      "observed_count": 3,
+      "tier": "A",
+      "category": "term",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:39:11.34+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "지진난주",
+      "right": "지지난주",
+      "observed_count": 3,
+      "tier": "A",
+      "category": "other",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:39:00.462+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "ACDS",
+      "right": "HTS",
+      "observed_count": 2,
+      "tier": "A",
+      "category": "other",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:44:45.899+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "등뜸이는",
+      "right": "등 떠미는",
+      "observed_count": 2,
+      "tier": "A",
+      "category": "other",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:41:57.326+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "마이콘 테크놀로지",
+      "right": "마이크론 테크놀로지",
+      "observed_count": 2,
+      "tier": "A",
+      "category": "other",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:42:01.731+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "마이크 테크놀로지",
+      "right": "마이크론 테크놀로지",
+      "observed_count": 2,
+      "tier": "A",
+      "category": "other",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:40:11.301+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "머비의 법칙",
+      "right": "머피의 법칙",
+      "observed_count": 2,
+      "tier": "A",
+      "category": "other",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:42:06.34+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "머표 법칙",
+      "right": "머피의 법칙",
+      "observed_count": 2,
+      "tier": "A",
+      "category": "other",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:42:11.532+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "미국체",
+      "right": "미국채",
+      "observed_count": 2,
+      "tier": "A",
+      "category": "other",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:42:18.012+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "바위",
+      "right": "바이오",
+      "observed_count": 2,
+      "tier": "A",
+      "category": "other",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:41:16.381+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "보스턴 다이네믹스",
+      "right": "보스턴 다이내믹스",
+      "observed_count": 2,
+      "tier": "A",
+      "category": "other",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T11:32:15.561+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "소부 장단",
+      "right": "소부장",
+      "observed_count": 2,
+      "tier": "A",
+      "category": "other",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:40:20.962+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "수납매",
+      "right": "순환매",
+      "observed_count": 2,
+      "tier": "A",
+      "category": "other",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:41:49.087+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "실험률",
+      "right": "실업률",
+      "observed_count": 2,
+      "tier": "A",
+      "category": "other",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:40:30.93+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "엔트로피",
+      "right": "앤트로픽",
+      "observed_count": 2,
+      "tier": "A",
+      "category": "other",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:40:37.476+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "역초세",
+      "right": "역추세",
+      "observed_count": 2,
+      "tier": "A",
+      "category": "other",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:42:23.949+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "올리브형",
+      "right": "올리브영",
+      "observed_count": 2,
+      "tier": "A",
+      "category": "other",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:41:00.736+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "장기체",
+      "right": "장기채",
+      "observed_count": 2,
+      "tier": "A",
+      "category": "other",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:40:52.208+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "종목면",
+      "right": "종목명",
+      "observed_count": 2,
+      "tier": "A",
+      "category": "other",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:41:06.43+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "줄린이의 법칙",
+      "right": "주린이의 법칙",
+      "observed_count": 2,
+      "tier": "A",
+      "category": "other",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:42:28.749+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "지정확전 리스크",
+      "right": "지정학적 리스크",
+      "observed_count": 2,
+      "tier": "A",
+      "category": "other",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T11:33:12.597+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "지정확정 리스크",
+      "right": "지정학적 리스크",
+      "observed_count": 2,
+      "tier": "A",
+      "category": "other",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T11:32:41.294+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "코사 넣어",
+      "right": "코스닥 넣어",
+      "observed_count": 2,
+      "tier": "A",
+      "category": "other",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:42:51.127+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "코스하고",
+      "right": "코스닥으로",
+      "observed_count": 2,
+      "tier": "A",
+      "category": "other",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:43:41.089+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "코싹이",
+      "right": "코스닥이",
+      "observed_count": 2,
+      "tier": "A",
+      "category": "other",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:43:47.605+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "하스",
+      "right": "하이닉스",
+      "observed_count": 2,
+      "tier": "A",
+      "category": "stock",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:44:16.176+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "하이퍼스러들",
+      "right": "하이퍼스케일러들",
+      "observed_count": 2,
+      "tier": "A",
+      "category": "other",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:41:12.395+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "해제 펀드",
+      "right": "헤지 펀드",
+      "observed_count": 2,
+      "tier": "A",
+      "category": "other",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T11:33:33.354+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "해치 펀드",
+      "right": "헤지 펀드",
+      "observed_count": 2,
+      "tier": "A",
+      "category": "other",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T11:33:50.753+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "3,억짜리",
+      "right": "3천억짜리",
+      "observed_count": 1,
+      "tier": "A",
+      "category": "number",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:45:28.339+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "3무기",
+      "right": "3분기",
+      "observed_count": 1,
+      "tier": "A",
+      "category": "number",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:45:41.239+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "4쪽 보행",
+      "right": "사족 보행",
+      "observed_count": 1,
+      "tier": "A",
+      "category": "other",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:45:53.891+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "5,억짜리",
+      "right": "5천억짜리",
+      "observed_count": 1,
+      "tier": "A",
+      "category": "number",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:45:49.679+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "70 750조",
+      "right": "750조",
+      "observed_count": 1,
+      "tier": "A",
+      "category": "number",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:46:18.823+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "7라노급",
+      "right": "7나노급",
+      "observed_count": 1,
+      "tier": "A",
+      "category": "number",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:46:23.817+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "SM0봉",
+      "right": "S&P500 일봉",
+      "observed_count": 1,
+      "tier": "A",
+      "category": "number",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:46:45.994+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "감만해도",
+      "right": "감안해도",
+      "observed_count": 1,
+      "tier": "A",
+      "category": "other",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:47:55.805+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "갤러시",
+      "right": "갤럭시",
+      "observed_count": 1,
+      "tier": "A",
+      "category": "other",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:48:00.428+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "경원자",
+      "right": "경영자",
+      "observed_count": 1,
+      "tier": "A",
+      "category": "other",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:48:07.968+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "나상은",
+      "right": "나스닥은",
+      "observed_count": 1,
+      "tier": "A",
+      "category": "other",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:48:40.82+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "노크먼트",
+      "right": "노코멘트",
+      "observed_count": 1,
+      "tier": "A",
+      "category": "other",
+      "auditor_models": [],
+      "first_seen": null,
+      "approved_at": "2026-08-12T04:48:49.439+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "ACBM",
+      "right": "HBM",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "stock",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-11T23:15:41.649703+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "AMAMD",
+      "right": "AMD",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "stock",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-12T03:44:01.304425+00:00",
+      "word_boundary": true,
+      "apply_scope": "unique"
+    },
+    {
+      "wrong": "AM대",
+      "right": "AMD",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "stock",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-12T03:44:01.304425+00:00",
+      "word_boundary": true,
+      "apply_scope": "unique"
+    },
+    {
+      "wrong": "DT 5",
+      "right": "DDR5",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "term",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-12T00:13:33.031664+00:00",
+      "word_boundary": true,
+      "apply_scope": "unique"
+    },
+    {
+      "wrong": "FFC",
+      "right": "FOMC",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "term",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-12T03:44:01.304425+00:00",
+      "word_boundary": true,
+      "apply_scope": "unique"
+    },
+    {
+      "wrong": "FMC",
+      "right": "FOMC",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "term",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-12T00:13:33.031664+00:00",
+      "word_boundary": true,
+      "apply_scope": "unique"
+    },
+    {
+      "wrong": "HCBM",
+      "right": "HBM",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "stock",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-11T23:15:41.649703+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "IS%",
+      "right": "ISC",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "stock",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-12T03:44:01.304425+00:00",
+      "word_boundary": true,
+      "apply_scope": "unique"
+    },
+    {
+      "wrong": "MCD",
+      "right": "MACD",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "term",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-12T00:13:33.031664+00:00",
+      "word_boundary": true,
+      "apply_scope": "unique"
+    },
+    {
+      "wrong": "M비디아",
+      "right": "엔비디아",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "stock",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-12T03:44:01.304425+00:00",
+      "word_boundary": true,
+      "apply_scope": "unique"
+    },
+    {
+      "wrong": "SK 하이네스",
+      "right": "SK 하이닉스",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "stock",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-12T03:44:01.304425+00:00",
+      "word_boundary": true,
+      "apply_scope": "unique"
+    },
+    {
+      "wrong": "SK 하이스",
+      "right": "SK하이닉스",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "stock",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-11T23:15:41.649703+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "SK 하이하스",
+      "right": "SK하이닉스",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "stock",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-11T23:15:41.649703+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "SK 하인",
+      "right": "SK하이닉스",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "stock",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-12T00:13:33.031664+00:00",
+      "word_boundary": true,
+      "apply_scope": "unique"
+    },
+    {
+      "wrong": "SKS",
+      "right": "SK하이닉스",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "stock",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-12T03:44:01.304425+00:00",
+      "word_boundary": true,
+      "apply_scope": "unique"
+    },
+    {
+      "wrong": "SK하잉",
+      "right": "SK하이닉스",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "stock",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-11T23:15:41.649703+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "SPB",
+      "right": "SPV",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "term",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-12T00:13:33.031664+00:00",
+      "word_boundary": true,
+      "apply_scope": "unique"
+    },
+    {
+      "wrong": "XAI",
+      "right": "xAI",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "stock",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-12T03:44:01.304425+00:00",
+      "word_boundary": true,
+      "apply_scope": "unique"
+    },
+    {
+      "wrong": "공배도",
+      "right": "공매도",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "term",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-12T00:13:33.031664+00:00",
+      "word_boundary": true,
+      "apply_scope": "unique"
+    },
+    {
+      "wrong": "나마토건",
+      "right": "남화토건",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "stock",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-11T23:15:41.649703+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "남마토건",
+      "right": "남화토건",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "stock",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-11T23:15:41.649703+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "남마토원",
+      "right": "남화토건",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "stock",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-11T23:15:41.649703+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "남화통원",
+      "right": "남화토건",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "stock",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-11T23:15:41.649703+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "대원전설",
+      "right": "대원전선",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "stock",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-11T23:15:41.649703+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "라이언 라이엇",
+      "right": "라이엇",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "stock",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-12T03:44:01.304425+00:00",
+      "word_boundary": true,
+      "apply_scope": "unique"
+    },
+    {
+      "wrong": "마이크로님",
+      "right": "마이크론",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "stock",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-11T23:15:41.649703+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "변합기",
+      "right": "변압기",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "term",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-12T03:44:01.304425+00:00",
+      "word_boundary": true,
+      "apply_scope": "unique"
+    },
+    {
+      "wrong": "삼성근자",
+      "right": "삼성전자",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "stock",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-12T03:44:01.304425+00:00",
+      "word_boundary": true,
+      "apply_scope": "unique"
+    },
+    {
+      "wrong": "삼성제카인",
+      "right": "삼성전자",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "stock",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-12T03:44:01.304425+00:00",
+      "word_boundary": true,
+      "apply_scope": "unique"
+    },
+    {
+      "wrong": "서브라임 모기지",
+      "right": "서브프라임 모기지",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "term",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-12T00:13:33.031664+00:00",
+      "word_boundary": true,
+      "apply_scope": "unique"
+    },
+    {
+      "wrong": "셀트리오",
+      "right": "셀트리온",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "stock",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-11T23:15:41.649703+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "슈머로이드",
+      "right": "휴머노이드",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "term",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-12T03:44:01.304425+00:00",
+      "word_boundary": true,
+      "apply_scope": "unique"
+    },
+    {
+      "wrong": "시가 총의",
+      "right": "시가총액",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "term",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-12T03:44:01.304425+00:00",
+      "word_boundary": true,
+      "apply_scope": "unique"
+    },
+    {
+      "wrong": "신형증권",
+      "right": "신영증권",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "stock",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-11T23:15:41.649703+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "아모래 퍼시픽",
+      "right": "아모레퍼시픽",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "stock",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-11T23:15:41.649703+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "워닝 IPS",
+      "right": "원익IPS",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "stock",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-12T03:44:01.304425+00:00",
+      "word_boundary": true,
+      "apply_scope": "unique"
+    },
+    {
+      "wrong": "유상진자",
+      "right": "유상증자",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "term",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-12T03:44:01.304425+00:00",
+      "word_boundary": true,
+      "apply_scope": "unique"
+    },
+    {
+      "wrong": "주성 엔지리어링",
+      "right": "주성엔지니어링",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "stock",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-12T03:44:01.304425+00:00",
+      "word_boundary": true,
+      "apply_scope": "unique"
+    },
+    {
+      "wrong": "코스고",
+      "right": "코스닥",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "stock",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-11T23:15:41.649703+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "펀더멘탈",
+      "right": "펀더멘털",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "term",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-12T03:44:01.304425+00:00",
+      "word_boundary": true,
+      "apply_scope": "unique"
+    },
+    {
+      "wrong": "하이네스",
+      "right": "하이닉스",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "stock",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-12T03:44:01.304425+00:00",
+      "word_boundary": true,
+      "apply_scope": "unique"
+    },
+    {
+      "wrong": "하이니스",
+      "right": "하이닉스",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "stock",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-12T03:44:01.304425+00:00",
+      "word_boundary": true,
+      "apply_scope": "unique"
+    },
+    {
+      "wrong": "하잉스",
+      "right": "하이닉스",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "stock",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-11T23:15:41.649703+00:00",
+      "word_boundary": true,
+      "apply_scope": "all"
+    },
+    {
+      "wrong": "휴먼노이드",
+      "right": "휴머노이드",
+      "observed_count": 0,
+      "tier": "B",
+      "category": "term",
+      "auditor_models": [
+        "claude-code/opus",
+        "codex/gpt-5.6-sol"
+      ],
+      "first_seen": null,
+      "approved_at": "2026-08-12T03:44:01.304425+00:00",
+      "word_boundary": true,
+      "apply_scope": "unique"
+    }
+  ]
+}

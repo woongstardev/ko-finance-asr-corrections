@@ -17,6 +17,9 @@
 
 ## 스냅숏 갱신 절차 (v0.1 이후)
 
-1. 껄무새 레포의 export 스크립트로 활성(A·B) 쌍 추출 → 인물 필터 → `data/` 갱신
+1. `scripts/export_pairs.py`를 껄무새 venv로 실행(파일 상단 사용법) — 활성(A·B) 쌍 추출,
+   레지스트리 인물 + `scripts/person-exclusions.txt` 필터 → `data/` 갱신.
+   출력의 "review before release" 목록에서 **새 인물 쌍이 없는지 사람이 확인**하고,
+   있으면 exclusions에 추가 후 재실행.
 2. `CITATION.cff` version·date 갱신
 3. 릴리스 태그 `vYYYY.MM`

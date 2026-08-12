@@ -8,9 +8,9 @@ person-name pairs and source sentences are excluded).
 |---|---|---|
 | `wrong` | string | Misrecognized surface form as observed in YouTube auto-captions (e.g. `변합기`) |
 | `right` | string | Verified correction (e.g. `변압기`) |
-| `observed_count` | int | Number of times `wrong` was observed in the source corpus (~440 finance/stock videos, growing) |
+| `observed_count` | int | Times `wrong` was observed during candidate mining rounds |
 | `tier` | `"A"` \| `"B"` | Promotion tier. A = human-approved. B = `right` exists verbatim in an external registry (listed stocks / finance glossary) **and** both LLM auditors independently agreed |
-| `category` | `"stock"` \| `"term"` \| `"number"` | Kind of vocabulary the pair belongs to |
+| `category` | `"stock"` \| `"term"` \| `"number"` \| `"other"` | Vocabulary kind. `stock`/`term` = verbatim registry/glossary match; `number` = amount/figure damage; `other` = domain colloquialisms, foreign companies outside the KRX registry, multi-word phrases |
 | `auditor_models` | string[] | Model identifiers of the independent auditors that agreed (empty for tier A pairs approved directly by a human) |
 | `first_seen` | date | First observation date |
 | `approved_at` | date | Promotion date |
@@ -28,6 +28,9 @@ person-name pairs and source sentences are excluded).
 - `data/pairs.json` — canonical, full metadata
 - `data/pairs.csv` — flat convenience export (same rows)
 
-<!-- TODO(v0.1): freeze field list against production exporter; add `category`
-     classification pass (stock/term/number) — production dict does not carry this
-     field yet, derive from registry membership. -->
+<!-- TODO(v0.1):
+  - Add `corpus_count`: full-corpus frequency (whole ~440-video caption scan). Current
+    `observed_count` only counts mining rounds (max ~6); the headline frequencies
+    (e.g. 펀더멘탈→펀더멘털 ×375) come from the corpus scan and must ship as a field.
+  - first_seen is empty for most rows — backfill from corpus scan or drop the field.
+  - Freeze field list, then version the schema. -->
