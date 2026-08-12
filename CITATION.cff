@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this dataset or benchmark, please cite it as below."
+title: "ko-finance-asr-corrections: Frequency-annotated Korean ASR confusion pairs from finance/stock YouTube"
+authors:
+  - alias: woongstardev
+repository-code: "https://github.com/woongstardev/ko-finance-asr-corrections"
+url: "https://ggulmuse.woongstar.com"
+license: CC-BY-4.0
+version: 0.1.0-dev
+date-released: "2026-08-12"
+keywords:
+  - Korean
+  - ASR
+  - speech recognition
+  - error correction
+  - confusion pairs
+  - finance
+  - post-processing
