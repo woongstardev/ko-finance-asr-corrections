@@ -87,9 +87,56 @@ expensive, uncertain layer has to get right.
 
 ## Composition of the current snapshot
 
-89 pairs: 45 Tier A (human-approved), 44 Tier B (consensus + registry). By category: 37
-`other`, 32 `stock`, 14 `term`, 6 `number`. Every Tier B pair carries both auditor model ids;
-Tier A pairs carry none by construction, since a human approved them directly.
+89 pairs: 45 Tier A (a person approved them), 44 Tier B (promoted automatically). By
+category: 37 `other`, 32 `stock`, 14 `term`, 6 `number`.
+
+Every Tier B pair carries both auditor model ids. Tier A pairs usually carry none — but not
+by construction, and one shipped pair (`업항 → 업황`) is Tier A *with* both ids, because a
+person approved a pair that had already reached auditor consensus. Provenance therefore
+lives in its own `evidence` field rather than being inferred from `tier` or from whether
+`auditor_models` is empty. See [`SCHEMA.md`](SCHEMA.md).
+
+## Manual captions are not gold
+
+The obvious way to build an ASR correction dataset is to take videos that have both an
+official (human-written) caption track and an auto-generated one, align them, and treat
+every difference as an error the ASR made. We measured what that actually yields, and it
+does not work the way it sounds.
+
+Pilot, 2026-08-13: **3 videos, ~2h40m, one channel.** Small — read the ratios, not the
+absolute counts.
+
+| | |
+|---|---|
+| Word tokens aligned | 22,213 |
+| Mismatching | 18.8% |
+| 1:1 substitution candidates | 1,290 (1,116 unique) |
+| Registry-verifiable (stocks, names) | 32 unique |
+| Latin/numeric (`FMC → FOMC`, `SMP → S&P`, `YY로 → YOY로`) | 110 unique |
+| **Everything else — style, not error** | **974 unique (87.3%)** |
+
+**Only 12.7% of the unique differences were misrecognitions.** The rest is a human editor
+turning speech into prose: `그니까 → 그러니까`, `요거 → 이거`, dropped fillers, normalized
+endings. Treat the official caption as an answer key and you are mostly measuring how
+formal the channel's caption writer is.
+
+Worse, the direction is not always what you would assume. In `15% → 15프로`, the official
+caption wrote what the speaker actually said and the *auto* caption was the normalized one.
+For an archive whose claim is "who said what", verbatim fidelity is the goal and the
+official caption is the less faithful text. The same alignment, scored with a different
+objective, would call that a regression.
+
+So official captions are not a gold reference. They are a **candidate miner**: high recall,
+low precision, cheap to run, and useless without a precision stage. In this pipeline that
+stage is the same registry check that governs everything else — which is why pairs found
+this way carry `evidence: goldset-alignment` and still have to match a registry entry
+verbatim before they ship.
+
+Two consequences worth stating for anyone reproducing this:
+
+- **Restrict scoring to verifiable spans.** Measuring whole-transcript agreement optimizes
+  toward prose-normalization, not toward correcting misrecognitions.
+- **Official captions contain errors too.** They are a second opinion, not ground truth.
 
 ## Design rules, learned from production incidents
 

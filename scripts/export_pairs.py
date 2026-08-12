@@ -7,7 +7,10 @@ Must run on Orbit with the ggulmuse venv (needs DB env + registry):
 
 Hard lines (AGENTS.md): ships only enabled tier A/B pairs; person-name pairs and
 anything whose `wrong` or `right` resolves to a person in the registry are dropped.
-Internal-only fields (`reason`, `approved_by`, `source`) never leave the pipeline.
+Internal-only fields (`reason`, `approved_by`) never leave the pipeline; the
+upstream `source` is not exported verbatim either - it is mapped to the public
+`evidence` vocabulary so that renaming an internal value cannot silently change
+the published schema.
 """
 
 from __future__ import annotations
@@ -34,12 +37,23 @@ PUBLIC_FIELDS = [
     "corpus_count",
     "observed_count",
     "tier",
+    "evidence",
     "category",
     "auditor_models",
     "approved_at",
     "word_boundary",
     "apply_scope",
 ]
+
+# Upstream `source` -> published `evidence`. `tier` says how much authority a pair
+# carries; `evidence` says how it was verified. They are not the same axis: a pair
+# can be human-approved on top of auditor consensus (see 업항 → 업황), and the
+# goldset path coming from upstream an upstream pipeline task promotes without consensus at all.
+EVIDENCE_BY_SOURCE = {
+    "human": "human",
+    "auditor": "auditor-consensus",
+    "goldset": "goldset-alignment",
+}
 
 
 def categorize(right: str, kind: str | None) -> str:
@@ -82,6 +96,7 @@ def main() -> None:
     shipped: list[dict] = []
     dropped_person: list[str] = []
     review_other: list[str] = []
+    unknown_source: list[str] = []
 
     for e in rows:
         if not e.enabled or e.tier not in ("A", "B"):
@@ -99,6 +114,12 @@ def main() -> None:
         category = categorize(e.right, kind)
         if category == "other":
             review_other.append(f"{e.wrong}→{e.right} ({e.tier})")
+        evidence = EVIDENCE_BY_SOURCE.get(e.source or "")
+        if evidence is None:
+            # Never guess. An unmapped source means upstream grew a verification
+            # path we have not described publicly yet.
+            evidence = "unknown"
+            unknown_source.append(f"{e.wrong}→{e.right} (source={e.source!r})")
         shipped.append(
             {
                 "wrong": e.wrong,
@@ -106,6 +127,7 @@ def main() -> None:
                 "corpus_count": corpus_counts.get(e.wrong),
                 "observed_count": e.observed_count,
                 "tier": e.tier,
+                "evidence": evidence,
                 "category": category,
                 "auditor_models": list(e.auditor_models or []),
                 "approved_at": e.approved_at or None,
@@ -146,6 +168,11 @@ def main() -> None:
     print(f"category=other (review before release): {len(review_other)}")
     for line in review_other:
         print(f"  - {line}")
+    if unknown_source:
+        print(f"!! unmapped source -> evidence='unknown': {len(unknown_source)}")
+        print("   add it to EVIDENCE_BY_SOURCE and document it in docs/SCHEMA.md")
+        for line in unknown_source:
+            print(f"  - {line}")
 
 
 if __name__ == "__main__":
