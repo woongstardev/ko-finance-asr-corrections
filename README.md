@@ -31,6 +31,50 @@ archive. The pairs here are the byproduct of correcting real YouTube auto-captio
 | `docs/SCHEMA.md` | Field-by-field schema. |
 | `docs/METHODOLOGY.md` | The no-gold-label verification loop: 2 independent LLM auditors → consensus-only adoption → external registry check → 3-tier promotion → instant rollback. |
 
+## The benchmark in one table
+
+Task: fix the misrecognition, change nothing else. Three ways of using the dataset itself as
+a correction system, scored on 456 synthetic items (no caption text). Net score is fixes
+minus over-corrections, over error items.
+
+| Baseline | Recall | Over-corrections | **Net score** |
+|---|---|---|---|
+| Plain substring replacement | 75.9% | 11 | **72.8%** |
+| Whitespace-flexible matching | 100.0% | 14 | **96.0%** |
+| Whitespace-flexible, keys ≥ 4 chars | 68.0% | 2 | **67.4%** |
+
+Details, scoring rules and what the numbers mean: [`benchmark/README.md`](benchmark/README.md).
+
+## Known limitations
+
+Stated up front, because a niche dataset earns trust by being explicit about its edges.
+
+- **One corpus, one ASR system, one domain.** Every pair comes from YouTube auto-captions of
+  Korean stock/investing channels — 521 videos as of the current snapshot. A different ASR
+  engine mishears differently, so these pairs are not a general Korean ASR error list.
+- **89 pairs is small.** This is a frequency-annotated seed, not a comprehensive lexicon. It
+  grows with monthly snapshots as the upstream pipeline verifies more pairs.
+- **Skewed by construction.** Frequency-ranked mining favours what the channels talk about
+  most, so semiconductor and index vocabulary dominates, and a single company can account for
+  a family of variants (`하이니스`, `하이네스`, `SK 하인`, `하잉스`, …).
+- **`corpus_count` counts surface forms, not confirmed errors.** No shipped pair is also an
+  ordinary Korean word, but the metric would overstate frequency for one that was. See
+  [`docs/SCHEMA.md`](docs/SCHEMA.md).
+- **Some pairs encode a spelling standard, not only a mishearing.** `펀더멘탈 → 펀더멘털`, the
+  highest-frequency pair, is the standard transliteration correcting a widely used variant.
+  Treat the dataset as "what the upstream pipeline normalizes", not purely "what the ASR got
+  wrong".
+- **Verification is auditor consensus plus a registry check, not human ground truth.** Tier A
+  pairs were approved by a person; Tier B pairs were not. See
+  [`docs/METHODOLOGY.md`](docs/METHODOLOGY.md), including the measured ~1-in-10
+  over-correction rate that motivated the benchmark's penalty.
+- **No person-name pairs and no source sentences**, by policy. Misheard names are a real and
+  frequent error class that this dataset deliberately does not cover, and contexts cannot be
+  recomputed from what ships here.
+- **The benchmark is in-domain by construction.** Its error sentences are generated from
+  these same pairs, so a dictionary lookup reaches 100% recall. v0 measures restraint and
+  robustness, not generalization to unseen misrecognitions.
+
 ## Relationship to prior work
 
 | Resource | What it is | How this differs |
