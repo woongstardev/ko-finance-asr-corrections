@@ -1,0 +1,89 @@
+{
+  "note": "Hand-authored over-correction traps. Every sentence here is ordinary Korean written for this benchmark - no caption text, no transcript excerpts. Each one contains the `wrong` string of a shipped pair as legitimate text, so a system that replaces blindly will damage it. `triggers` lists the pair(s) that fire.",
+  "traps": [
+    {
+      "id": "trp-entropy",
+      "text": "엔트로피가 커지는 방향으로 흘러간다는 설명이 이어졌습니다.",
+      "triggers": ["엔트로피"],
+      "why": "'엔트로피' is the ordinary technical term (entropy). The pair 엔트로피→앤트로픽 must not fire outside an AI-company context."
+    },
+    {
+      "id": "trp-rock",
+      "text": "산 정상에 있는 커다란 바위 앞에서 사진을 찍었습니다.",
+      "triggers": ["바위"],
+      "why": "'바위' is a common noun (rock). 바위→바이오 is only valid on the misheard token."
+    },
+    {
+      "id": "trp-hearthstone",
+      "text": "주말에 친구들과 하스스톤 대회를 봤습니다.",
+      "triggers": ["하스"],
+      "why": "Two-syllable key inside a longer word; 하스→하이닉스 would mangle it."
+    },
+    {
+      "id": "trp-us-stay",
+      "text": "미국 체류 기간을 한 달 더 늘리기로 했습니다.",
+      "triggers": ["미국체"],
+      "why": "Whitespace-flexible matching sees 미국체 across the space in '미국 체류'. Plain substring replacement does not - this trap separates the two matcher families."
+    },
+    {
+      "id": "trp-long-stay",
+      "text": "장기체류자 대상 비자 제도가 바뀌었습니다.",
+      "triggers": ["장기체"],
+      "why": "'장기체류' contains 장기체 contiguously, so even a plain replacer damages it (장기채류)."
+    },
+    {
+      "id": "trp-aspect",
+      "text": "종목 면에서는 지난 분기와 큰 차이가 없었습니다.",
+      "triggers": ["종목면"],
+      "why": "'종목 면에서' is a normal construction; whitespace-flexible matching turns it into 종목명."
+    },
+    {
+      "id": "trp-course",
+      "text": "요가 코스하고 필라테스 코스를 같이 비교해봤습니다.",
+      "triggers": ["코스하고"],
+      "why": "'코스하고' = '코스' + connective '하고'. The pair 코스하고→코스닥으로 assumes a mishearing that is not present here."
+    },
+    {
+      "id": "trp-storage-stall",
+      "text": "창고에 수납 매대를 하나 더 들여놨습니다.",
+      "triggers": ["수납매"],
+      "why": "Whitespace-flexible matching sees 수납매 across '수납 매대' and rewrites it to 순환매."
+    },
+    {
+      "id": "trp-mcd",
+      "text": "MCD 주가는 실적 발표 뒤 소폭 올랐습니다.",
+      "triggers": ["MCD"],
+      "why": "MCD is McDonald's ticker. MCD→MACD is a genuine ASR pair but collides with a real symbol."
+    },
+    {
+      "id": "trp-fmc",
+      "text": "FMC 코퍼레이션 실적이 예상치를 밑돌았습니다.",
+      "triggers": ["FMC"],
+      "why": "FMC Corporation is a listed company; the highest-frequency ASCII pair (FMC→FOMC) collides with it."
+    },
+    {
+      "id": "trp-xai",
+      "text": "설명가능한 인공지능, 즉 XAI 연구가 최근 활발합니다.",
+      "triggers": ["XAI"],
+      "why": "XAI (explainable AI) is an established acronym; XAI→xAI is a casing fix meant only for the company name."
+    },
+    {
+      "id": "trp-am-band",
+      "text": "차 안에서 AM대역 라디오 주파수를 맞췄습니다.",
+      "triggers": ["AM대"],
+      "why": "'AM대역' contains AM대; the pair AM대→AMD would produce AMD역."
+    },
+    {
+      "id": "trp-dt5",
+      "text": "DT 5년 차 조직 개편안을 공유드립니다.",
+      "triggers": ["DT 5"],
+      "why": "'DT 5년 차' contains the multi-token key 'DT 5'; DT 5→DDR5 would produce DDR5년 차."
+    },
+    {
+      "id": "trp-person-name",
+      "text": "나상은 씨가 오늘 발표를 맡기로 했습니다.",
+      "triggers": ["나상은"],
+      "why": "나상은 is a plausible person name. The pair 나상은→나스닥은 encodes a mid-utterance mishearing and would rewrite a name - the failure mode the person-pair hard line exists to avoid."
+    }
+  ]
+}

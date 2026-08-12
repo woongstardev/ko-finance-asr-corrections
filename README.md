@@ -27,7 +27,7 @@ archive. The pairs here are the byproduct of correcting real YouTube auto-captio
 | Path | Contents |
 |---|---|
 | `data/` | Confusion pairs (JSON/CSV): `wrong`, `right`, `observed_count`, `tier`, verification metadata. Stock names & finance terms only — no person names, no source sentences. |
-| `benchmark/` | Scoring script + evaluation protocol: "given these sentences, how many misrecognitions does your system fix (without over-correcting)?" |
+| `benchmark/` | Mini benchmark v0: pure-stdlib scorer, a 456-item synthetic evaluation set (no caption text), and three dictionary baselines. Fixes and over-corrections are scored together — see [`benchmark/README.md`](benchmark/README.md). |
 | `docs/SCHEMA.md` | Field-by-field schema. |
 | `docs/METHODOLOGY.md` | The no-gold-label verification loop: 2 independent LLM auditors → consensus-only adoption → external registry check → 3-tier promotion → instant rollback. |
 
