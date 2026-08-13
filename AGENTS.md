@@ -18,11 +18,24 @@
 - 언어: 커밋 메시지 영어, 문서는 파일별 기존 언어 유지 (README·docs = 영어, 이 파일 = 한국어).
 - 공개 전까지 스키마 변경 자유. v0.1 이후 `data/` 스키마 변경은 마이너 버전 승격.
 
-## 스냅숏 갱신 절차 (v0.1 이후)
+## 스냅숏 갱신 (task 005에서 3층으로 자동화 — 2026-08-14)
 
-1. `scripts/export_pairs.py`를 껄무새 venv로 실행(파일 상단 사용법) — 활성(A·B) 쌍 추출,
-   레지스트리 인물 + `scripts/person-exclusions.txt` 필터 → `data/` 갱신.
-   출력의 "review before release" 목록에서 **새 인물 쌍이 없는지 사람이 확인**하고,
-   있으면 exclusions에 추가 후 재실행.
-2. `CITATION.cff` version·date 갱신
-3. 릴리스 태그 `vYYYY.MM`
+**주간 감지(자동, 사람 개입 없음)**: 오르빗 유저 타이머 `oss-corrections-refresh.timer`
+(월 07:20 KST)가 `scripts/refresh_snapshot.py --notify` **드라이런**을 돌린다 —
+재계수(임시 경로, 상류 트리 안 건드림) → export → 현 스냅숏과 diff.
+리포트는 `$OSS_REFRESH_REPORT_DIR/`(인물 후보가 담기므로 레포 밖), 변화·실패 시에만
+텔레그램 알림(무변화여도 월 1회 하트비트 — 침묵과 고장을 구분한다).
+
+**월간 발행(사람 개입 1회)**:
+1. 주간 리포트의 **새 인물 쌍 후보를 사람이 확인** — 있으면 상류 제외 목록에 추가 후 재실행.
+2. `python3 scripts/refresh_snapshot.py --write` — 재계수(정본 아티팩트 갱신 →
+   껄무새에 an upstream pipeline task 명의로 커밋) → export → `data/` 갱신 + `CHANGELOG.md` 반영.
+   내부에서 `scripts/release_check.py`(공개 경계 검사)가 먼저 돌고, 실패하면 쓰지 않는다.
+3. `CITATION.cff` version·date 갱신, CHANGELOG의 Unreleased를 버전 절로 승격
+4. 릴리스 태그 `vYYYY.MM`
+
+**패치 릴리스(이벤트)**: 배포된 오교정 쌍의 **회수 전용**. 신규 쌍 추가는 패치 사유가 아니다.
+
+인물 제외 목록의 정본 위치는 **상류 `pipeline/data/person-exclusions.txt`**(프라이빗)다 —
+목록 자체가 인물 정보라 공개 레포에 두지 않는다(껄무새 an upstream pipeline task). exporter는 상류
+목록과 (이관 완료 전까지의) 로컬 레거시 목록의 **합집합**을 쓴다.

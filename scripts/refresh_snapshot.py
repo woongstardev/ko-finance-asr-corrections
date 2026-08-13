@@ -1,0 +1,349 @@
+"""One-command snapshot refresh: recount -> export -> diff -> report.
+
+Task 005. The weekly cron runs this in dry-run mode (the default) to *detect*
+change; a human runs it with --write once a month to *publish* change. The
+split is deliberate: the dataset grows in bursts (audit rounds), not on a
+calendar, so weekly runs mostly confirm "nothing new" — that confirmation is
+the point (silence and breakage must look different).
+
+Runs on the host that has the upstream checkout and its venv. This script
+itself needs only the stdlib; it invokes the upstream venv's python for the
+recount and export subprocesses. Locate the upstream checkout with
+``GGULMUSE_ROOT`` (default: $GGULMUSE_ROOT).
+
+    python3 scripts/refresh_snapshot.py              # dry-run: report only
+    python3 scripts/refresh_snapshot.py --notify     # dry-run + Telegram on change/failure (cron mode)
+    python3 scripts/refresh_snapshot.py --write      # update data/ + CHANGELOG.md (monthly release prep)
+
+Exit codes: 0 = ran fine (changed or not), nonzero = the refresh itself failed
+(recount/export crashed, or the exporter met an unmapped evidence source —
+that means upstream grew a verification path we have not described publicly,
+and publishing on top of it would be wrong).
+
+Reports and state live outside the repo on purpose — they can contain
+dropped person names, which never enter this (eventually public) tree:
+  reports  $OSS_REFRESH_REPORT_DIR/YYYY-MM-DD.md
+  state    $OSS_REFRESH_STATE
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import shutil
+import subprocess
+import sys
+import tempfile
+import time
+import urllib.parse
+import urllib.request
+from datetime import date
+from pathlib import Path
+
+REPO = Path(__file__).resolve().parent.parent
+GGULMUSE = Path(
+    os.environ.get("GGULMUSE_ROOT", str(Path.home() / "projects" / "ggulmuse"))
+).expanduser()
+ORBIT = Path.home() / "orbit"
+REPORT_DIR = Path(os.environ.get("OSS_REFRESH_REPORT_DIR", ORBIT / "logs" / "oss-refresh"))
+STATE_PATH = Path(os.environ.get("OSS_REFRESH_STATE", ORBIT / "state" / "oss-refresh-state.json"))
+CRED_PATH = ORBIT / "ops" / ".credentials" / "telegram.env"
+
+# Frequency fields drift a little every week just because the corpus grows.
+# They are reported, but they alone do not make a snapshot "changed" —
+# otherwise every weekly run would cry wolf and the alert would train people
+# to ignore it.
+FREQUENCY_FIELDS = {"corpus_count", "observed_count"}
+
+HEARTBEAT_SECONDS = 30 * 24 * 3600  # "no change" still gets said out loud monthly
+
+
+def venv_python() -> Path:
+    py = GGULMUSE / ".venv" / "bin" / "python"
+    if not py.exists():
+        sys.exit(f"upstream venv not found: {py} (set GGULMUSE_ROOT?)")
+    return py
+
+
+def run_step(name: str, cmd: list[str], env: dict | None = None) -> str:
+    proc = subprocess.run(
+        cmd, cwd=GGULMUSE, capture_output=True, text=True, timeout=1500, env=env
+    )
+    if proc.returncode != 0:
+        sys.stderr.write(proc.stdout)
+        sys.stderr.write(proc.stderr)
+        sys.exit(f"step failed: {name} (exit {proc.returncode})")
+    return proc.stdout
+
+
+def load_pairs(path: Path) -> dict[tuple[str, str], dict]:
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    return {(p["wrong"], p["right"]): p for p in payload["pairs"]}
+
+
+def diff_pairs(
+    old: dict[tuple[str, str], dict], new: dict[tuple[str, str], dict]
+) -> dict:
+    added = sorted(k for k in new if k not in old)
+    removed = sorted(k for k in old if k not in new)
+    meta_changed: list[tuple[tuple[str, str], list[str]]] = []
+    freq_changed: list[tuple[str, str]] = []
+    for k in sorted(set(old) & set(new)):
+        fields = [f for f in new[k] if old[k].get(f) != new[k].get(f)]
+        meta = [f for f in fields if f not in FREQUENCY_FIELDS]
+        if meta:
+            meta_changed.append((k, meta))
+        elif fields:
+            freq_changed.append(k)
+    return {
+        "added": added,
+        "removed": removed,
+        "meta_changed": meta_changed,
+        "freq_changed": freq_changed,
+    }
+
+
+def load_state() -> dict:
+    try:
+        return json.loads(STATE_PATH.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+
+
+def save_state(state: dict) -> None:
+    STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
+    STATE_PATH.write_text(
+        json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
+
+
+def send_telegram(text: str) -> bool:
+    """Same one-way bot channel as the fleet notification channel."""
+    try:
+        env = {}
+        for line in CRED_PATH.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if line and not line.startswith("#") and "=" in line:
+                k, _, v = line.partition("=")
+                env[k.strip()] = v.strip().strip('"').strip("'")
+        token, chat = env["TELEGRAM_BOT_TOKEN"], env["TELEGRAM_CHAT_ID"]
+    except (OSError, KeyError):
+        print("WARNING: telegram credentials unavailable — not notifying", file=sys.stderr)
+        return False
+    payload = urllib.parse.urlencode(
+        {"chat_id": chat, "text": text, "disable_web_page_preview": "true"}
+    ).encode()
+    req = urllib.request.Request(
+        f"https://api.telegram.org/bot{token}/sendMessage", data=payload
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=20) as resp:
+            return bool(json.load(resp).get("ok", False))
+    except Exception as exc:
+        print(f"WARNING: telegram send failed: {type(exc).__name__}", file=sys.stderr)
+        return False
+
+
+def fmt_pair(k: tuple[str, str]) -> str:
+    return f"{k[0]} → {k[1]}"
+
+
+def render_report(
+    today: str, diff: dict, export_report: dict, new_person: list[str], old_count: int, new_count: int
+) -> str:
+    lines = [
+        f"# oss-refresh dry-run — {today}",
+        "",
+        f"pairs: {old_count} → {new_count}",
+        f"added: {len(diff['added'])} · removed: {len(diff['removed'])} · "
+        f"metadata changed: {len(diff['meta_changed'])} · frequency-only drift: {len(diff['freq_changed'])}",
+        "",
+    ]
+    if diff["added"]:
+        lines.append("## Added")
+        lines += [f"- {fmt_pair(k)}" for k in diff["added"]]
+        lines.append("")
+    if diff["removed"]:
+        lines.append("## Removed")
+        lines += [f"- {fmt_pair(k)}" for k in diff["removed"]]
+        lines.append("")
+    if diff["meta_changed"]:
+        lines.append("## Metadata changed")
+        lines += [f"- {fmt_pair(k)}: {', '.join(fs)}" for k, fs in diff["meta_changed"]]
+        lines.append("")
+    if new_person:
+        lines.append("## ⚠ NEW person-pair candidates dropped by the filter (human must review)")
+        lines += [f"- {s}" for s in new_person]
+        lines.append("")
+    if export_report.get("review_other"):
+        lines.append("## category=other (review before release)")
+        lines += [f"- {s}" for s in export_report["review_other"]]
+        lines.append("")
+    if export_report.get("unknown_source"):
+        lines.append("## ✖ unmapped evidence source (refresh treated as FAILURE)")
+        lines += [f"- {s}" for s in export_report["unknown_source"]]
+        lines.append("")
+    return "\n".join(lines) + "\n"
+
+
+def update_changelog(today: str, diff: dict) -> None:
+    """Fold this write's delta into the Unreleased section of CHANGELOG.md."""
+    path = REPO / "CHANGELOG.md"
+    text = path.read_text(encoding="utf-8")
+    marker = "## [Unreleased]"
+    if marker not in text:
+        sys.exit("CHANGELOG.md has no '## [Unreleased]' section")
+    entry_lines = []
+    if diff["added"]:
+        entry_lines.append("### Added")
+        entry_lines += [f"- `{fmt_pair(k)}` ({today})" for k in diff["added"]]
+        entry_lines.append("")
+    if diff["removed"]:
+        entry_lines.append("### Removed")
+        entry_lines += [f"- `{fmt_pair(k)}` ({today})" for k in diff["removed"]]
+        entry_lines.append("")
+    if diff["meta_changed"]:
+        entry_lines.append("### Changed")
+        entry_lines += [
+            f"- `{fmt_pair(k)}`: {', '.join(fs)} ({today})" for k, fs in diff["meta_changed"]
+        ]
+        entry_lines.append("")
+    if not entry_lines:
+        return
+    head, _, tail = text.partition(marker)
+    path.write_text(
+        head + marker + "\n\n" + "\n".join(entry_lines) + "\n" + tail.lstrip("\n"),
+        encoding="utf-8",
+    )
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser(description="recount -> export -> diff -> report")
+    ap.add_argument("--write", action="store_true", help="update data/ and CHANGELOG.md (monthly)")
+    ap.add_argument("--yes", action="store_true", help="skip the interactive confirmation on --write")
+    ap.add_argument("--notify", action="store_true", help="Telegram on change/failure (weekly cron mode)")
+    ap.add_argument("--no-recount", action="store_true", help="reuse the existing corpus counts artifact")
+    ap.add_argument(
+        "--baseline",
+        type=Path,
+        default=REPO / "data" / "pairs.json",
+        help="snapshot to diff against (testing hook; default data/pairs.json)",
+    )
+    args = ap.parse_args()
+
+    if os.environ.get("OSS_REFRESH_FORCE_FAIL"):
+        sys.exit("OSS_REFRESH_FORCE_FAIL is set — failing on purpose (alert-path drill)")
+
+    today = date.today().isoformat()
+    py = venv_python()
+
+    try:
+        tmp = Path(tempfile.mkdtemp(prefix="oss-refresh-", dir="/tmp"))
+        export_env = dict(os.environ)
+        if not args.no_recount:
+            # Dry-runs recount into scratch: the upstream checkout is a shared
+            # working tree and an unattended weekly job must not dirty it.
+            # --write refreshes the canonical artifact (commit it upstream
+            # under an upstream pipeline task as part of the monthly procedure).
+            recount_cmd = [str(py), "-m", "pipeline.correction_corpus", "--oss-counts"]
+            if not args.write:
+                counts_path = tmp / "oss-corpus-counts.json"
+                recount_cmd += ["--out", str(counts_path)]
+                export_env["OSS_COUNTS_PATH"] = str(counts_path)
+            out = run_step("recount", recount_cmd)
+            print(out, end="")
+
+        export_report_path = tmp / "export-report.json"
+        out = run_step(
+            "export",
+            [
+                str(py),
+                str(REPO / "scripts" / "export_pairs.py"),
+                "--out",
+                str(tmp),
+                "--report",
+                str(export_report_path),
+            ],
+            env=export_env,
+        )
+        print(out, end="")
+        export_report = json.loads(export_report_path.read_text(encoding="utf-8"))
+
+        if export_report.get("unknown_source"):
+            # Publishing pairs whose verification path the public schema cannot
+            # name would be a silent contract break — stop the line instead.
+            sys.exit("export produced evidence='unknown' pairs — fix EVIDENCE_BY_SOURCE first")
+
+        old = load_pairs(args.baseline)
+        new = load_pairs(tmp / "pairs.json")
+        diff = diff_pairs(old, new)
+
+        state = load_state()
+        seen_person = set(state.get("seen_person", []))
+        new_person = [s for s in export_report.get("dropped_person", []) if s not in seen_person]
+
+        report = render_report(today, diff, export_report, new_person, len(old), len(new))
+        REPORT_DIR.mkdir(parents=True, exist_ok=True)
+        report_path = REPORT_DIR / f"{today}.md"
+        report_path.write_text(report, encoding="utf-8")
+        print(report)
+        print(f"report: {report_path}")
+
+        changed = bool(diff["added"] or diff["removed"] or diff["meta_changed"] or new_person)
+
+        if args.notify:
+            now = time.time()
+            last = float(state.get("last_notified", 0))
+            if changed:
+                send_telegram(
+                    "📊 ko-finance-asr 주간 스냅숏 점검\n"
+                    f"+{len(diff['added'])} / -{len(diff['removed'])} / "
+                    f"변경 {len(diff['meta_changed'])} · 신규 인물 후보 {len(new_person)}건\n"
+                    f"리포트: {report_path}"
+                )
+                state["last_notified"] = now
+            elif now - last > HEARTBEAT_SECONDS:
+                send_telegram(
+                    "📊 ko-finance-asr 주간 점검 — 이번 달 변화 없음 "
+                    f"(쌍 {len(new)}개 유지). 점검 자체는 정상 동작 중."
+                )
+                state["last_notified"] = now
+
+        if args.write:
+            check = subprocess.run(
+                [sys.executable, str(REPO / "scripts" / "release_check.py")], cwd=REPO
+            )
+            if check.returncode != 0:
+                sys.exit("release_check failed — fix findings before writing the snapshot")
+            if new_person and not args.yes:
+                sys.exit(
+                    "new person-pair candidates need human review before --write "
+                    "(rerun with --yes after reviewing the report)"
+                )
+            if not args.yes and sys.stdin.isatty():
+                answer = input(f"write {len(new)} pairs to data/ ? [y/N] ")
+                if answer.strip().lower() != "y":
+                    sys.exit("aborted")
+            for name in ("pairs.json", "pairs.csv"):
+                shutil.copy2(tmp / name, REPO / "data" / name)
+            update_changelog(today, diff)
+            print("data/ and CHANGELOG.md updated — review, commit, and (monthly) tag")
+
+        # Person candidates count as "seen" only once a human had the chance to
+        # see them in a report; recording them here is what makes next week's
+        # report highlight only what is genuinely new.
+        state["seen_person"] = sorted(
+            seen_person | set(export_report.get("dropped_person", []))
+        )
+        state["last_run"] = today
+        state["changed"] = changed
+        save_state(state)
+    except SystemExit as exc:
+        if args.notify and exc.code not in (0, None):
+            send_telegram(f"⚠️ ko-finance-asr 주간 스냅숏 점검 실패: {exc.code}")
+        raise
+
+
+if __name__ == "__main__":
+    main()

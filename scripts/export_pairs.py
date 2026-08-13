@@ -1,8 +1,9 @@
 """Export verified confusion pairs from the production dictionary into data/.
 
-Must run on Orbit with the ggulmuse venv (needs DB env + registry):
+Must run with the upstream pipeline's venv (needs DB env + registry). The
+upstream checkout is located via the ``GGULMUSE_ROOT`` environment variable:
 
-    cd $GGULMUSE_ROOT && .venv/bin/python \
+    cd "$GGULMUSE_ROOT" && .venv/bin/python \
         /path/to/ko-finance-asr-corrections/scripts/export_pairs.py
 
 Hard lines (AGENTS.md): ships only enabled tier A/B pairs; person-name pairs and
@@ -15,13 +16,17 @@ the published schema.
 
 from __future__ import annotations
 
+import argparse
 import csv
 import json
+import os
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-GGULMUSE = Path.home() / "projects" / "ggulmuse"
+GGULMUSE = Path(
+    os.environ.get("GGULMUSE_ROOT", str(Path.home() / "projects" / "ggulmuse"))
+).expanduser()
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(GGULMUSE))
 
@@ -29,7 +34,13 @@ from pipeline.correction_cycle import verified_kind  # noqa: E402
 from pipeline.correction_store import load_dictionary_rows  # noqa: E402
 from pipeline.registry import get_registry  # noqa: E402
 
-OSS_COUNTS_PATH = GGULMUSE / "pipeline" / "data" / "oss-corpus-counts.json"
+# Overridable so a dry-run can recount to a scratch path without dirtying the
+# upstream working tree (a shared checkout — see refresh_snapshot.py).
+OSS_COUNTS_PATH = Path(
+    os.environ.get(
+        "OSS_COUNTS_PATH", str(GGULMUSE / "pipeline" / "data" / "oss-corpus-counts.json")
+    )
+).expanduser()
 
 PUBLIC_FIELDS = [
     "wrong",
@@ -64,15 +75,36 @@ def categorize(right: str, kind: str | None) -> str:
     return "other"
 
 
+# The person-exclusion list is private data (it names real people via their
+# misrecognized forms), so its home is the upstream private repo, not here.
+# The legacy in-repo copy is still honored during the transition; when both
+# exist their union applies — dropping a name can only happen deliberately,
+# never by picking the wrong file.
+EXCLUSION_SOURCES = [
+    GGULMUSE / "pipeline" / "data" / "person-exclusions.txt",
+    REPO / "scripts" / "person-exclusions.txt",  # legacy, pending upstream move
+]
+
+
 def load_exclusions() -> set[str]:
-    path = REPO / "scripts" / "person-exclusions.txt"
-    if not path.exists():
-        return set()
-    return {
-        line.strip()
-        for line in path.read_text(encoding="utf-8").splitlines()
-        if line.strip() and not line.startswith("#")
-    }
+    names: set[str] = set()
+    for path in EXCLUSION_SOURCES:
+        if not path.exists():
+            continue
+        found = {
+            line.strip()
+            for line in path.read_text(encoding="utf-8").splitlines()
+            if line.strip() and not line.startswith("#")
+        }
+        print(f"person exclusions: {len(found)} from {path}", file=sys.stderr)
+        names |= found
+    if not names:
+        print(
+            "WARNING: no person-exclusion list found — only the registry "
+            "person check stands between person names and data/",
+            file=sys.stderr,
+        )
+    return names
 
 
 def load_corpus_counts() -> tuple[dict[str, int], dict]:
@@ -88,6 +120,22 @@ def load_corpus_counts() -> tuple[dict[str, int], dict]:
 
 
 def main() -> None:
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument(
+        "--out",
+        type=Path,
+        default=REPO / "data",
+        help="directory for pairs.json/pairs.csv (default: data/)",
+    )
+    ap.add_argument(
+        "--report",
+        type=Path,
+        default=None,
+        help="also write a machine-readable export report (JSON) here; "
+        "contains dropped person names, so keep it out of the public repo",
+    )
+    args = ap.parse_args()
+
     registry = get_registry()
     rows = load_dictionary_rows()
     exclusions = load_exclusions()
@@ -140,8 +188,8 @@ def main() -> None:
         key=lambda r: (-(r["corpus_count"] or 0), -(r["observed_count"] or 0), r["wrong"])
     )
 
-    data_dir = REPO / "data"
-    data_dir.mkdir(exist_ok=True)
+    data_dir = args.out
+    data_dir.mkdir(parents=True, exist_ok=True)
     payload = {
         "dataset": "ko-finance-asr-corrections",
         "exported_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
@@ -173,6 +221,23 @@ def main() -> None:
         print("   add it to EVIDENCE_BY_SOURCE and document it in docs/SCHEMA.md")
         for line in unknown_source:
             print(f"  - {line}")
+
+    if args.report is not None:
+        args.report.parent.mkdir(parents=True, exist_ok=True)
+        args.report.write_text(
+            json.dumps(
+                {
+                    "shipped": len(shipped),
+                    "dropped_person": dropped_person,
+                    "review_other": review_other,
+                    "unknown_source": unknown_source,
+                },
+                ensure_ascii=False,
+                indent=2,
+            )
+            + "\n",
+            encoding="utf-8",
+        )
 
 
 if __name__ == "__main__":

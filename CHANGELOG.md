@@ -1,0 +1,27 @@
+# Changelog
+
+All notable changes to the published snapshot (`data/`) are recorded here.
+Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), adapted for a
+dataset — **Added** = new pairs, **Removed** = pairs recalled from the snapshot
+(the only patch-release trigger), **Changed** = metadata changes on existing
+pairs (tier, evidence, scope — not weekly frequency drift, which is expected as
+the corpus grows and is not chronicled per-pair).
+
+Versions are calendar snapshots (`vYYYY.MM`) after the initial `v0.1`; a pair's
+identity across versions is its `(wrong, right)` tuple (`docs/SCHEMA.md`).
+Entries are appended by `scripts/refresh_snapshot.py --write`; the Unreleased
+section becomes the next release's notes.
+
+## [Unreleased]
+
+### Added
+- Initial public snapshot: 89 verified confusion pairs (tier A/B, enabled)
+  exported 2026-08-12 from the upstream production dictionary — stock names,
+  finance terms, and number damage from Korean finance-YouTube auto-captions.
+  Full-corpus frequencies (`corpus_count`) from a 521-video scan.
+- `evidence` field (2026-08-13): verification provenance (`human` /
+  `auditor-consensus` / `goldset-alignment`) separated from `tier`, which
+  remains an authority ordering.
+- Benchmark: frozen eval set, trap set, scorer, and three replacement baselines
+  (naive / word-boundary / production-guarded) with per-round verification
+  numbers.
