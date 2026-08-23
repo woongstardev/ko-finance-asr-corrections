@@ -149,13 +149,45 @@ def fmt_pair(k: tuple[str, str]) -> str:
     return f"{k[0]} → {k[1]}"
 
 
+def run_gates(candidate_dir: Path, write: bool) -> str:
+    """Schema contract + benchmark regression, on the candidate export.
+
+    Dry-runs report; --write stops. The point of running them here rather than
+    after copying into data/ is that a failed gate should leave the published
+    snapshot untouched, not require a revert.
+    """
+    mode: list[str] = [] if write else ["--warn-only"]
+    summary = []
+    for name, cmd in (
+        ("schema", [sys.executable, str(REPO / "scripts" / "validate_snapshot.py"),
+                    "--dir", str(candidate_dir), "--skip-prose",
+                    *(["--require-person-list"] if write else []), *mode]),
+        ("benchmark", [sys.executable, str(REPO / "scripts" / "benchmark_gate.py"),
+                       "--pairs", str(candidate_dir / "pairs.json"), *mode]),
+    ):
+        proc = subprocess.run(cmd, cwd=REPO, capture_output=True, text=True)
+        print(proc.stdout, end="")
+        if proc.stderr:
+            sys.stderr.write(proc.stderr)
+        if proc.returncode != 0:
+            if write:
+                sys.exit(f"{name} gate failed — snapshot not written")
+            summary.append(f"{name}: FAILED")
+        else:
+            hits = sum(1 for l in proc.stderr.splitlines() if l.startswith(("WARN", "FAIL")))
+            summary.append(f"{name}: ok" + (f" ({hits} note(s))" if hits else ""))
+    return " · ".join(summary)
+
+
 def render_report(
-    today: str, diff: dict, export_report: dict, new_person: list[str], old_count: int, new_count: int
+    today: str, diff: dict, export_report: dict, new_person: list[str], old_count: int,
+    new_count: int, gates: str = ""
 ) -> str:
     lines = [
         f"# oss-refresh dry-run — {today}",
         "",
         f"pairs: {old_count} → {new_count}",
+        f"gates: {gates or 'not run'}",
         f"added: {len(diff['added'])} · removed: {len(diff['removed'])} · "
         f"metadata changed: {len(diff['meta_changed'])} · frequency-only drift: {len(diff['freq_changed'])}",
         "",
@@ -275,6 +307,8 @@ def main() -> None:
             # name would be a silent contract break — stop the line instead.
             sys.exit("export produced evidence='unknown' pairs — fix EVIDENCE_BY_SOURCE first")
 
+        gates = run_gates(tmp, args.write)
+
         old = load_pairs(args.baseline)
         new = load_pairs(tmp / "pairs.json")
         diff = diff_pairs(old, new)
@@ -283,7 +317,7 @@ def main() -> None:
         seen_person = set(state.get("seen_person", []))
         new_person = [s for s in export_report.get("dropped_person", []) if s not in seen_person]
 
-        report = render_report(today, diff, export_report, new_person, len(old), len(new))
+        report = render_report(today, diff, export_report, new_person, len(old), len(new), gates)
         REPORT_DIR.mkdir(parents=True, exist_ok=True)
         report_path = REPORT_DIR / f"{today}.md"
         report_path.write_text(report, encoding="utf-8")

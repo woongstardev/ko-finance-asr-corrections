@@ -19,13 +19,28 @@ Item kinds
            `wrong` string occurs as legitimate Korean; any edit is an
            over-correction.
 
-Ids are derived from the pair sorted by `wrong`, not from the export order, so
-they stay stable when the upstream snapshot grows.
+Stability across snapshots
+--------------------------
+The eval set is **append-only**. Ids come from the pair's `wrong` form rather
+than its position, and every item that already exists in the previous eval set
+is copied across verbatim; only pairs new to the snapshot generate new items.
+
+Both halves are needed. Positional ids looked stable while only frequencies
+drifted and came apart the moment a pair was inserted mid-sort - inserting one
+pair reassigned 40 ids to different content and rewrote the carrier sentence of
+40 more. Either failure makes "did this snapshot only add items?" unanswerable,
+and that question is a release gate (scripts/benchmark_gate.py). Copying forward
+also means a committed prediction file stays valid as the snapshot grows, which
+is what lets an expensive LLM run outlive one release.
+
+Pass --no-carry-over to rebuild every item from scratch; that is a benchmark
+version bump, not a refresh.
 """
 
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from datetime import datetime, timezone
 from pathlib import Path
@@ -47,6 +62,12 @@ FRAMES = [
     "투자자들이 {w} 이슈에 주목하고 있습니다.",
 ]
 ERRORS_PER_PAIR = 3
+ID_DIGEST_BYTES = 3  # 6 hex chars; collisions are checked for, not assumed away
+
+
+def pair_slug(wrong: str) -> str:
+    """Stable per-pair id fragment. Depends on the pair, never on the ordering."""
+    return hashlib.blake2s(wrong.encode("utf-8"), digest_size=ID_DIGEST_BYTES).hexdigest()
 
 
 def spacing_variant(wrong: str) -> str | None:
@@ -84,28 +105,60 @@ def _error_item(item_id: str, frame: str, surface: str, pair: dict, variant: str
     }
 
 
-def build(pairs: list[dict], traps: list[dict]) -> list[dict]:
+def build(pairs: list[dict], traps: list[dict],
+          previous: dict[str, dict] | None = None) -> list[dict]:
+    previous = previous or {}
     items: list[dict] = []
     ordered = sorted(pairs, key=lambda p: (p["wrong"], p["right"]))
 
-    for idx, pair in enumerate(ordered):
+    slugs: dict[str, str] = {}
+    for pair in ordered:
         wrong, right = pair["wrong"], pair["right"]
         category = pair.get("category") or "other"
+        slug = pair_slug(wrong)
+        if slugs.setdefault(slug, wrong) != wrong:
+            raise SystemExit(
+                f"id collision: {wrong!r} and {slugs[slug]!r} both hash to {slug}; "
+                "raise ID_DIGEST_BYTES"
+            )
+
+        # The frame is picked from the pair, not from its position, for the same
+        # reason the id is: a positional pick silently rewrites earlier items'
+        # sentences when a pair is inserted ahead of them.
+        base = int(slug, 16)
+
+        def carried(item_id: str) -> dict | None:
+            """The previous item, when it is still about this exact pair.
+
+            Guarded on (wrong, right): if upstream changed the correction, the
+            pair is a different pair under the schema's primary key and its
+            items have to be regenerated rather than inherited.
+            """
+            old = previous.get(item_id)
+            if old and old.get("wrong") == wrong and old.get("right") == right:
+                return old
+            return None
 
         for k in range(ERRORS_PER_PAIR):
-            frame = FRAMES[(idx + k) % len(FRAMES)]
-            items.append(_error_item(f"err-{idx:03d}-{k}", frame, wrong, pair, "plain"))
+            item_id = f"err-{slug}-{k}"
+            reuse = carried(item_id)
+            frame = FRAMES[(base + k) % len(FRAMES)]
+            items.append(reuse or _error_item(item_id, frame, wrong, pair, "plain"))
 
         damaged = spacing_variant(wrong)
         if damaged:
-            frame = FRAMES[(idx + ERRORS_PER_PAIR + 1) % len(FRAMES)]
-            items.append(_error_item(f"err-{idx:03d}-s", frame, damaged, pair, "spacing"))
+            item_id = f"err-{slug}-s"
+            reuse = carried(item_id)
+            frame = FRAMES[(base + ERRORS_PER_PAIR + 1) % len(FRAMES)]
+            items.append(reuse or _error_item(item_id, frame, damaged, pair, "spacing"))
 
-        clean_frame = FRAMES[(idx + ERRORS_PER_PAIR) % len(FRAMES)]
+        clean_frame = FRAMES[(base + ERRORS_PER_PAIR) % len(FRAMES)]
         clean_text = clean_frame.format(w=right)
+        reuse = carried(f"cln-{slug}")
         items.append(
-            {
-                "id": f"cln-{idx:03d}",
+            reuse
+            or {
+                "id": f"cln-{slug}",
                 "kind": "clean",
                 "input": clean_text,
                 "expected": clean_text,
@@ -137,11 +190,21 @@ def main() -> None:
     ap.add_argument("--out", type=Path, default=DEFAULT_OUT)
     ap.add_argument("--pairs", type=Path, default=PAIRS)
     ap.add_argument("--traps", type=Path, default=TRAPS)
+    ap.add_argument("--previous", type=Path, default=DEFAULT_OUT,
+                    help="eval set to carry existing items over from")
+    ap.add_argument("--no-carry-over", action="store_true",
+                    help="rebuild every item from scratch (a benchmark version bump)")
     args = ap.parse_args()
 
     dataset = json.loads(args.pairs.read_text(encoding="utf-8"))
     traps = json.loads(args.traps.read_text(encoding="utf-8"))["traps"]
-    items = build(dataset["pairs"], traps)
+    previous: dict[str, dict] = {}
+    if not args.no_carry_over and args.previous.exists():
+        previous = {
+            i["id"]: i
+            for i in json.loads(args.previous.read_text(encoding="utf-8"))["items"]
+        }
+    items = build(dataset["pairs"], traps, previous)
 
     counts: dict[str, int] = {}
     for item in items:

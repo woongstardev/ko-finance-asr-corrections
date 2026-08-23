@@ -12,6 +12,8 @@ Everything here is pure stdlib Python 3.10+. No installation, no network, no dep
 the upstream pipeline.
 
 ```bash
+python3 scripts/validate_snapshot.py      # schema contract: fields, enums, keys, json<->csv
+python3 scripts/benchmark_gate.py         # release gate: eval set grew only, no new cascades
 python3 benchmark/mine_traps.py           # rank pairs by over-correction risk (trap candidates)
 python3 benchmark/make_eval_set.py        # data/pairs.json + traps.json -> eval-set.json
 python3 benchmark/baselines.py --all      # reference systems -> predictions/
@@ -28,7 +30,7 @@ export ANTHROPIC_API_KEY=...                                       # or an API k
 python3 benchmark/llm_reference.py --runs 3
 ```
 
-## The evaluation set (482 items)
+## The evaluation set (482 items) <!-- stat:eval_items -->
 
 No caption text appears anywhere in this benchmark. Source transcripts are not
 redistributable and the dataset's hard line excludes them, so every sentence is either a
@@ -39,15 +41,22 @@ template fill or hand-authored for this repo.
 | `error` / plain | 267 | Six carrier templates filled with a pair's `wrong` form, 3 per pair | Replace the slot with `right` |
 | `error` / spacing | 86 | The same, with the spacing of `wrong` damaged — a space inserted mid-word, or a phrase's space removed | Replace the slot with `right` |
 | `clean` | 89 | A template filled with `right` — already correct | Change nothing |
-| `trap` | 40 | Hand-authored sentences where a pair's `wrong` string is legitimate Korean (`엔트로피` the physics term, `바위` the rock, `MCD` the McDonald's ticker, `FFC` the flat cable, `블랙락 시티`, `사업 항목`, `지진 난 주`) | Change nothing |
+| `trap` | 40 | <!-- stat:trap_count --> Hand-authored sentences where a pair's `wrong` string is legitimate Korean (`엔트로피` the physics term, `바위` the rock, `MCD` the McDonald's ticker, `FFC` the flat cable, `블랙락 시티`, `사업 항목`, `지진 난 주`) | Change nothing |
 
 The spacing variants are not synthetic difficulty for its own sake: YouTube auto-captions
 drop the space at event boundaries essentially always, which is why the upstream matcher is
 whitespace-flexible. A system that only does exact string matching will miss these, and the
 baseline table below shows exactly how much that costs.
 
-Item ids are derived from the pair list sorted by `wrong`, so they stay stable as the
-monthly snapshot grows.
+The evaluation set is **append-only across snapshots.** Item ids come from the pair's
+`wrong` form rather than its position, and `make_eval_set.py` copies every existing item
+across verbatim, so a new pair adds items and touches nothing else. That is what makes a
+committed prediction file — an expensive LLM run, say — still valid next month, and it is
+checked at release time by `scripts/benchmark_gate.py`.
+
+The earlier positional scheme looked stable for as long as only frequencies drifted. It was
+not: inserting a single pair reassigned 40 ids to different sentences and rewrote the carrier
+sentence of 40 more.
 
 ## Scoring
 

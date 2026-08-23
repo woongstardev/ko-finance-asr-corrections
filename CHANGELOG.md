@@ -33,6 +33,9 @@ section becomes the next release's notes.
   net scores moved accordingly (boundary 96.0% -> 88.7%) and are **not
   comparable across benchmark versions**; both are recorded in
   `benchmark/README.md`. No `data/` pair changed.
+- Benchmark evaluation set is now append-only: item ids derive from the pair
+  rather than its position, and existing items are carried across unchanged when
+  the snapshot grows. Ids from `mini-v0` do not carry over to `mini-v0.2`.
 - Benchmark: first LLM reference row (2026-08-23) — `claude-opus-5`, no
   dictionary, mean of 3 runs: 61.2% net against the dictionary's 88.7%, with
   four times fewer over-corrections and 114 confident wrong answers. Runner,

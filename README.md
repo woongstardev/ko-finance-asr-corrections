@@ -17,8 +17,10 @@ archive. The pairs here are the byproduct of correcting real YouTube auto-captio
   KEBAP (2.5K pairs, error-type labels, frozen since 2023). No finance-domain resource exists.
 - **No public "confusion pair dictionary with observed frequencies" exists in any language**
   (as of our 2026-08 survey). Frequency is what makes a pair list actionable: it tells you
-  which errors dominate real traffic (e.g. `펀더멘탈→펀더멘털` ×449, `변합기→변압기` ×333,
-  `FMC→FOMC` ×270 — full scan of a 595-video caption corpus).
+  which errors dominate real traffic (e.g. `펀더멘탈→펀더멘털` ×449, <!-- stat:count:펀더멘탈 -->
+  `변합기→변압기` ×333, <!-- stat:count:변합기 -->
+  `FMC→FOMC` ×270 <!-- stat:count:FMC --> — full scan of a
+  595-video caption corpus). <!-- stat:scanned_videos -->
 - Every pair carries provenance: how it was mined, which auditor models independently agreed,
   and its promotion tier (human-approved / registry-verified).
 
@@ -27,15 +29,15 @@ archive. The pairs here are the byproduct of correcting real YouTube auto-captio
 | Path | Contents |
 |---|---|
 | `data/` | Confusion pairs (JSON/CSV): `wrong`, `right`, `observed_count`, `tier`, verification metadata. Stock names & finance terms only — no person names, no source sentences. |
-| `benchmark/` | Mini benchmark v0.2: pure-stdlib scorer, a 482-item synthetic evaluation set (no caption text), a mechanical trap-risk miner, and three dictionary baselines. Fixes and over-corrections are scored together — see [`benchmark/README.md`](benchmark/README.md). |
+| `benchmark/` | <!-- stat:eval_items --> Mini benchmark v0.2: pure-stdlib scorer, a 482-item synthetic evaluation set (no caption text), a mechanical trap-risk miner, and three dictionary baselines. Fixes and over-corrections are scored together — see [`benchmark/README.md`](benchmark/README.md). |
 | `docs/SCHEMA.md` | Field-by-field schema. |
 | `docs/METHODOLOGY.md` | The no-gold-label verification loop: 2 independent LLM auditors → consensus-only adoption → external registry check → 3-tier promotion → instant rollback. |
 
 ## The benchmark in one table
 
 Task: fix the misrecognition, change nothing else. Three ways of using the dataset itself as
-a correction system, scored on 482 synthetic items (no caption text), of which 40 are traps —
-ordinary sentences a blind replacement damages. Net score is fixes minus over-corrections,
+a correction system, scored on 482 synthetic items <!-- stat:eval_items --> (no caption text),
+of which 40 are traps <!-- stat:trap_count --> — ordinary sentences a blind replacement damages. Net score is fixes minus over-corrections,
 over error items.
 
 | System | Recall | Over-corrections | **Net score** |
@@ -61,9 +63,9 @@ Details, scoring rules and what the numbers mean: [`benchmark/README.md`](benchm
 Stated up front, because a niche dataset earns trust by being explicit about its edges.
 
 - **One corpus, one ASR system, one domain.** Every pair comes from YouTube auto-captions of
-  Korean stock/investing channels — 595 videos as of the current snapshot. A different ASR
+  Korean stock/investing channels — 595 videos as of the current snapshot. <!-- stat:scanned_videos --> A different ASR
   engine mishears differently, so these pairs are not a general Korean ASR error list.
-- **89 pairs is small.** This is a frequency-annotated seed, not a comprehensive lexicon. It
+- **89 pairs is small.** <!-- stat:pair_count --> This is a frequency-annotated seed, not a comprehensive lexicon. It
   grows with monthly snapshots as the upstream pipeline verifies more pairs.
 - **Skewed by construction.** Frequency-ranked mining favours what the channels talk about
   most, so semiconductor and index vocabulary dominates, and a single company can account for

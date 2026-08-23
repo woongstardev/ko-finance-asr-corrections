@@ -16,6 +16,10 @@
 ## 커밋
 
 - 언어: 커밋 메시지 영어, 문서는 파일별 기존 언어 유지 (README·docs = 영어, 이 파일 = 한국어).
+- **`docs/SCHEMA.md`를 바꾸는 커밋은 `scripts/validate_snapshot.py`를 같이 바꾼다.** 검증
+  규칙이 스키마 문서에서 하드코드로 떨어져 나와 있어(외부 의존 금지) 이중 정본이다 —
+  같은 커밋에서 맞추지 않으면 조용히 어긋난다. 검증기의 각 규칙에는 근거가 된 SCHEMA 절이
+  주석으로 달려 있다.
 - 공개 전까지 스키마 변경 자유. v0.1 이후 `data/` 스키마 변경은 마이너 버전 승격.
 
 ## 스냅숏 갱신 (task 005에서 3층으로 자동화 — 2026-08-14)
@@ -36,8 +40,11 @@
 **월간 발행(사람 개입 1회)**:
 1. 주간 리포트의 **새 인물 쌍 후보를 사람이 확인** — 있으면 상류 제외 목록에 추가 후 재실행.
 2. `python3 scripts/refresh_snapshot.py --write` — 재계수(정본 아티팩트 갱신 →
-   껄무새에 an upstream pipeline task 명의로 커밋) → export → `data/` 갱신 + `CHANGELOG.md` 반영.
-   내부에서 `scripts/release_check.py`(공개 경계 검사)가 먼저 돌고, 실패하면 쓰지 않는다.
+   껄무새에 an upstream pipeline task 명의로 커밋) → export → **게이트 3종** → `data/` 갱신 +
+   `CHANGELOG.md` 반영. 게이트는 후보 export에 대해 돌고, 하나라도 실패하면 쓰지 않는다:
+   `release_check.py`(공개 경계) · `validate_snapshot.py`(스키마 계약·인물 최후 방어·
+   산문 수치) · `benchmark_gate.py`(평가셋 추가만·연쇄 치환 신규 발생). 드라이런에서는
+   같은 게이트가 경고로만 돌고 주간 리포트 머리에 한 줄로 요약된다.
 3. `CITATION.cff` version·date 갱신, CHANGELOG의 Unreleased를 버전 절로 승격
 4. 릴리스 태그 `vYYYY.MM`
 5. (공개 이후에만) HuggingFace 미러 `woongstardev/ko-finance-asr-corrections` push +

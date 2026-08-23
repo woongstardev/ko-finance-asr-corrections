@@ -24,24 +24,21 @@ jobs:
       - name: Benchmark scorer tests
         run: python3 benchmark/test_score.py
 
-      - name: Data files parse and agree
-        run: |
-          python3 - <<'PY'
-          import csv, json
-          d = json.load(open("data/pairs.json", encoding="utf-8"))
-          rows = list(csv.DictReader(open("data/pairs.csv", encoding="utf-8")))
-          assert d["pair_count"] == len(d["pairs"]) == len(rows), (
-              d["pair_count"], len(d["pairs"]), len(rows))
-          keys = {(p["wrong"], p["right"]) for p in d["pairs"]}
-          assert len(keys) == len(d["pairs"]), "duplicate (wrong, right) key"
-          assert keys == {(r["wrong"], r["right"]) for r in rows}, "json/csv disagree"
-          print(f'ok: {d["pair_count"]} pairs, corpus {d["corpus"]["scanned_videos"]} videos')
-          PY
+      # The real gates, not a CI-only copy of them: schema contract, prose-number
+      # drift, and the benchmark regression check. The person-name check inside
+      # validate_snapshot reads a list that lives outside this repo, so in CI it
+      # warns rather than passing silently; the release path runs it with
+      # --require-person-list, where a missing list is a failure.
+      - name: Snapshot contract and prose numbers
+        run: python3 scripts/validate_snapshot.py
 
-      # scripts/release_check.py is deliberately NOT run here. Its person-name check
-      # reads an exclusion list that lives outside this repository (private, upstream),
-      # so in CI it would find nothing and pass vacuously — a boundary check that can
-      # only fail open is worse than no check. It runs on the release host instead.
+      - name: Benchmark gate
+        run: python3 scripts/benchmark_gate.py
+
+      # scripts/release_check.py is deliberately NOT run here: it scans git history
+      # for person names using that same off-repo list, so in CI it would find
+      # nothing and pass vacuously. A boundary check that can only fail open is
+      # worse than no check. It runs on the release host instead.
       - name: Issue forms are valid YAML
         run: |
           pip install --quiet pyyaml
