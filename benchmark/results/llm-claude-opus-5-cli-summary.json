@@ -1,0 +1,76 @@
+{
+ "system": "llm-claude-opus-5-cli",
+ "runs": 3,
+ "run_files": [
+  "benchmark/results/llm-claude-opus-5-cli-run1.json",
+  "benchmark/results/llm-claude-opus-5-cli-run2.json",
+  "benchmark/results/llm-claude-opus-5-cli-run3.json"
+ ],
+ "metrics": {
+  "recall": {
+   "mean": 0.6383,
+   "spread": 0.0027,
+   "min": 0.6346,
+   "max": 0.6402,
+   "runs": 3
+  },
+  "over_correction_rate": {
+   "mean": 0.0194,
+   "spread": 0.001,
+   "min": 0.0187,
+   "max": 0.0207,
+   "runs": 3
+  },
+  "precision_proxy": {
+   "mean": 0.6469,
+   "spread": 0.0008,
+   "min": 0.6457,
+   "max": 0.6476,
+   "runs": 3
+  },
+  "net_score": {
+   "mean": 0.6119,
+   "spread": 0.0023,
+   "min": 0.6091,
+   "max": 0.6147,
+   "runs": 3
+  }
+ },
+ "counts": {
+  "fixed": {
+   "mean": 225.3333,
+   "spread": 0.9428,
+   "min": 224.0,
+   "max": 226.0,
+   "runs": 3
+  },
+  "missed": {
+   "mean": 14.0,
+   "spread": 1.4142,
+   "min": 13.0,
+   "max": 16.0,
+   "runs": 3
+  },
+  "mangled": {
+   "mean": 113.6667,
+   "spread": 0.4714,
+   "min": 113.0,
+   "max": 114.0,
+   "runs": 3
+  },
+  "missing_predictions": {
+   "mean": 0.0,
+   "spread": 0.0,
+   "min": 0.0,
+   "max": 0.0,
+   "runs": 3
+  }
+ },
+ "over_corrections": {
+  "mean": 9.3333,
+  "spread": 0.4714,
+  "min": 9.0,
+  "max": 10.0,
+  "runs": 3
+ }
+}

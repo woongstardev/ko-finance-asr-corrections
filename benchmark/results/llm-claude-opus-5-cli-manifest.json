@@ -1,0 +1,42 @@
+{
+ "model": "claude-opus-5",
+ "transport": "cli",
+ "harness": "2.1.234 (Claude Code)",
+ "cli_flags": [
+  "--print",
+  "--model",
+  "claude-opus-5",
+  "--effort",
+  "medium",
+  "--tools",
+  "",
+  "--safe-mode",
+  "--disable-slash-commands",
+  "--no-session-persistence",
+  "--output-format",
+  "json",
+  "--system-prompt",
+  "You correct Korean speech-recognition errors in sentences from finance and stock videos.\n\nA sentence may contain a misrecognized stock name, finance term, or number. If it does,\noutput the sentence with that misrecognition corrected and nothing else changed.\n\nIf the sentence is already correct, output it exactly as given. Ordinary Korean words,\nplace names, product names, and acronyms from other fields are not errors - leave them\nalone even when they resemble a finance term.\n\nOutput only the sentence. No explanation, no quotes, no formatting.",
+  "--max-budget-usd",
+  "0.05"
+ ],
+ "measured_cost_usd": 9.3455,
+ "prompt_id": "fix-only-v1",
+ "system_prompt": "You correct Korean speech-recognition errors in sentences from finance and stock videos.\n\nA sentence may contain a misrecognized stock name, finance term, or number. If it does,\noutput the sentence with that misrecognition corrected and nothing else changed.\n\nIf the sentence is already correct, output it exactly as given. Ordinary Korean words,\nplace names, product names, and acronyms from other fields are not errors - leave them\nalone even when they resemble a finance term.\n\nOutput only the sentence. No explanation, no quotes, no formatting.",
+ "request_params": {
+  "max_tokens": 2000,
+  "output_config": {
+   "effort": "medium"
+  },
+  "anthropic_version": "2023-06-01"
+ },
+ "note": "Current Claude models removed temperature/top_p/top_k, so there is no sampling knob to pin - run-to-run spread is inherent and is why --runs defaults to 3.",
+ "benchmark": "ko-finance-asr-corrections/mini-v0.2",
+ "eval_items": 482,
+ "runs": 3,
+ "prediction_files": [
+  "llm-claude-opus-5-cli-run1.json",
+  "llm-claude-opus-5-cli-run2.json",
+  "llm-claude-opus-5-cli-run3.json"
+ ]
+}

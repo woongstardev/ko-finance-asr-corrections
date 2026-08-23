@@ -38,11 +38,18 @@ a correction system, scored on 482 synthetic items (no caption text), of which 4
 ordinary sentences a blind replacement damages. Net score is fixes minus over-corrections,
 over error items.
 
-| Baseline | Recall | Over-corrections | **Net score** |
+| System | Recall | Over-corrections | **Net score** |
 |---|---|---|---|
 | Plain substring replacement | 75.9% | 25 | **68.8%** |
 | Whitespace-flexible matching | 100.0% | 40 | **88.7%** |
 | Whitespace-flexible, keys ≥ 4 chars | 68.0% | 15 | **63.7%** |
+| Claude Opus 5, no dictionary (3 runs) | 63.8% | 9.3 | **61.2%** |
+
+The LLM row is the comparison this benchmark exists to make. A frontier model given only the
+sentence **over-corrects about four times less** than the dictionary — it has the restraint —
+but it cannot recover the specific term: 114 of 353 error items come back as a confident
+wrong answer, usually a different plausible finance term. Which misrecognition maps to which
+company is an observation, not an inference, and that observation is what this dataset is.
 
 Benchmark `mini-v0.2`; v0 numbers are in [`benchmark/README.md`](benchmark/README.md) and are
 not comparable — the trap set grew from 14 to 40.

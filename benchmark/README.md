@@ -19,11 +19,13 @@ python3 benchmark/score.py --pred benchmark/predictions/boundary.json
 cd benchmark && python3 -m unittest discover    # scorer self-test (10 cases)
 ```
 
-An LLM row needs credentials and is the one thing here that touches the network:
+An LLM row is the one thing here that touches the network, and it takes either credential
+you happen to have:
 
 ```bash
-export ANTHROPIC_API_KEY=...                    # only this script needs it
-python3 benchmark/llm_reference.py --runs 3     # -> predictions/ + a run manifest
+python3 benchmark/llm_reference.py --transport cli --runs 3        # Claude Code CLI's own auth
+export ANTHROPIC_API_KEY=...                                       # or an API key
+python3 benchmark/llm_reference.py --runs 3
 ```
 
 ## The evaluation set (482 items)
@@ -89,8 +91,17 @@ penalty measures.
 | naive | 75.9% | 267/267 | 1/86 | 1 | 25 | 5.2% | 91.2% | **68.8%** |
 | boundary | 100.0% | 267/267 | 86/86 | 0 | 40 | 8.3% | 89.8% | **88.7%** |
 | guarded (min key 4) | 68.0% | 180/267 | 60/86 | 0 | 15 | 3.1% | 94.1% | **63.7%** |
+| Claude Opus 5 (no dictionary) | 63.8% ±0.3 | — | — | 113.7 | 9.3 | 1.9% | 64.7% | **61.2% ±0.2** |
 
-Committed results: `benchmark/results/baseline-*.json` (full per-item breakdown).
+The LLM row is `claude-opus-5` at effort `medium`, given the sentence and no dictionary, mean
+over 3 runs (spread is the population standard deviation). Reached through the Claude Code
+CLI with tools off and its default system prompt replaced — see "Reproducing an LLM row";
+the exact flags, prompt and CLI version are in
+`benchmark/results/llm-claude-opus-5-cli-manifest.json`.
+
+Committed results: `benchmark/results/baseline-*.json` and
+`benchmark/results/llm-claude-opus-5-cli-run{1,2,3}.json` plus a `-summary.json`
+(`benchmark/aggregate_runs.py` produces the mean-and-spread summary from the per-run files).
 
 What the table says:
 
@@ -112,6 +123,38 @@ What the table says:
 4. The one `mangled` case is instructive. On `SK하이하스`, naive replacement applies
    `하스 → 하이닉스` inside a longer key and emits `SK하이하이닉스`. Cascading rules are a real
    failure mode, and a fix-only metric would have scored it as merely a miss.
+
+### Dictionary versus LLM
+
+This is the comparison the benchmark exists to make, and the answer at this snapshot is
+**the dictionary wins, and not narrowly** — 88.7% against 61.2% net.
+
+The interesting part is that the LLM wins the axis the dictionary was supposed to lose:
+
+- **It over-corrects roughly four times less** — 9.3 against 40. Given a sentence that is
+  already correct, or one where a shipped key appears as ordinary Korean, it usually leaves
+  the text alone. That is the restraint the penalty was designed to reward, and the LLM has it.
+- **It cannot recover the specific term.** 114 of 353 error items came back `mangled` — a
+  confident wrong answer rather than a miss. Breaking those down across the three runs:
+
+  | What the model returned instead | Mean items |
+  |---|---|
+  | A different plausible finance term (`SKS`→`SKC`, `ACBM`→`ABCP`, `AM대`→`M&A`, `머표 법칙`→`무어의 법칙`) | 94.0 |
+  | The right term with the wrong stem or particle (`코스하고`→`코스닥`, gold `코스닥으로`) | 20.3 |
+  | The sentence reshaped rather than slot-edited | 1.3 |
+
+  Only the first group is a real failure of knowledge, and it is the large one. These are
+  misrecognitions whose correction is not inferable from the sentence — you have to have
+  *observed* that this channel's captions turn `SK하이닉스` into `SKS`. That observation is
+  exactly what the dataset is.
+
+Two caveats, both against the dataset rather than the model. Roughly 20 items per run were
+scored wrong for a stem/particle mismatch on fragment pairs (`코스하고 → 코스닥으로`), which the
+limitations already flag as reading unnaturally in a carrier frame — the model's answer is
+arguably right there and the gold string is the artifact. And on `펀더멘탈 → 펀더멘털`, the
+highest-frequency pair, the model declines to edit; since that pair encodes a spelling
+standard rather than a mishearing, declining is defensible. Neither changes the direction of
+the result, but a reader deserves to know the gap is somewhat smaller than the table says.
 
 Ceiling note: the dictionary baselines see the exact pairs the error items were generated
 from, so 100% recall on `boundary` measures the eval set's construction, not generalization.
@@ -185,6 +228,11 @@ can interrogate is decoration:
 - **The benchmark stays standard-library only.** The caller script may need network access
   and an API key; `score.py` never does. An LLM row exists here as a committed result file
   plus the script that produced it, and re-running it is optional.
+- **Name the harness, not just the model.** The `cli` transport reaches the same model
+  through the Claude Code CLI — a coding agent, invoked with `--tools ""`, `--safe-mode` and
+  its default system prompt replaced. That is close to a bare API call but not identical, so
+  the manifest records the transport, the CLI version, and every flag, and the results table
+  labels the row. Do not merge a `cli` row and an `api` row into one number.
 - **Say what the model may already know.** These pairs are public once this repo is, so a
   model may have memorised the dictionary rather than reasoned about the sentence. The carrier
   sentences are synthetic, so there is no transcript contamination — but pair-knowledge
@@ -214,9 +262,13 @@ can interrogate is decoration:
   over-corrects on 40 of 40. That makes the trap axis a floor for dictionary systems rather
   than a ranking among them; it discriminates where it is meant to, between systems that use
   context and systems that do not.
-- **No LLM row yet.** The table is still three dictionaries, so the question this benchmark
-  exists to answer — dictionary versus LLM once over-corrections are counted — is still half
-  unanswered. `benchmark/llm_reference.py` implements the protocol above and the run is one
-  API key away; until it has been run and the results committed, this limitation stands.
+- **One LLM, one prompt, one effort level.** The LLM row is a reference point, not a survey:
+  a different prompt (few-shot, or one that tells the model it may decline) would move it, and
+  no other model has been run. Read it as "a strong general model, told only what the task is,
+  lands here", not as a ceiling for LLMs on this task.
+- **`mangled` is stricter than "wrong".** The scorer compares against one gold string, so a
+  correction that is defensible but differently spelled, spaced, or inflected counts as a
+  confident error. For dictionary systems this never bites; for generative systems it costs
+  roughly 20 items per run at this snapshot. See "Dictionary versus LLM".
 - **No ranking or partial credit.** One slot, one answer. Systems that flag uncertainty
   instead of editing get no credit for the restraint beyond avoiding the penalty.

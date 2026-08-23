@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Run the benchmark against an LLM and write predictions + a run manifest.
 
-    export ANTHROPIC_API_KEY=...
-    python3 benchmark/llm_reference.py --runs 3
+    python3 benchmark/llm_reference.py --transport cli --runs 3   # Claude Code CLI
+    export ANTHROPIC_API_KEY=... && python3 benchmark/llm_reference.py --runs 3   # API
     python3 benchmark/score.py --pred benchmark/predictions/llm-claude-opus-5-run1.json \
         --name llm-claude-opus-5 --json benchmark/results/llm-claude-opus-5-run1.json
 
@@ -13,6 +13,16 @@ rather than adding a dependency to a repository whose selling point is that it
 has none. The scorer never needs network access; this script is the only thing
 here that does, and re-running it is optional because the results it produces
 are committed.
+
+Two transports, because access to a model is not the same thing as an API key:
+
+  api  POST /v1/messages with ANTHROPIC_API_KEY. The plain reading of the number.
+  cli  Shell out to the Claude Code CLI (`claude -p`), which authenticates with
+       whatever credential that CLI already holds. Same model, different harness
+       - it is a coding agent invoked with its tools switched off and its
+       default system prompt replaced - so a row produced this way is labelled
+       with its transport and CLI version. The two are not interchangeable in a
+       results table.
 
 Reproducibility rules this script enforces (see benchmark/README.md):
   - the exact model id is recorded, never an alias;
@@ -26,6 +36,8 @@ import argparse
 import json
 import os
 import random
+import shutil
+import subprocess
 import sys
 import time
 import urllib.error
@@ -88,6 +100,54 @@ def request(payload: dict, api_key: str, timeout: float, attempts: int = 5) -> d
     raise SystemExit("unreachable")
 
 
+def cli_flags(model: str, effort: str, budget: float) -> list[str]:
+    """Flags that make the coding agent behave like a one-shot rewriter.
+
+    --tools ""            no tool use; the model must answer in text
+    --safe-mode           no CLAUDE.md, skills, hooks, plugins, MCP - otherwise
+                          this repository's own instructions would enter the
+                          prompt and the run would not reproduce elsewhere
+    --system-prompt       replaces the agent's default system prompt with ours
+    --max-budget-usd      hard ceiling; the run stops rather than surprising you
+    """
+    flags = [
+        "--print",
+        "--model", model,
+        "--effort", effort,
+        "--tools", "",
+        "--safe-mode",
+        "--disable-slash-commands",
+        "--no-session-persistence",
+        "--output-format", "json",
+        "--system-prompt", SYSTEM_PROMPT,
+    ]
+    if budget:
+        flags += ["--max-budget-usd", str(budget)]
+    return flags
+
+
+def cli_call(text: str, flags: list[str], timeout: float) -> tuple[str, float]:
+    """One `claude -p` invocation. Returns (answer, cost_usd)."""
+    proc = subprocess.run(
+        ["claude", *flags, text],
+        capture_output=True, text=True, timeout=timeout, check=False,
+    )
+    if proc.returncode != 0:
+        raise SystemExit(f"claude CLI exited {proc.returncode}: {proc.stderr[:400]}")
+    payload = json.loads(proc.stdout)
+    cost = float(payload.get("total_cost_usd") or 0.0)
+    if payload.get("is_error"):
+        return "", cost
+    return (payload.get("result") or "").strip(), cost
+
+
+def cli_version() -> str:
+    if not shutil.which("claude"):
+        raise SystemExit("--transport cli needs the `claude` CLI on PATH.")
+    out = subprocess.run(["claude", "--version"], capture_output=True, text=True, check=False)
+    return out.stdout.strip() or "unknown"
+
+
 def answer_of(response: dict) -> str:
     """The model's sentence, or '' when the turn produced no text.
 
@@ -103,6 +163,8 @@ def answer_of(response: dict) -> str:
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    ap.add_argument("--transport", choices=("api", "cli"), default="api",
+                    help="api = ANTHROPIC_API_KEY; cli = the Claude Code CLI's own credential")
     ap.add_argument("--model", default="claude-opus-5", help="exact model id, never an alias")
     ap.add_argument("--effort", default="medium",
                     choices=("low", "medium", "high", "xhigh", "max"))
@@ -111,20 +173,29 @@ def main() -> None:
     ap.add_argument("--concurrency", type=int, default=4)
     ap.add_argument("--timeout", type=float, default=120.0)
     ap.add_argument("--limit", type=int, default=0, help="first N items only, for a smoke test")
+    ap.add_argument("--max-budget-usd", type=float, default=0.0,
+                    help="cli transport only: hard per-call spend ceiling")
     ap.add_argument("--eval", type=Path, default=DEFAULT_EVAL, dest="eval_path")
     ap.add_argument("--outdir", type=Path, default=DEFAULT_OUTDIR)
     args = ap.parse_args()
 
     api_key = os.environ.get("ANTHROPIC_API_KEY")
-    if not api_key:
-        sys.exit("ANTHROPIC_API_KEY is not set. This is the only part of the benchmark "
-                 "that needs credentials; scoring committed results does not.")
+    if args.transport == "api" and not api_key:
+        sys.exit("ANTHROPIC_API_KEY is not set. Either export one, or use --transport cli "
+                 "to go through the credential the Claude Code CLI already holds.")
+    harness = cli_version() if args.transport == "cli" else None
+    flags = cli_flags(args.model, args.effort, args.max_budget_usd)
+    spent = [0.0]
 
     dataset = json.loads(args.eval_path.read_text(encoding="utf-8"))
     items = dataset["items"][: args.limit] if args.limit else dataset["items"]
     args.outdir.mkdir(parents=True, exist_ok=True)
 
     def ask(item: dict) -> tuple[str, str]:
+        if args.transport == "cli":
+            answer, cost = cli_call(item["input"], flags, args.timeout)
+            spent[0] += cost
+            return item["id"], answer
         payload = {
             "model": args.model,
             "max_tokens": args.max_tokens,
@@ -134,7 +205,7 @@ def main() -> None:
         }
         return item["id"], answer_of(request(payload, api_key, args.timeout))
 
-    slug = args.model.replace("/", "-")
+    slug = args.model.replace("/", "-") + ("-cli" if args.transport == "cli" else "")
     written = []
     for run in range(1, args.runs + 1):
         started = time.time()
@@ -144,11 +215,16 @@ def main() -> None:
         out.write_text(json.dumps(preds, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
         empty = sum(1 for v in preds.values() if not v)
         written.append(out.name)
+        cost = f", ${spent[0]:.2f} spent" if args.transport == "cli" else ""
         print(f"run {run}/{args.runs}: {len(preds)} items, {empty} empty, "
-              f"{time.time() - started:.0f}s -> {out}")
+              f"{time.time() - started:.0f}s{cost} -> {out}")
 
     manifest = {
         "model": args.model,
+        "transport": args.transport,
+        "harness": harness,
+        "cli_flags": flags if args.transport == "cli" else None,
+        "measured_cost_usd": round(spent[0], 4) if args.transport == "cli" else None,
         "prompt_id": PROMPT_ID,
         "system_prompt": SYSTEM_PROMPT,
         "request_params": {
@@ -165,7 +241,11 @@ def main() -> None:
         "runs": args.runs,
         "prediction_files": written,
     }
-    man_path = args.outdir / f"llm-{slug}-manifest.json"
+    # The manifest belongs with the committed results, not with predictions/,
+    # which is gitignored - a result whose provenance was not committed is not
+    # reproducible by anyone else.
+    man_path = REPO / "benchmark" / "results" / f"llm-{slug}-manifest.json"
+    man_path.parent.mkdir(parents=True, exist_ok=True)
     man_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     print(f"manifest -> {man_path}")
 
