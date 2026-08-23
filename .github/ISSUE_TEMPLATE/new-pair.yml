@@ -1,0 +1,78 @@
+name: Propose a correction pair / 새 교정 쌍 제안
+description: Suggest a misrecognition → correction pair we should add to the next snapshot.
+title: "[pair] <wrong> → <right>"
+labels: ["pair-proposal"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **How a proposal becomes a shipped pair.** This repository is a *snapshot*, not the
+        source of truth. Pairs are verified upstream (two independent LLM auditors must agree,
+        plus an external registry check) and only then appear in the next monthly snapshot.
+        So: **propose here → upstream verification → next release.** Nothing is merged by PR.
+
+        ⛔ **Do not paste caption text.** No transcript sentences, no screenshots of captions,
+        no person names. This dataset ships pairs, counts and metadata only — a pasted caption
+        in a public issue is the exact thing the project promises not to publish.
+        (자막 원문·실명은 붙여넣지 마세요. 종목명·금융용어·숫자만 받습니다.)
+  - type: input
+    id: wrong
+    attributes:
+      label: Misrecognized form (wrong)
+      description: Exactly what the ASR produced, as written.
+      placeholder: 변합기
+    validations:
+      required: true
+  - type: input
+    id: right
+    attributes:
+      label: Correct form (right)
+      description: What it should have been.
+      placeholder: 변압기
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - stock name (종목명)
+        - finance term (금융용어)
+        - number / unit damage (숫자·단위 훼손)
+        - other
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Where you heard it (optional)
+      description: Channel name or video topic. No URLs to timestamps are needed, and no transcript.
+      placeholder: 반도체 종목 리뷰 채널
+    validations:
+      required: false
+  - type: input
+    id: seen
+    attributes:
+      label: Roughly when (optional)
+      description: Month is enough — it helps us know which corpus window to re-scan.
+      placeholder: 2026-08
+    validations:
+      required: false
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything else (optional)
+      description: |
+        Why the mishearing happens, other variants you have seen, or a registry/ticker reference.
+        Describe it — do not quote captions.
+    validations:
+      required: false
+  - type: checkboxes
+    id: boundary
+    attributes:
+      label: Before submitting
+      options:
+        - label: This pair is a stock name, finance term, or number — **not a person's name**.
+          required: true
+        - label: I have not pasted caption text, transcripts, or screenshots of captions.
+          required: true

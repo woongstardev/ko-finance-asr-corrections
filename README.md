@@ -88,6 +88,14 @@ Stated up front, because a niche dataset earns trust by being explicit about its
 Snapshot releases (`v0.1`, then monthly `vYYYY.MM`). The upstream pipeline keeps producing
 verified pairs; each snapshot adds newly promoted entries and retires rolled-back ones.
 
+## Contributing
+
+`data/` is a generated export, so it does not take pull requests — pairs are verified upstream
+and arrive with the next snapshot. Propose a pair or report an over-correction through the
+issue forms; `benchmark/` and `scripts/` take ordinary PRs (standard library only).
+See [CONTRIBUTING.md](CONTRIBUTING.md), [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md), and
+[SECURITY.md](SECURITY.md) — the last one is where a privacy report goes, privately.
+
 ## License
 
 - **Data** (`data/`): [CC BY 4.0](LICENSE-DATA)

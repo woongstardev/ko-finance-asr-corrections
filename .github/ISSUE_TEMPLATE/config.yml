@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: How contributions work (read first)
+    url: https://github.com/woongstardev/ko-finance-asr-corrections/blob/main/CONTRIBUTING.md
+    about: What this repo accepts, why `data/` cannot be edited by PR, and how a proposal reaches a release.
+  - name: What the fields mean
+    url: https://github.com/woongstardev/ko-finance-asr-corrections/blob/main/docs/SCHEMA.md
+    about: Field-by-field schema before you report that a value looks wrong.
+  - name: Privacy or boundary report (private)
+    url: https://github.com/woongstardev/ko-finance-asr-corrections/blob/main/SECURITY.md
+    about: A person's name or caption text made it into the data — report privately, not in a public issue.

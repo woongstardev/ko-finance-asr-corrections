@@ -1,0 +1,61 @@
+name: Report an over-correction / 오교정 신고
+description: A shipped pair fires where it should not, and text that was already correct gets damaged.
+title: "[bad-pair] <wrong> → <right>"
+labels: ["over-correction"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **This is the one report that can trigger a patch release.** A shipped pair that
+        over-corrects is recalled from the snapshot — that is what patch releases exist for
+        (adding new pairs never is). Recall happens upstream first, then the snapshot is
+        re-exported, so please report the pair rather than sending a PR against `data/`.
+
+        ⛔ **Do not paste caption text.** If you need to show the failure, write a **short
+        example sentence of your own** that contains the trigger. A constructed example is
+        enough to reproduce a string replacement.
+        (자막 원문 대신 직접 지어낸 짧은 예문을 적어 주세요.)
+  - type: input
+    id: pair
+    attributes:
+      label: Which pair
+      description: Copy the `wrong` and `right` values from `data/pairs.csv`.
+      placeholder: "하이닉 → 하이닉스"
+    validations:
+      required: true
+  - type: textarea
+    id: example
+    attributes:
+      label: A constructed example where it misfires
+      description: Your own sentence, not a transcript. Show the input and what the pair turns it into.
+      placeholder: |
+        input:  그 회사는 하이닉이라는 이름의 자회사를 세웠다
+        output: 그 회사는 하이닉스라는 이름의 자회사를 세웠다   ← wrong, the original was correct
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of failure is this?
+      options:
+        - The trigger is also an ordinary word or another valid name (false positive)
+        - It chains with another pair and mangles the result (e.g. double replacement)
+        - The `right` side is itself wrong or outdated
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Snapshot version
+      description: From `CITATION.cff` or the release tag you are using.
+      placeholder: v2026.09
+    validations:
+      required: false
+  - type: checkboxes
+    id: boundary
+    attributes:
+      label: Before submitting
+      options:
+        - label: My example is a sentence I wrote myself, not pasted caption text.
+          required: true

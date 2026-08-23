@@ -1,0 +1,58 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # The benchmark is standard-library only, on purpose (see CONTRIBUTING.md).
+      # No install step here is a feature: if this job ever needs `pip install`,
+      # that constraint has been broken.
+      - name: Benchmark scorer tests
+        run: python3 benchmark/test_score.py
+
+      - name: Data files parse and agree
+        run: |
+          python3 - <<'PY'
+          import csv, json
+          d = json.load(open("data/pairs.json", encoding="utf-8"))
+          rows = list(csv.DictReader(open("data/pairs.csv", encoding="utf-8")))
+          assert d["pair_count"] == len(d["pairs"]) == len(rows), (
+              d["pair_count"], len(d["pairs"]), len(rows))
+          keys = {(p["wrong"], p["right"]) for p in d["pairs"]}
+          assert len(keys) == len(d["pairs"]), "duplicate (wrong, right) key"
+          assert keys == {(r["wrong"], r["right"]) for r in rows}, "json/csv disagree"
+          print(f'ok: {d["pair_count"]} pairs, corpus {d["corpus"]["scanned_videos"]} videos')
+          PY
+
+      # scripts/release_check.py is deliberately NOT run here. Its person-name check
+      # reads an exclusion list that lives outside this repository (private, upstream),
+      # so in CI it would find nothing and pass vacuously — a boundary check that can
+      # only fail open is worse than no check. It runs on the release host instead.
+      - name: Issue forms are valid YAML
+        run: |
+          pip install --quiet pyyaml
+          python3 - <<'PY'
+          import pathlib, yaml
+          for f in sorted(pathlib.Path(".github/ISSUE_TEMPLATE").glob("*.yml")):
+              doc = yaml.safe_load(f.read_text(encoding="utf-8"))
+              if f.name != "config.yml":
+                  assert {"name", "description", "body"} <= set(doc), f
+              print("ok", f)
+          doc = yaml.safe_load(pathlib.Path("CITATION.cff").read_text(encoding="utf-8"))
+          assert doc["cff-version"] == "1.2.0" and doc["type"] == "dataset"
+          print("ok CITATION.cff")
+          PY
