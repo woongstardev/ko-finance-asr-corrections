@@ -17,8 +17,8 @@ archive. The pairs here are the byproduct of correcting real YouTube auto-captio
   KEBAP (2.5K pairs, error-type labels, frozen since 2023). No finance-domain resource exists.
 - **No public "confusion pair dictionary with observed frequencies" exists in any language**
   (as of our 2026-08 survey). Frequency is what makes a pair list actionable: it tells you
-  which errors dominate real traffic (e.g. `펀더멘탈→펀더멘털` ×414, `변합기→변압기` ×322,
-  `FMC→FOMC` ×261 — full scan of a 521-video caption corpus).
+  which errors dominate real traffic (e.g. `펀더멘탈→펀더멘털` ×449, `변합기→변압기` ×333,
+  `FMC→FOMC` ×270 — full scan of a 595-video caption corpus).
 - Every pair carries provenance: how it was mined, which auditor models independently agreed,
   and its promotion tier (human-approved / registry-verified).
 
@@ -50,7 +50,7 @@ Details, scoring rules and what the numbers mean: [`benchmark/README.md`](benchm
 Stated up front, because a niche dataset earns trust by being explicit about its edges.
 
 - **One corpus, one ASR system, one domain.** Every pair comes from YouTube auto-captions of
-  Korean stock/investing channels — 521 videos as of the current snapshot. A different ASR
+  Korean stock/investing channels — 595 videos as of the current snapshot. A different ASR
   engine mishears differently, so these pairs are not a general Korean ASR error list.
 - **89 pairs is small.** This is a frequency-annotated seed, not a comprehensive lexicon. It
   grows with monthly snapshots as the upstream pipeline verifies more pairs.

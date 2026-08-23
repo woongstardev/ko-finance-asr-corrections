@@ -16,9 +16,9 @@ section becomes the next release's notes.
 
 ### Added
 - Initial public snapshot: 89 verified confusion pairs (tier A/B, enabled)
-  exported 2026-08-12 from the upstream production dictionary — stock names,
+  exported 2026-08-13 from the upstream production dictionary — stock names,
   finance terms, and number damage from Korean finance-YouTube auto-captions.
-  Full-corpus frequencies (`corpus_count`) from a 521-video scan.
+  Full-corpus frequencies (`corpus_count`) from a 595-video scan.
 - `evidence` field (2026-08-13): verification provenance (`human` /
   `auditor-consensus` / `goldset-alignment`) separated from `tier`, which
   remains an authority ordering.

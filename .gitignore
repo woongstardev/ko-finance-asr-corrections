@@ -9,3 +9,5 @@ build/
 tmp/
 scratch/
 benchmark/predictions/
+# person info — list lives upstream (private); local legacy copy stays untracked (task 006)
+scripts/person-exclusions.txt
