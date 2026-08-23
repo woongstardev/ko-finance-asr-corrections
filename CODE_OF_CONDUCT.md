@@ -44,9 +44,8 @@ We agree to restrict the following behaviors in our community. Instances, threat
 ## Reporting an Issue
 
 Tensions can occur between community members even when they are trying their best to collaborate. Not every conflict represents a code of conduct violation, and this Code of Conduct reinforces encouraged behaviors and norms that can help avoid conflicts and minimize harm.
-When an incident does occur, it is important to report it promptly. To report a possible violation, contact the maintainer privately — email the address
-listed on the [@woongstardev](https://github.com/woongstardev) GitHub profile, or use
-GitHub's [report abuse](https://github.com/contact/report-abuse) form. Do not report a
+When an incident does occur, it is important to report it promptly. To report a possible violation, contact the maintainer privately at **oss@woongstar.com**,
+or use GitHub's [report abuse](https://github.com/contact/report-abuse) form. Do not report a
 violation in a public issue: issues here are a data-submission channel, and a public
 thread makes the harm harder to contain. This project has a single maintainer, who is
 the Community Moderator referred to below.

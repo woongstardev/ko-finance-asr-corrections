@@ -6,8 +6,8 @@ no service and holds no credentials, so "security" here is mostly about a **priv
 
 ## Report privately, not in a public issue
 
-Use GitHub's private reporting on this repository (**Security → Report a vulnerability**), or
-email the address on the [@woongstardev](https://github.com/woongstardev) GitHub profile.
+Email **oss@woongstar.com**, or use GitHub's private reporting on this repository
+(**Security → Report a vulnerability**).
 
 Please do **not** open a public issue for the reports below. A public issue that quotes the
 offending name or caption text republishes exactly what the report is asking us to remove.
