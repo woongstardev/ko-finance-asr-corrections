@@ -1,13 +1,13 @@
 {
- "benchmark": "ko-finance-asr-corrections/mini-v0",
- "generated_at": "2026-08-12T23:32:19Z",
- "pairs_exported_at": "2026-08-12T23:28:07Z",
+ "benchmark": "ko-finance-asr-corrections/mini-v0.2",
+ "generated_at": "2026-08-23T13:55:53Z",
+ "pairs_exported_at": "2026-08-13T21:39:19Z",
  "pair_count": 89,
  "item_counts": {
   "error:plain": 267,
   "error:spacing": 86,
   "clean": 89,
-  "trap": 14
+  "trap": 40
  },
  "frames": [
   "{w} 관련해서 궁금한 부분이 있습니다.",
@@ -6710,6 +6710,292 @@
    ],
    "category": "trap",
    "why": "나상은 is a plausible person name. The pair 나상은→나스닥은 encodes a mid-utterance mishearing and would rewrite a name - the failure mode the person-pair hard line exists to avoid."
+  },
+  {
+   "id": "trp-business-item",
+   "kind": "trap",
+   "input": "신규 사업 항목을 두 개 더 추가했습니다.",
+   "expected": "신규 사업 항목을 두 개 더 추가했습니다.",
+   "triggers": [
+    "업항"
+   ],
+   "category": "trap",
+   "why": "Whitespace-flexible matching joins '사업 항목' into 업항. Highest-frequency short key in the snapshot (x151) and it has an everyday collision."
+  },
+  {
+   "id": "trp-hiking-course",
+   "kind": "trap",
+   "input": "등산 코스 고르는 데 한참 걸렸습니다.",
+   "expected": "등산 코스 고르는 데 한참 걸렸습니다.",
+   "triggers": [
+    "코스고"
+   ],
+   "category": "trap",
+   "why": "'코스 고르는' spans a space; 코스고→코스닥 turns a hiking sentence into a stock index."
+  },
+  {
+   "id": "trp-quake-week",
+   "kind": "trap",
+   "input": "지진 난 주에는 대피 훈련을 다시 했습니다.",
+   "expected": "지진 난 주에는 대피 훈련을 다시 했습니다.",
+   "triggers": [
+    "지진난주"
+   ],
+   "category": "trap",
+   "why": "Two spaces are joined at once ('지진 난 주' -> 지진난주). Tests that a matcher's flexibility does not compound across several boundaries."
+  },
+  {
+   "id": "trp-olive-shape",
+   "kind": "trap",
+   "input": "올리브 형태의 얼굴형을 설명하는 영상이었습니다.",
+   "expected": "올리브 형태의 얼굴형을 설명하는 영상이었습니다.",
+   "triggers": [
+    "올리브형"
+   ],
+   "category": "trap",
+   "why": "'올리브 형태' spans a space into 올리브형; the correction would name a retail chain instead."
+  },
+  {
+   "id": "trp-level3-weapon",
+   "kind": "trap",
+   "input": "게임에서 레벨 3 무기를 먼저 맞췄습니다.",
+   "expected": "게임에서 레벨 3 무기를 먼저 맞췄습니다.",
+   "triggers": [
+    "3무기"
+   ],
+   "category": "trap",
+   "why": "A digit followed by an ordinary noun ('3 무기') joins into a number-damage key."
+  },
+  {
+   "id": "trp-black-rock-city",
+   "kind": "trap",
+   "input": "블랙락 시티에서 열리는 축제에 다녀왔습니다.",
+   "expected": "블랙락 시티에서 열리는 축제에 다녀왔습니다.",
+   "triggers": [
+    "블랙락"
+   ],
+   "category": "trap",
+   "why": "Black Rock City is a real place name transliterated exactly like the asset manager's misheard form."
+  },
+  {
+   "id": "trp-your-highness",
+   "kind": "trap",
+   "input": "영화 제목이 '유어 하이네스'였습니다.",
+   "expected": "영화 제목이 '유어 하이네스'였습니다.",
+   "triggers": [
+    "하이네스"
+   ],
+   "category": "trap",
+   "why": "'하이네스' is the ordinary transliteration of Highness. This key is also the one cross-pair chain in the snapshot (it sits inside 'SK 하이네스')."
+  },
+  {
+   "id": "trp-sks-pump",
+   "kind": "trap",
+   "input": "SKS 자전거 펌프를 하나 샀습니다.",
+   "expected": "SKS 자전거 펌프를 하나 샀습니다.",
+   "triggers": [
+    "SKS"
+   ],
+   "category": "trap",
+   "why": "SKS is a real bicycle-accessory brand; a three-letter ASCII key collides with brands as readily as with tickers."
+  },
+  {
+   "id": "trp-spb-abbrev",
+   "kind": "trap",
+   "input": "상트페테르부르크를 SPB로 줄여 적었습니다.",
+   "expected": "상트페테르부르크를 SPB로 줄여 적었습니다.",
+   "triggers": [
+    "SPB"
+   ],
+   "category": "trap",
+   "why": "SPB is a common abbreviation for Saint Petersburg."
+  },
+  {
+   "id": "trp-ffc-cable",
+   "kind": "trap",
+   "input": "노트북 FFC 케이블이 끊어져 교체했습니다.",
+   "expected": "노트북 FFC 케이블이 끊어져 교체했습니다.",
+   "triggers": [
+    "FFC"
+   ],
+   "category": "trap",
+   "why": "FFC is a standard electronics term (flexible flat cable) that a finance channel can mention without meaning FOMC."
+  },
+  {
+   "id": "trp-miracle-analysis",
+   "kind": "trap",
+   "input": "그 기적 분석하듯 파고든 다큐멘터리였습니다.",
+   "expected": "그 기적 분석하듯 파고든 다큐멘터리였습니다.",
+   "triggers": [
+    "기적 분석"
+   ],
+   "category": "trap",
+   "why": "The key already contains a space, so it matches ordinary text where the two words simply follow each other."
+  },
+  {
+   "id": "trp-contract-cancel",
+   "kind": "trap",
+   "input": "계약 해제 펀드는 환매 수수료가 없다고 합니다.",
+   "expected": "계약 해제 펀드는 환매 수수료가 없다고 합니다.",
+   "triggers": [
+    "해제 펀드"
+   ],
+   "category": "trap",
+   "why": "'해제'(cancellation) legitimately precedes '펀드' in contract language — and the sentence is finance text, where this pair is most likely to run."
+  },
+  {
+   "id": "trp-mic-technology",
+   "kind": "trap",
+   "input": "마이크 테크놀로지 전시회에 다녀왔습니다.",
+   "expected": "마이크 테크놀로지 전시회에 다녀왔습니다.",
+   "triggers": [
+    "마이크 테크놀로지"
+   ],
+   "category": "trap",
+   "why": "'마이크'(microphone) plus 테크놀로지 is ordinary Korean; the pair reads it as a chipmaker."
+  },
+  {
+   "id": "trp-entropic-force",
+   "kind": "trap",
+   "input": "엔트로픽 힘은 통계역학에서 다루는 개념입니다.",
+   "expected": "엔트로픽 힘은 통계역학에서 다루는 개념입니다.",
+   "triggers": [
+    "엔트로픽"
+   ],
+   "category": "trap",
+   "why": "'엔트로픽' is the physics adjective (entropic). Sibling of trp-entropy: the snapshot ships both 엔트로피 and 엔트로픽 as keys for the same AI company."
+  },
+  {
+   "id": "trp-crew-legend",
+   "kind": "trap",
+   "input": "산악 구조 대원 전설처럼 남은 이야기가 있습니다.",
+   "expected": "산악 구조 대원 전설처럼 남은 이야기가 있습니다.",
+   "triggers": [
+    "대원전설"
+   ],
+   "category": "trap",
+   "why": "'대원 전설' spans a space into a listed company's misheard name."
+  },
+  {
+   "id": "trp-new-terminal",
+   "kind": "trap",
+   "input": "신형 증권 거래 단말기를 올해 도입했습니다.",
+   "expected": "신형 증권 거래 단말기를 올해 도입했습니다.",
+   "triggers": [
+    "신형증권"
+   ],
+   "category": "trap",
+   "why": "'신형 증권' spans a space and becomes a specific brokerage's name."
+  },
+  {
+   "id": "trp-page4-walk",
+   "kind": "trap",
+   "input": "교재 4쪽 보행 안전 단원을 함께 읽었습니다.",
+   "expected": "교재 4쪽 보행 안전 단원을 함께 읽었습니다.",
+   "triggers": [
+    "4쪽 보행"
+   ],
+   "category": "trap",
+   "why": "Page number followed by a noun; the key's own space makes this an exact match, not a flexible one."
+  },
+  {
+   "id": "trp-animal-testing",
+   "kind": "trap",
+   "input": "동물 실험률을 낮추자는 청원이 올라왔습니다.",
+   "expected": "동물 실험률을 낮추자는 청원이 올라왔습니다.",
+   "triggers": [
+    "실험률"
+   ],
+   "category": "trap",
+   "why": "'실험률'(experiment rate) is ordinary Korean and one edit away from the unemployment rate."
+  },
+  {
+   "id": "trp-designation-fixed",
+   "kind": "trap",
+   "input": "부지 지정 확정 리스크를 먼저 검토했습니다.",
+   "expected": "부지 지정 확정 리스크를 먼저 검토했습니다.",
+   "triggers": [
+    "지정확정 리스크"
+   ],
+   "category": "trap",
+   "why": "'지정 확정' spans a space; the correction inserts a geopolitical term into a zoning sentence."
+  },
+  {
+   "id": "trp-mcu-technology",
+   "kind": "trap",
+   "input": "마이콘 테크놀로지 세미나 자료를 정리했습니다.",
+   "expected": "마이콘 테크놀로지 세미나 자료를 정리했습니다.",
+   "triggers": [
+    "마이콘 테크놀로지"
+   ],
+   "category": "trap",
+   "why": "'마이콘' is the common short form for microcontroller."
+  },
+  {
+   "id": "trp-micro-nim",
+   "kind": "trap",
+   "input": "마이크로 님이 남긴 댓글이 인상 깊었습니다.",
+   "expected": "마이크로 님이 남긴 댓글이 인상 깊었습니다.",
+   "triggers": [
+    "마이크로님"
+   ],
+   "category": "trap",
+   "why": "A username followed by the honorific '님' joins across the space into a chipmaker's misheard form. Community text does this constantly."
+  },
+  {
+   "id": "trp-haskell",
+   "kind": "trap",
+   "input": "하스켈 문법을 처음 배워봤습니다.",
+   "expected": "하스켈 문법을 처음 배워봤습니다.",
+   "triggers": [
+    "하스"
+   ],
+   "category": "trap",
+   "why": "Second context for the 하스 key (see trp-hearthstone): a two-syllable key sits inside many longer words, so one trap per key understates the exposure."
+  },
+  {
+   "id": "trp-rock-island",
+   "kind": "trap",
+   "input": "'바위섬'이라는 노래를 오랜만에 들었습니다.",
+   "expected": "'바위섬'이라는 노래를 오랜만에 들었습니다.",
+   "triggers": [
+    "바위"
+   ],
+   "category": "trap",
+   "why": "Second context for 바위 (see trp-rock): here the key is a prefix of a compound noun rather than a standalone word."
+  },
+  {
+   "id": "trp-us-gymnastics",
+   "kind": "trap",
+   "input": "미국 체조 대표팀 경기를 봤습니다.",
+   "expected": "미국 체조 대표팀 경기를 봤습니다.",
+   "triggers": [
+    "미국체"
+   ],
+   "category": "trap",
+   "why": "Second context for 미국체 (see trp-us-stay): a different word follows the boundary, so the split point is the same but the surrounding text is not."
+  },
+  {
+   "id": "trp-longterm-fitness",
+   "kind": "trap",
+   "input": "장기 체력 훈련 계획을 다시 짰습니다.",
+   "expected": "장기 체력 훈련 계획을 다시 짰습니다.",
+   "triggers": [
+    "장기체"
+   ],
+   "category": "trap",
+   "why": "Second context for 장기체 (see trp-long-stay), with the boundary falling between two ordinary words rather than inside a compound."
+  },
+  {
+   "id": "trp-storage-manual",
+   "kind": "trap",
+   "input": "수납 매뉴얼을 새로 만들어 붙였습니다.",
+   "expected": "수납 매뉴얼을 새로 만들어 붙였습니다.",
+   "triggers": [
+    "수납매"
+   ],
+   "category": "trap",
+   "why": "Second context for 수납매 (see trp-storage-stall). This key is the third most frequent in the snapshot (x160), so its false-positive surface matters."
   }
  ]
 }

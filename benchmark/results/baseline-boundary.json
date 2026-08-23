@@ -1,22 +1,22 @@
 {
  "items": {
-  "total": 456,
+  "total": 482,
   "error": 353,
-  "guard": 103
+  "guard": 129
  },
  "fixed": 353,
  "missed": 0,
  "mangled": 0,
  "over_corrections": {
-  "total": 14,
+  "total": 40,
   "error_context": 0,
   "clean": 0,
-  "trap": 14
+  "trap": 40
  },
  "recall": 1.0,
- "over_correction_rate": 0.03070175438596491,
- "precision_proxy": 0.9618528610354223,
- "net_score": 0.9603399433427762,
+ "over_correction_rate": 0.08298755186721991,
+ "precision_proxy": 0.8982188295165394,
+ "net_score": 0.886685552407932,
  "missing_predictions": 0,
  "by_category": {
   "number": {
@@ -48,11 +48,11 @@
    "over": 0
   },
   "trap": {
-   "items": 14,
+   "items": 40,
    "fixed": 0,
    "missed": 0,
    "mangled": 0,
-   "over": 14
+   "over": 40
   }
  },
  "by_variant": {

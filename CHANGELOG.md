@@ -25,3 +25,11 @@ section becomes the next release's notes.
 - Benchmark: frozen eval set, trap set, scorer, and three replacement baselines
   (naive / word-boundary / production-guarded) with per-round verification
   numbers.
+
+### Changed
+- Benchmark promoted to `mini-v0.2` (2026-08-23): the trap set grew from 14 to
+  40 hand-written sentences, chosen from a mechanical risk ranking
+  (`benchmark/mine_traps.py`), and the eval set from 456 to 482 items. Baseline
+  net scores moved accordingly (boundary 96.0% -> 88.7%) and are **not
+  comparable across benchmark versions**; both are recorded in
+  `benchmark/README.md`. No `data/` pair changed.

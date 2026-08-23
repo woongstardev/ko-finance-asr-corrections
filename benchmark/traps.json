@@ -1,89 +1,325 @@
 {
-  "note": "Hand-authored over-correction traps. Every sentence here is ordinary Korean written for this benchmark - no caption text, no transcript excerpts. Each one contains the `wrong` string of a shipped pair as legitimate text, so a system that replaces blindly will damage it. `triggers` lists the pair(s) that fire.",
+  "note": "Hand-authored over-correction traps. Every sentence here is ordinary Korean written for this benchmark - no caption text, no transcript excerpts. Each one contains the `wrong` string of a shipped pair as legitimate text, so a system that replaces blindly will damage it. `triggers` lists the pair(s) that fire. Candidates are ranked mechanically by benchmark/mine_traps.py (cross-pair containment, whitespace-spanning shapes, ASCII keys, short keys); the sentences are written and reviewed by a person, because an unreviewed generated sentence is a trap that reads wrong.",
   "traps": [
     {
       "id": "trp-entropy",
       "text": "엔트로피가 커지는 방향으로 흘러간다는 설명이 이어졌습니다.",
-      "triggers": ["엔트로피"],
+      "triggers": [
+        "엔트로피"
+      ],
       "why": "'엔트로피' is the ordinary technical term (entropy). The pair 엔트로피→앤트로픽 must not fire outside an AI-company context."
     },
     {
       "id": "trp-rock",
       "text": "산 정상에 있는 커다란 바위 앞에서 사진을 찍었습니다.",
-      "triggers": ["바위"],
+      "triggers": [
+        "바위"
+      ],
       "why": "'바위' is a common noun (rock). 바위→바이오 is only valid on the misheard token."
     },
     {
       "id": "trp-hearthstone",
       "text": "주말에 친구들과 하스스톤 대회를 봤습니다.",
-      "triggers": ["하스"],
+      "triggers": [
+        "하스"
+      ],
       "why": "Two-syllable key inside a longer word; 하스→하이닉스 would mangle it."
     },
     {
       "id": "trp-us-stay",
       "text": "미국 체류 기간을 한 달 더 늘리기로 했습니다.",
-      "triggers": ["미국체"],
+      "triggers": [
+        "미국체"
+      ],
       "why": "Whitespace-flexible matching sees 미국체 across the space in '미국 체류'. Plain substring replacement does not - this trap separates the two matcher families."
     },
     {
       "id": "trp-long-stay",
       "text": "장기체류자 대상 비자 제도가 바뀌었습니다.",
-      "triggers": ["장기체"],
+      "triggers": [
+        "장기체"
+      ],
       "why": "'장기체류' contains 장기체 contiguously, so even a plain replacer damages it (장기채류)."
     },
     {
       "id": "trp-aspect",
       "text": "종목 면에서는 지난 분기와 큰 차이가 없었습니다.",
-      "triggers": ["종목면"],
+      "triggers": [
+        "종목면"
+      ],
       "why": "'종목 면에서' is a normal construction; whitespace-flexible matching turns it into 종목명."
     },
     {
       "id": "trp-course",
       "text": "요가 코스하고 필라테스 코스를 같이 비교해봤습니다.",
-      "triggers": ["코스하고"],
+      "triggers": [
+        "코스하고"
+      ],
       "why": "'코스하고' = '코스' + connective '하고'. The pair 코스하고→코스닥으로 assumes a mishearing that is not present here."
     },
     {
       "id": "trp-storage-stall",
       "text": "창고에 수납 매대를 하나 더 들여놨습니다.",
-      "triggers": ["수납매"],
+      "triggers": [
+        "수납매"
+      ],
       "why": "Whitespace-flexible matching sees 수납매 across '수납 매대' and rewrites it to 순환매."
     },
     {
       "id": "trp-mcd",
       "text": "MCD 주가는 실적 발표 뒤 소폭 올랐습니다.",
-      "triggers": ["MCD"],
+      "triggers": [
+        "MCD"
+      ],
       "why": "MCD is McDonald's ticker. MCD→MACD is a genuine ASR pair but collides with a real symbol."
     },
     {
       "id": "trp-fmc",
       "text": "FMC 코퍼레이션 실적이 예상치를 밑돌았습니다.",
-      "triggers": ["FMC"],
+      "triggers": [
+        "FMC"
+      ],
       "why": "FMC Corporation is a listed company; the highest-frequency ASCII pair (FMC→FOMC) collides with it."
     },
     {
       "id": "trp-xai",
       "text": "설명가능한 인공지능, 즉 XAI 연구가 최근 활발합니다.",
-      "triggers": ["XAI"],
+      "triggers": [
+        "XAI"
+      ],
       "why": "XAI (explainable AI) is an established acronym; XAI→xAI is a casing fix meant only for the company name."
     },
     {
       "id": "trp-am-band",
       "text": "차 안에서 AM대역 라디오 주파수를 맞췄습니다.",
-      "triggers": ["AM대"],
+      "triggers": [
+        "AM대"
+      ],
       "why": "'AM대역' contains AM대; the pair AM대→AMD would produce AMD역."
     },
     {
       "id": "trp-dt5",
       "text": "DT 5년 차 조직 개편안을 공유드립니다.",
-      "triggers": ["DT 5"],
+      "triggers": [
+        "DT 5"
+      ],
       "why": "'DT 5년 차' contains the multi-token key 'DT 5'; DT 5→DDR5 would produce DDR5년 차."
     },
     {
       "id": "trp-person-name",
       "text": "나상은 씨가 오늘 발표를 맡기로 했습니다.",
-      "triggers": ["나상은"],
+      "triggers": [
+        "나상은"
+      ],
       "why": "나상은 is a plausible person name. The pair 나상은→나스닥은 encodes a mid-utterance mishearing and would rewrite a name - the failure mode the person-pair hard line exists to avoid."
+    },
+    {
+      "id": "trp-business-item",
+      "text": "신규 사업 항목을 두 개 더 추가했습니다.",
+      "triggers": [
+        "업항"
+      ],
+      "why": "Whitespace-flexible matching joins '사업 항목' into 업항. Highest-frequency short key in the snapshot (x151) and it has an everyday collision."
+    },
+    {
+      "id": "trp-hiking-course",
+      "text": "등산 코스 고르는 데 한참 걸렸습니다.",
+      "triggers": [
+        "코스고"
+      ],
+      "why": "'코스 고르는' spans a space; 코스고→코스닥 turns a hiking sentence into a stock index."
+    },
+    {
+      "id": "trp-quake-week",
+      "text": "지진 난 주에는 대피 훈련을 다시 했습니다.",
+      "triggers": [
+        "지진난주"
+      ],
+      "why": "Two spaces are joined at once ('지진 난 주' -> 지진난주). Tests that a matcher's flexibility does not compound across several boundaries."
+    },
+    {
+      "id": "trp-olive-shape",
+      "text": "올리브 형태의 얼굴형을 설명하는 영상이었습니다.",
+      "triggers": [
+        "올리브형"
+      ],
+      "why": "'올리브 형태' spans a space into 올리브형; the correction would name a retail chain instead."
+    },
+    {
+      "id": "trp-level3-weapon",
+      "text": "게임에서 레벨 3 무기를 먼저 맞췄습니다.",
+      "triggers": [
+        "3무기"
+      ],
+      "why": "A digit followed by an ordinary noun ('3 무기') joins into a number-damage key."
+    },
+    {
+      "id": "trp-black-rock-city",
+      "text": "블랙락 시티에서 열리는 축제에 다녀왔습니다.",
+      "triggers": [
+        "블랙락"
+      ],
+      "why": "Black Rock City is a real place name transliterated exactly like the asset manager's misheard form."
+    },
+    {
+      "id": "trp-your-highness",
+      "text": "영화 제목이 '유어 하이네스'였습니다.",
+      "triggers": [
+        "하이네스"
+      ],
+      "why": "'하이네스' is the ordinary transliteration of Highness. This key is also the one cross-pair chain in the snapshot (it sits inside 'SK 하이네스')."
+    },
+    {
+      "id": "trp-sks-pump",
+      "text": "SKS 자전거 펌프를 하나 샀습니다.",
+      "triggers": [
+        "SKS"
+      ],
+      "why": "SKS is a real bicycle-accessory brand; a three-letter ASCII key collides with brands as readily as with tickers."
+    },
+    {
+      "id": "trp-spb-abbrev",
+      "text": "상트페테르부르크를 SPB로 줄여 적었습니다.",
+      "triggers": [
+        "SPB"
+      ],
+      "why": "SPB is a common abbreviation for Saint Petersburg."
+    },
+    {
+      "id": "trp-ffc-cable",
+      "text": "노트북 FFC 케이블이 끊어져 교체했습니다.",
+      "triggers": [
+        "FFC"
+      ],
+      "why": "FFC is a standard electronics term (flexible flat cable) that a finance channel can mention without meaning FOMC."
+    },
+    {
+      "id": "trp-miracle-analysis",
+      "text": "그 기적 분석하듯 파고든 다큐멘터리였습니다.",
+      "triggers": [
+        "기적 분석"
+      ],
+      "why": "The key already contains a space, so it matches ordinary text where the two words simply follow each other."
+    },
+    {
+      "id": "trp-contract-cancel",
+      "text": "계약 해제 펀드는 환매 수수료가 없다고 합니다.",
+      "triggers": [
+        "해제 펀드"
+      ],
+      "why": "'해제'(cancellation) legitimately precedes '펀드' in contract language — and the sentence is finance text, where this pair is most likely to run."
+    },
+    {
+      "id": "trp-mic-technology",
+      "text": "마이크 테크놀로지 전시회에 다녀왔습니다.",
+      "triggers": [
+        "마이크 테크놀로지"
+      ],
+      "why": "'마이크'(microphone) plus 테크놀로지 is ordinary Korean; the pair reads it as a chipmaker."
+    },
+    {
+      "id": "trp-entropic-force",
+      "text": "엔트로픽 힘은 통계역학에서 다루는 개념입니다.",
+      "triggers": [
+        "엔트로픽"
+      ],
+      "why": "'엔트로픽' is the physics adjective (entropic). Sibling of trp-entropy: the snapshot ships both 엔트로피 and 엔트로픽 as keys for the same AI company."
+    },
+    {
+      "id": "trp-crew-legend",
+      "text": "산악 구조 대원 전설처럼 남은 이야기가 있습니다.",
+      "triggers": [
+        "대원전설"
+      ],
+      "why": "'대원 전설' spans a space into a listed company's misheard name."
+    },
+    {
+      "id": "trp-new-terminal",
+      "text": "신형 증권 거래 단말기를 올해 도입했습니다.",
+      "triggers": [
+        "신형증권"
+      ],
+      "why": "'신형 증권' spans a space and becomes a specific brokerage's name."
+    },
+    {
+      "id": "trp-page4-walk",
+      "text": "교재 4쪽 보행 안전 단원을 함께 읽었습니다.",
+      "triggers": [
+        "4쪽 보행"
+      ],
+      "why": "Page number followed by a noun; the key's own space makes this an exact match, not a flexible one."
+    },
+    {
+      "id": "trp-animal-testing",
+      "text": "동물 실험률을 낮추자는 청원이 올라왔습니다.",
+      "triggers": [
+        "실험률"
+      ],
+      "why": "'실험률'(experiment rate) is ordinary Korean and one edit away from the unemployment rate."
+    },
+    {
+      "id": "trp-designation-fixed",
+      "text": "부지 지정 확정 리스크를 먼저 검토했습니다.",
+      "triggers": [
+        "지정확정 리스크"
+      ],
+      "why": "'지정 확정' spans a space; the correction inserts a geopolitical term into a zoning sentence."
+    },
+    {
+      "id": "trp-mcu-technology",
+      "text": "마이콘 테크놀로지 세미나 자료를 정리했습니다.",
+      "triggers": [
+        "마이콘 테크놀로지"
+      ],
+      "why": "'마이콘' is the common short form for microcontroller."
+    },
+    {
+      "id": "trp-micro-nim",
+      "text": "마이크로 님이 남긴 댓글이 인상 깊었습니다.",
+      "triggers": [
+        "마이크로님"
+      ],
+      "why": "A username followed by the honorific '님' joins across the space into a chipmaker's misheard form. Community text does this constantly."
+    },
+    {
+      "id": "trp-haskell",
+      "text": "하스켈 문법을 처음 배워봤습니다.",
+      "triggers": [
+        "하스"
+      ],
+      "why": "Second context for the 하스 key (see trp-hearthstone): a two-syllable key sits inside many longer words, so one trap per key understates the exposure."
+    },
+    {
+      "id": "trp-rock-island",
+      "text": "'바위섬'이라는 노래를 오랜만에 들었습니다.",
+      "triggers": [
+        "바위"
+      ],
+      "why": "Second context for 바위 (see trp-rock): here the key is a prefix of a compound noun rather than a standalone word."
+    },
+    {
+      "id": "trp-us-gymnastics",
+      "text": "미국 체조 대표팀 경기를 봤습니다.",
+      "triggers": [
+        "미국체"
+      ],
+      "why": "Second context for 미국체 (see trp-us-stay): a different word follows the boundary, so the split point is the same but the surrounding text is not."
+    },
+    {
+      "id": "trp-longterm-fitness",
+      "text": "장기 체력 훈련 계획을 다시 짰습니다.",
+      "triggers": [
+        "장기체"
+      ],
+      "why": "Second context for 장기체 (see trp-long-stay), with the boundary falling between two ordinary words rather than inside a compound."
+    },
+    {
+      "id": "trp-storage-manual",
+      "text": "수납 매뉴얼을 새로 만들어 붙였습니다.",
+      "triggers": [
+        "수납매"
+      ],
+      "why": "Second context for 수납매 (see trp-storage-stall). This key is the third most frequent in the snapshot (x160), so its false-positive surface matters."
     }
   ]
 }

@@ -27,21 +27,25 @@ archive. The pairs here are the byproduct of correcting real YouTube auto-captio
 | Path | Contents |
 |---|---|
 | `data/` | Confusion pairs (JSON/CSV): `wrong`, `right`, `observed_count`, `tier`, verification metadata. Stock names & finance terms only — no person names, no source sentences. |
-| `benchmark/` | Mini benchmark v0: pure-stdlib scorer, a 456-item synthetic evaluation set (no caption text), and three dictionary baselines. Fixes and over-corrections are scored together — see [`benchmark/README.md`](benchmark/README.md). |
+| `benchmark/` | Mini benchmark v0.2: pure-stdlib scorer, a 482-item synthetic evaluation set (no caption text), a mechanical trap-risk miner, and three dictionary baselines. Fixes and over-corrections are scored together — see [`benchmark/README.md`](benchmark/README.md). |
 | `docs/SCHEMA.md` | Field-by-field schema. |
 | `docs/METHODOLOGY.md` | The no-gold-label verification loop: 2 independent LLM auditors → consensus-only adoption → external registry check → 3-tier promotion → instant rollback. |
 
 ## The benchmark in one table
 
 Task: fix the misrecognition, change nothing else. Three ways of using the dataset itself as
-a correction system, scored on 456 synthetic items (no caption text). Net score is fixes
-minus over-corrections, over error items.
+a correction system, scored on 482 synthetic items (no caption text), of which 40 are traps —
+ordinary sentences a blind replacement damages. Net score is fixes minus over-corrections,
+over error items.
 
 | Baseline | Recall | Over-corrections | **Net score** |
 |---|---|---|---|
-| Plain substring replacement | 75.9% | 11 | **72.8%** |
-| Whitespace-flexible matching | 100.0% | 14 | **96.0%** |
-| Whitespace-flexible, keys ≥ 4 chars | 68.0% | 2 | **67.4%** |
+| Plain substring replacement | 75.9% | 25 | **68.8%** |
+| Whitespace-flexible matching | 100.0% | 40 | **88.7%** |
+| Whitespace-flexible, keys ≥ 4 chars | 68.0% | 15 | **63.7%** |
+
+Benchmark `mini-v0.2`; v0 numbers are in [`benchmark/README.md`](benchmark/README.md) and are
+not comparable — the trap set grew from 14 to 40.
 
 Details, scoring rules and what the numbers mean: [`benchmark/README.md`](benchmark/README.md).
 
@@ -72,7 +76,7 @@ Stated up front, because a niche dataset earns trust by being explicit about its
   frequent error class that this dataset deliberately does not cover, and contexts cannot be
   recomputed from what ships here.
 - **The benchmark is in-domain by construction.** Its error sentences are generated from
-  these same pairs, so a dictionary lookup reaches 100% recall. v0 measures restraint and
+  these same pairs, so a dictionary lookup reaches 100% recall. It measures restraint and
   robustness, not generalization to unseen misrecognitions.
 
 ## Relationship to prior work
