@@ -1,0 +1,64 @@
+#!/bin/sh
+# Install the weekly snapshot dry-run as a systemd user timer.
+#
+#   sh scripts/install-refresh-timer.sh          # install and start
+#   sh scripts/install-refresh-timer.sh --remove # stop and uninstall
+#
+# The dry-run recounts into a scratch directory and never writes to data/ or to
+# the upstream checkout, so it is safe to run unattended. Publishing stays a
+# once-a-month human step (AGENTS.md) because a person has to review dropped
+# person-name candidates before anything ships.
+#
+# Everything is derived from where this checkout actually lives, so the units
+# carry no path this script did not compute. Requires `loginctl enable-linger
+# $USER` for the timer to fire without an active login session.
+set -eu
+
+REPO=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+UNIT_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/systemd/user"
+NAME=oss-corrections-refresh
+
+if [ "${1:-}" = "--remove" ]; then
+    systemctl --user disable --now "$NAME.timer" 2>/dev/null || true
+    rm -f "$UNIT_DIR/$NAME.service" "$UNIT_DIR/$NAME.timer"
+    systemctl --user daemon-reload
+    echo "removed $NAME.{service,timer}"
+    exit 0
+fi
+
+mkdir -p "$UNIT_DIR"
+
+cat > "$UNIT_DIR/$NAME.service" <<EOF
+[Unit]
+Description=ko-finance-asr-corrections weekly snapshot dry-run
+Documentation=file://$REPO/AGENTS.md
+
+[Service]
+Type=oneshot
+WorkingDirectory=$REPO
+ExecStart=$(command -v python3) $REPO/scripts/refresh_snapshot.py --notify
+# Reports name dropped person-name candidates, so they stay outside the repo.
+# Telegram credentials are optional: without them the run still produces its
+# report and says so, rather than failing.
+Environment=GGULMUSE_ROOT=${GGULMUSE_ROOT}
+TimeoutStartSec=1800
+EOF
+
+cat > "$UNIT_DIR/$NAME.timer" <<EOF
+[Unit]
+Description=Weekly ko-finance-asr-corrections snapshot dry-run
+
+[Timer]
+OnCalendar=Mon 07:20
+# A missed week is run at the next opportunity: the point of this timer is that
+# silence and breakage look different, which a skipped run would undo.
+Persistent=true
+RandomizedDelaySec=300
+
+[Install]
+WantedBy=timers.target
+EOF
+
+systemctl --user daemon-reload
+systemctl --user enable --now "$NAME.timer"
+systemctl --user list-timers "$NAME.timer" --all --no-pager

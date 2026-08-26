@@ -62,8 +62,7 @@ INTERNAL_HOST_PATTERNS = [
 INTERNAL_REFERENCE_PATTERNS = [
     r"pipeline-[0-9]{3}",                          # upstream task numbers
     r"~/(projects|orbit|max|alpha|bravo)/",        # host paths
-    r"~/\.local/state/",
-    r"oss-corrections-refresh",                    # timer / unit names
+    r"~/\.local/state/[a-z]",  # a concrete state path, not the XDG convention itself
     r"FLEET\.md|WOONGSTAR_CHECK\.md",              # fleet-internal documents
     r"correction_(cycle|dict|corpus|audit)\.py",   # upstream module layout
 ]

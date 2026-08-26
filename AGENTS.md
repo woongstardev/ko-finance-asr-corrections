@@ -24,23 +24,26 @@
 
 ## 스냅숏 갱신 (task 005에서 3층으로 자동화 — 2026-08-14)
 
-**주간 감지 — 🔴 현재 자동으로 돌지 않는다 (2026-08-23 실측).** 오르빗 유저 타이머
-`oss-corrections-refresh.timer`는 8/19 orbit `opensource` 세션 폐지 때 함께 정리됐고
-(유닛·클론·로그 디렉터리 전부 부재, 마지막 발화 8/17), tower에 대응 타이머가 아직 없다.
-재건은 [`tasks/010`](tasks/010-public-surface-and-automation.md).
-**그때까지는 월간 발행 직전에 사람이 한 번 손으로 돌린다**:
+**주간 감지(자동)**: 유저 타이머가 월요일 07:20에 `refresh_snapshot.py --notify`
+**드라이런**을 돌린다 — 재계수(임시 경로, 상류 트리 안 건드림) → export → 게이트 3종 →
+현 스냅숏과 diff. 설치·제거는 한 줄이다:
 
-    python3 scripts/refresh_snapshot.py --notify     # 드라이런
+    sh scripts/install-refresh-timer.sh            # 설치 + 즉시 활성화
+    sh scripts/install-refresh-timer.sh --remove
 
-드라이런은 재계수(임시 경로, 상류 트리 안 건드림) → export → 현 스냅숏과 diff이고,
-리포트는 `OSS_REFRESH_REPORT_DIR`(기본값도 레포 밖 — 인물 후보가 담긴다).
-재건 후의 목표 상태는 주 1회 자동 드라이런 + 변화·실패 시 텔레그램 알림,
-무변화여도 월 1회 하트비트(침묵과 고장을 구분한다).
+리포트는 `OSS_REFRESH_REPORT_DIR`(기본값 `~/.local/state/oss-refresh/reports`, 항상 레포
+밖 — 인물 후보가 담긴다). 알림은 `OSS_REFRESH_TELEGRAM_ENV`의 자격증명이 있을 때만 가고,
+없으면 경고만 남기고 리포트는 정상 생성된다(알림 배선과 감지를 분리한 것은 의도다 —
+배선을 기다리다 감지가 죽어 있는 게 더 나쁘다). 무변화여도 월 1회 하트비트를 보낸다:
+침묵과 고장은 달라야 한다.
+
+⚠️ **2026-08-26 현재 텔레그램 자격증명 미배선** — 시크릿 이동이라 웅스타 직접.
+그때까지 변화 감지는 리포트 디렉터리를 사람이 열어봐야 보인다.
 
 **월간 발행(사람 개입 1회)**:
 1. 주간 리포트의 **새 인물 쌍 후보를 사람이 확인** — 있으면 상류 제외 목록에 추가 후 재실행.
 2. `python3 scripts/refresh_snapshot.py --write` — 재계수(정본 아티팩트 갱신 →
-   껄무새에 an upstream pipeline task 명의로 커밋) → export → **게이트 3종** → `data/` 갱신 +
+   상류에 커밋) → export → **게이트 3종** → `data/` 갱신 +
    `CHANGELOG.md` 반영. 게이트는 후보 export에 대해 돌고, 하나라도 실패하면 쓰지 않는다:
    `release_check.py`(공개 경계) · `validate_snapshot.py`(스키마 계약·인물 최후 방어·
    산문 수치) · `benchmark_gate.py`(평가셋 추가만·연쇄 치환 신규 발생). 드라이런에서는
@@ -53,5 +56,5 @@
 **패치 릴리스(이벤트)**: 배포된 오교정 쌍의 **회수 전용**. 신규 쌍 추가는 패치 사유가 아니다.
 
 인물 제외 목록의 정본 위치는 **상류 `pipeline/data/person-exclusions.txt`**(프라이빗)다 —
-목록 자체가 인물 정보라 공개 레포에 두지 않는다(껄무새 an upstream pipeline task). exporter는 상류
+목록 자체가 인물 정보라 공개 레포에 두지 않는다. exporter는 상류
 목록과 (이관 완료 전까지의) 로컬 레거시 목록의 **합집합**을 쓴다.
