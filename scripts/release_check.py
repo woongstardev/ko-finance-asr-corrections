@@ -61,18 +61,14 @@ INTERNAL_HOST_PATTERNS = [
 # a separate, irreversible problem (task 010 §A-3).
 INTERNAL_REFERENCE_PATTERNS = [
     r"pipeline-[0-9]{3}",                          # upstream task numbers
-    r"~/(projects|orbit|max|alpha|bravo)/",        # other repositories' checkouts
+    r"[~%]h?/?(projects|orbit|max|alpha|bravo)/",   # other repositories' checkouts
+    r"%h/(projects|config|orbit)/",                # systemd spells $HOME as %h
     # Not listed: ~/.local/state and ~/.config paths. Documenting where a
     # published script writes by default is documentation, not disclosure — the
     # leak is naming *other people's* trees and tickets, not our own defaults.
     r"FLEET\.md|WOONGSTAR_CHECK\.md",              # fleet-internal documents
     r"correction_(cycle|dict|corpus|audit)\.py",   # upstream module layout
 ]
-# Files whose entire purpose is internal, and which the publish/withhold decision
-# covers as a unit. Listing them keeps the report about *unexpected* leaks; the
-# decision itself is task 010 §A-2.
-INTERNAL_BY_DESIGN = ("tasks/", "CLAUDE.md", "docs/GGULMUSE-CONTEXT.md")
-
 # Files that legitimately quote the patterns because they document this check.
 # Person names are never allowlisted — that check has no such exemption.
 PATTERN_DOC_FILES = [
@@ -184,18 +180,15 @@ def main() -> None:
 
     refs = internal_references()
     if refs:
-        by_design = {f: h for f, h in refs.items()
-                     if any(f == d or f.startswith(d) for d in INTERNAL_BY_DESIGN)}
-        unexpected = {f: h for f, h in refs.items() if f not in by_design}
+        # The documents that were internal by design were moved out of this
+        # repository on 2026-08-26, so anything matching now is a regression:
+        # either a new leak, or one of those documents coming back.
         lines = [
             f"internal operational references in {len(refs)} tracked file(s), "
             f"{sum(len(h) for h in refs.values())} line(s) — AGENTS.md forbids "
-            "committing these (task 010 §A)",
-            f"  internal by design, publish/withhold undecided: {len(by_design)} file(s)",
+            "committing these"
         ]
-        lines += [f"    {f}: {len(h)}" for f, h in sorted(by_design.items())]
-        lines.append(f"  not covered by that decision: {len(unexpected)} file(s)")
-        lines += [f"    {f}: {len(h)}" for f, h in sorted(unexpected.items())]
+        lines += [f"    {f}: {len(h)}" for f, h in sorted(refs.items())]
         (failures if args.publication else warnings).append("\n".join(lines))
 
     for w in warnings:

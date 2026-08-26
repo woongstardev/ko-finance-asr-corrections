@@ -9,9 +9,14 @@
 # once-a-month human step (AGENTS.md) because a person has to review dropped
 # person-name candidates before anything ships.
 #
-# Everything is derived from where this checkout actually lives, so the units
-# carry no path this script did not compute. Requires `loginctl enable-linger
-# $USER` for the timer to fire without an active login session.
+# Everything is derived from where this checkout actually lives or from the
+# environment at install time, so the units carry no path this script did not
+# compute. Host-specific values are passed in rather than baked in:
+#
+#   GGULMUSE_ROOT=... OSS_REFRESH_TELEGRAM_ENV=... sh scripts/install-refresh-timer.sh
+#
+# Requires `loginctl enable-linger $USER` for the timer to fire without an
+# active login session.
 set -eu
 
 REPO=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
@@ -28,6 +33,17 @@ fi
 
 mkdir -p "$UNIT_DIR"
 
+# Only pass through what the caller actually set — an empty Environment= line
+# would be a syntax error, and a guessed default would be someone else's layout.
+ENV_LINES=""
+for var in GGULMUSE_ROOT OSS_REFRESH_REPORT_DIR OSS_REFRESH_STATE OSS_REFRESH_TELEGRAM_ENV; do
+    eval "value=\${$var:-}"
+    [ -n "$value" ] && ENV_LINES="${ENV_LINES}Environment=$var=$value
+"
+done
+ENV_LINES=${ENV_LINES%%
+}
+
 cat > "$UNIT_DIR/$NAME.service" <<EOF
 [Unit]
 Description=ko-finance-asr-corrections weekly snapshot dry-run
@@ -40,7 +56,7 @@ ExecStart=$(command -v python3) $REPO/scripts/refresh_snapshot.py --notify
 # Reports name dropped person-name candidates, so they stay outside the repo.
 # Telegram credentials are optional: without them the run still produces its
 # report and says so, rather than failing.
-Environment=GGULMUSE_ROOT=${GGULMUSE_ROOT}
+$ENV_LINES
 TimeoutStartSec=1800
 EOF
 

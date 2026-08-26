@@ -2,7 +2,7 @@
 
 > **This file is a draft of the `README.md` that will live in the HuggingFace mirror**
 > `woongstardev/ko-finance-asr-corrections`. It is not uploaded until the repository goes
-> public (see [`tasks/003-v01-release.md`](../tasks/003-v01-release.md)).
+> public (see [`ROADMAP.md`](../ROADMAP.md)).
 >
 > **The source of truth is the repository [`README.md`](../README.md), not this card.**
 > The card is a summary that links back. When the two disagree, the README wins; the monthly

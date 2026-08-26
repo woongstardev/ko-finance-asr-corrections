@@ -11,3 +11,11 @@ scratch/
 benchmark/predictions/
 # person info — list lives upstream (private); local legacy copy stays untracked (task 006)
 scripts/person-exclusions.txt
+
+# Internal working documents — task 010 §A-2 (2026-08-26). These live in a
+# separate, private repository and are symlinked back in so the working session
+# still finds them at the paths it expects. They describe upstream internals and
+# fleet operations, which AGENTS.md forbids committing here.
+CLAUDE.md
+tasks
+docs/GGULMUSE-CONTEXT.md

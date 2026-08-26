@@ -98,7 +98,8 @@ Stated up front, because a niche dataset earns trust by being explicit about its
 
 ## Versioning & updates
 
-Snapshot releases (`v0.1`, then monthly `vYYYY.MM`). The upstream pipeline keeps producing
+Snapshot releases (`v0.1`, then monthly `vYYYY.MM`). What is planned, and what is
+deliberately not: [ROADMAP.md](ROADMAP.md). The upstream pipeline keeps producing
 verified pairs; each snapshot adds newly promoted entries and retires rolled-back ones.
 
 ## Contributing
