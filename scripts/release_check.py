@@ -61,8 +61,10 @@ INTERNAL_HOST_PATTERNS = [
 # a separate, irreversible problem (task 010 §A-3).
 INTERNAL_REFERENCE_PATTERNS = [
     r"pipeline-[0-9]{3}",                          # upstream task numbers
-    r"~/(projects|orbit|max|alpha|bravo)/",        # host paths
-    r"~/\.local/state/[a-z]",  # a concrete state path, not the XDG convention itself
+    r"~/(projects|orbit|max|alpha|bravo)/",        # other repositories' checkouts
+    # Not listed: ~/.local/state and ~/.config paths. Documenting where a
+    # published script writes by default is documentation, not disclosure — the
+    # leak is naming *other people's* trees and tickets, not our own defaults.
     r"FLEET\.md|WOONGSTAR_CHECK\.md",              # fleet-internal documents
     r"correction_(cycle|dict|corpus|audit)\.py",   # upstream module layout
 ]
