@@ -16,11 +16,21 @@ What it only WARNS about (known, decision pending with 웅스타 — task 006):
   - scripts/person-exclusions.txt existing anywhere in history (item 1)
   - personal email in commit authorship (item 3)
 
+With --publication (the pre-flip check of task 003) one more class becomes a
+FAILURE rather than a warning: internal operational references in the working
+tree — upstream task numbers, host paths, timer names, fleet-internal documents.
+AGENTS.md forbids committing those, and as of 2026-08-26 the tree breaks that
+rule in its planning documents (task 010 §A). Keeping it a warning by default
+leaves today's monthly release path working while the publish/withhold decision
+is open; making it a failure under --publication stops the tree drifting further
+before the flip.
+
 Exit 0 = publishable, 1 = hard finding, plus warnings on stderr either way.
 """
 
 from __future__ import annotations
 
+import argparse
 import os
 import subprocess
 import sys
@@ -44,6 +54,23 @@ INTERNAL_HOST_PATTERNS = [
     r"tail[0-9a-f]{6}",
     r"100\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}",
 ]
+
+# Operational detail that AGENTS.md forbids committing. None of these is a secret;
+# together they describe how the upstream pipeline and this fleet are run, which is
+# exactly what the hard line is about. Scanned in the working tree only — history is
+# a separate, irreversible problem (task 010 §A-3).
+INTERNAL_REFERENCE_PATTERNS = [
+    r"pipeline-[0-9]{3}",                          # upstream task numbers
+    r"~/(projects|orbit|max|alpha|bravo)/",        # host paths
+    r"~/\.local/state/",
+    r"oss-corrections-refresh",                    # timer / unit names
+    r"FLEET\.md|WOONGSTAR_CHECK\.md",              # fleet-internal documents
+    r"correction_(cycle|dict|corpus|audit)\.py",   # upstream module layout
+]
+# Files whose entire purpose is internal, and which the publish/withhold decision
+# covers as a unit. Listing them keeps the report about *unexpected* leaks; the
+# decision itself is task 010 §A-2.
+INTERNAL_BY_DESIGN = ("tasks/", "CLAUDE.md", "docs/GGULMUSE-CONTEXT.md")
 
 # Files that legitimately quote the patterns because they document this check.
 # Person names are never allowlisted — that check has no such exemption.
@@ -79,6 +106,22 @@ def grep_history(pattern: str, commits: list[str], pathspec: list[str]) -> list[
     return hits
 
 
+def internal_references() -> dict[str, list[str]]:
+    """Working-tree hits, grouped by file. Empty when the tree is clean."""
+    found: dict[str, list[str]] = {}
+    for pat in INTERNAL_REFERENCE_PATTERNS:
+        out = subprocess.run(
+            ["git", "grep", "-I", "-n", "-E", pat],
+            cwd=REPO, capture_output=True, text=True, check=False,
+        ).stdout
+        for line in out.splitlines():
+            path = line.split(":", 1)[0]
+            if path in PATTERN_DOC_FILES:
+                continue
+            found.setdefault(path, []).append(line)
+    return found
+
+
 def load_person_patterns() -> list[str]:
     names: set[str] = set()
     for path in (
@@ -95,6 +138,11 @@ def load_person_patterns() -> list[str]:
 
 
 def main() -> None:
+    ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    ap.add_argument("--publication", action="store_true",
+                    help="pre-flip check: internal references fail instead of warning")
+    args = ap.parse_args()
+
     commits = all_commits()
     failures: list[str] = []
     warnings: list[str] = []
@@ -132,6 +180,22 @@ def main() -> None:
             + ", ".join(personal)
             + " (task 006 item 3 — rewrite pending 웅스타 decision)"
         )
+
+    refs = internal_references()
+    if refs:
+        by_design = {f: h for f, h in refs.items()
+                     if any(f == d or f.startswith(d) for d in INTERNAL_BY_DESIGN)}
+        unexpected = {f: h for f, h in refs.items() if f not in by_design}
+        lines = [
+            f"internal operational references in {len(refs)} tracked file(s), "
+            f"{sum(len(h) for h in refs.values())} line(s) — AGENTS.md forbids "
+            "committing these (task 010 §A)",
+            f"  internal by design, publish/withhold undecided: {len(by_design)} file(s)",
+        ]
+        lines += [f"    {f}: {len(h)}" for f, h in sorted(by_design.items())]
+        lines.append(f"  not covered by that decision: {len(unexpected)} file(s)")
+        lines += [f"    {f}: {len(h)}" for f, h in sorted(unexpected.items())]
+        (failures if args.publication else warnings).append("\n".join(lines))
 
     for w in warnings:
         print(f"WARN: {w}", file=sys.stderr)

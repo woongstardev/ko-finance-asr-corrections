@@ -59,7 +59,7 @@ PUBLIC_FIELDS = [
 # Upstream `source` -> published `evidence`. `tier` says how much authority a pair
 # carries; `evidence` says how it was verified. They are not the same axis: a pair
 # can be human-approved on top of auditor consensus (see 업항 → 업황), and the
-# goldset path coming from upstream an upstream pipeline task promotes without consensus at all.
+# the upstream goldset path promotes without auditor consensus at all.
 EVIDENCE_BY_SOURCE = {
     "human": "human",
     "auditor": "auditor-consensus",
@@ -108,7 +108,7 @@ def load_exclusions() -> set[str]:
 
 
 def load_corpus_counts() -> tuple[dict[str, int], dict]:
-    """ggulmuse an upstream pipeline task 산출물. 없으면 corpus_count는 null로 배포된다."""
+    """상류 코퍼스 재계수 산출물. 없으면 corpus_count는 null로 배포된다."""
     if not OSS_COUNTS_PATH.exists():
         return {}, {}
     payload = json.loads(OSS_COUNTS_PATH.read_text(encoding="utf-8"))

@@ -3,7 +3,7 @@
 
 Pure stdlib - no third-party imports, and deliberately no import of the upstream
 ggulmuse pipeline. This is a simplified port of that pipeline's `score_round`
-(pipeline/the upstream cycle module): the upstream scorer grades a candidate-mining
+(the upstream production scorer): that one grades a candidate-mining
 round against auditor consensus, this one grades a system's rewritten sentences
 against a known gold slot. The shared idea is the one that matters - a fix count
 alone is not a score, because a system can buy fixes with over-corrections.

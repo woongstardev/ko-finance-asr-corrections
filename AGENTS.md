@@ -27,7 +27,7 @@
 **주간 감지 — 🔴 현재 자동으로 돌지 않는다 (2026-08-23 실측).** 오르빗 유저 타이머
 `oss-corrections-refresh.timer`는 8/19 orbit `opensource` 세션 폐지 때 함께 정리됐고
 (유닛·클론·로그 디렉터리 전부 부재, 마지막 발화 8/17), tower에 대응 타이머가 아직 없다.
-재건은 [`tasks/010`](tasks/010-automation-restore-and-exclusions-handover.md).
+재건은 [`tasks/010`](tasks/010-public-surface-and-automation.md).
 **그때까지는 월간 발행 직전에 사람이 한 번 손으로 돌린다**:
 
     python3 scripts/refresh_snapshot.py --notify     # 드라이런

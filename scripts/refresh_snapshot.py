@@ -8,8 +8,7 @@ the point (silence and breakage must look different).
 
 Runs on the host that has the upstream checkout and its venv. This script
 itself needs only the stdlib; it invokes the upstream venv's python for the
-recount and export subprocesses. Locate the upstream checkout with
-``GGULMUSE_ROOT`` (default: $GGULMUSE_ROOT).
+recount and export subprocesses. Point ``GGULMUSE_ROOT`` at that checkout.
 
     python3 scripts/refresh_snapshot.py              # dry-run: report only
     python3 scripts/refresh_snapshot.py --notify     # dry-run + Telegram on change/failure (cron mode)
@@ -20,10 +19,10 @@ Exit codes: 0 = ran fine (changed or not), nonzero = the refresh itself failed
 that means upstream grew a verification path we have not described publicly,
 and publishing on top of it would be wrong).
 
-Reports and state live outside the repo on purpose — they can contain
-dropped person names, which never enter this (eventually public) tree:
-  reports  $OSS_REFRESH_REPORT_DIR/YYYY-MM-DD.md
-  state    $OSS_REFRESH_STATE
+Reports and state live outside the repo on purpose — they can contain dropped
+person names, which never enter this (eventually public) tree. Set
+``OSS_REFRESH_REPORT_DIR`` and ``OSS_REFRESH_STATE``; both default to a
+per-user state directory, never to a path inside the repository.
 """
 
 from __future__ import annotations
@@ -45,10 +44,26 @@ REPO = Path(__file__).resolve().parent.parent
 GGULMUSE = Path(
     os.environ.get("GGULMUSE_ROOT", str(Path.home() / "projects" / "ggulmuse"))
 ).expanduser()
-ORBIT = Path.home() / "orbit"
-REPORT_DIR = Path(os.environ.get("OSS_REFRESH_REPORT_DIR", ORBIT / "logs" / "oss-refresh"))
-STATE_PATH = Path(os.environ.get("OSS_REFRESH_STATE", ORBIT / "state" / "oss-refresh-state.json"))
-CRED_PATH = ORBIT / "ops" / ".credentials" / "telegram.env"
+# Defaults follow the XDG state convention rather than any one host's layout:
+# the previous defaults pointed at a machine that stopped running this in
+# 2026-08, and a stale default is worse than none — it writes reports somewhere
+# nobody reads. Every path here is outside the repository by construction,
+# because reports can name dropped person candidates.
+STATE_HOME = Path(
+    os.environ.get("XDG_STATE_HOME", str(Path.home() / ".local" / "state"))
+).expanduser()
+REPORT_DIR = Path(
+    os.environ.get("OSS_REFRESH_REPORT_DIR", STATE_HOME / "oss-refresh" / "reports")
+).expanduser()
+STATE_PATH = Path(
+    os.environ.get("OSS_REFRESH_STATE", STATE_HOME / "oss-refresh" / "state.json")
+).expanduser()
+CRED_PATH = Path(
+    os.environ.get(
+        "OSS_REFRESH_TELEGRAM_ENV",
+        str(Path.home() / ".config" / "oss-corrections" / "telegram.env"),
+    )
+).expanduser()
 
 # Frequency fields drift a little every week just because the corpus grows.
 # They are reported, but they alone do not make a snapshot "changed" —
@@ -119,7 +134,7 @@ def save_state(state: dict) -> None:
 
 
 def send_telegram(text: str) -> bool:
-    """Same one-way bot channel as the fleet notification channel."""
+    """One-way bot channel. Credentials come from CRED_PATH, never from git."""
     try:
         env = {}
         for line in CRED_PATH.read_text(encoding="utf-8").splitlines():
@@ -276,8 +291,8 @@ def main() -> None:
         if not args.no_recount:
             # Dry-runs recount into scratch: the upstream checkout is a shared
             # working tree and an unattended weekly job must not dirty it.
-            # --write refreshes the canonical artifact (commit it upstream
-            # under an upstream pipeline task as part of the monthly procedure).
+            # --write refreshes the canonical artifact, which is then committed
+            # upstream as part of the monthly procedure.
             recount_cmd = [str(py), "-m", "pipeline.correction_corpus", "--oss-counts"]
             if not args.write:
                 counts_path = tmp / "oss-corpus-counts.json"
