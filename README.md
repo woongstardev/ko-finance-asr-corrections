@@ -104,7 +104,7 @@ company is an observation, not an inference, and that observation is what this d
 
 † The LLM row was measured on `mini-v0.2`'s 482 items and is **not** rescored here: the model
 predictions are re-run output, not committed data, so reproducing the row costs an API run
-rather than a replay. The dictionary rows above are `mini-v0.3`.
+rather than a replay. The dictionary rows above are `mini-v0.4`.
 
 Benchmark `mini-v0.4` (135 pairs, 721 items). Earlier numbers are kept in
 [`benchmark/README.md`](benchmark/README.md) and are not comparable across versions — the

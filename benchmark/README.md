@@ -88,10 +88,10 @@ Three ways of using the dataset itself as a correction system (`benchmark/baseli
 None is a proposed method; they exist to give the benchmark a floor and to show what the
 penalty measures.
 
-- **naive** — plain substring replacement, all 89 pairs.
+- **naive** — plain substring replacement, all 135 pairs.
 - **boundary** — whitespace-flexible matching with a non-alphanumeric guard on ASCII keys.
   This mirrors how the upstream pipeline matches.
-- **guarded** — boundary, minus any key shorter than 4 characters (60 of 89 pairs survive).
+- **guarded** — boundary, minus any key shorter than 4 characters (83 of 135 pairs survive).
   Short Korean keys are where blind replacement does its damage, and Korean is agglutinative,
   so there is no word boundary to fall back on.
 

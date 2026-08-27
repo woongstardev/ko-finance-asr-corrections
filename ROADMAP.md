@@ -9,12 +9,13 @@ Preparing `v0.1`. The schema may still change; after v0.1 a `data/` schema chang
 minor version.
 
 - **Snapshot growth.** The upstream pipeline keeps verifying pairs, and each monthly snapshot
-  adds the newly promoted ones. The published snapshot is 89 pairs from a 595-video corpus;
-  the next one is larger.
-- **Benchmark `mini-v0.2`.** 482 items, 40 traps, three dictionary baselines and one LLM
-  reference row. See [`benchmark/README.md`](benchmark/README.md).
+  adds the newly promoted ones. The published snapshot is 135 pairs counted over a cumulative
+  corpus of 1,490 videos; the next one is larger.
+- **Benchmark `mini-v0.4`.** 721 items, 47 traps, three dictionary baselines, one LLM
+  reference row and a held-out row. See [`benchmark/README.md`](benchmark/README.md).
 - **Release automation.** A weekly dry-run detects upstream change; a monthly human step
-  publishes it. Three gates run against a candidate export before anything is written.
+  publishes it. Four gates run against a candidate export before anything is written:
+  publication boundary, corpus coverage, schema contract and benchmark regression.
 
 ## Next — after v0.1
 
@@ -22,11 +23,11 @@ minor version.
   from being large.
 - **A HuggingFace mirror**, kept as a summary of this repository rather than a second source
   of truth.
-- **A held-out evaluation split.** The benchmark is in-domain by construction today: its error
-  sentences are generated from the same pairs a dictionary system would use, so a lookup
-  scores 100% recall. A real held-out split needs verified pairs deliberately withheld from
-  the published snapshot, which only becomes possible once upstream produces more than the
-  snapshot ships.
+- **~~A held-out evaluation split.~~** Done, and without withholding anything: pairs that
+  arrive after a benchmark run have by definition not been seen by it, so each month's delta
+  is a held-out set for the systems measured before it. The first measurement (2026-08-27) is
+  the reversal the in-domain table cannot show — the previous snapshot's dictionary scores
+  2.3% on new pairs where an LLM scores 72.9%. Continues monthly.
 - **More traps.** Trap candidates are mined mechanically (`benchmark/mine_traps.py`) and the
   sentences are written by hand; the set grows with the pair list.
 

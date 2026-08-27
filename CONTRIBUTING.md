@@ -10,7 +10,9 @@ So the contribution paths are shaped differently for data and for code.
 
 ## Data: propose, don't patch
 
-`data/pairs.json` and `data/pairs.csv` are generated files. **Pull requests that edit them
+`data/pairs.json`, `data/pairs.csv`, `data/withdrawn.json` and `data/biasing-list.txt` are
+generated files — the last one by `scripts/make_biasing_list.py`, which the validator checks
+for drift. **Pull requests that edit them
 will be closed**, not because the change is unwelcome but because it would be overwritten by
 the next monthly export — and because a pair that skipped upstream verification would break
 the guarantee the dataset makes about its own provenance.
