@@ -74,7 +74,11 @@ STAT_MARKER = re.compile(r"<!--\s*stat:([A-Za-z_]+)(?::([^\s>]+))?\s*-->")
 # CHANGELOG.md is deliberately absent: its entries are historical records, and a
 # released line must keep the number it shipped with. Marking it would demand that
 # last month's release notes track this month's data.
-MARKED_FILES = ("README.md", "docs/SCHEMA.md", "benchmark/README.md")
+# The HF card is in here because it is the file most likely to go stale unnoticed:
+# it is a copy of claims that live elsewhere, and it is read by people who never
+# see this repository. It was three snapshots out of date when it joined the list.
+MARKED_FILES = ("README.md", "docs/SCHEMA.md", "benchmark/README.md",
+                "docs/hf-dataset-card.md")
 
 
 def exclusion_names(ggulmuse: Path) -> tuple[set[str], list[Path]]:

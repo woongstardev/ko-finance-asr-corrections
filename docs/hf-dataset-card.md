@@ -40,17 +40,27 @@ configs:
     data_files:
       - split: train
         path: data/pairs.csv
+  - config_name: withdrawn
+    data_files:
+      - split: train
+        path: data/withdrawn.json
 ---
 ```
 
 # ko-finance-asr-corrections
 
-Frequency-annotated Korean ASR confusion pairs from finance/stock YouTube — **89 pairs**
-mined from a **595-video** auto-caption corpus, each with an observed corpus frequency and
+Frequency-annotated Korean ASR confusion pairs from finance/stock YouTube.
+
+- **135 pairs** <!-- stat:pair_count -->
+- mined from **1,490 videos** <!-- stat:scanned_videos --> of auto-captions
+- across **43 channels** <!-- stat:corpus_channels -->
+- totalling **672.3 hours** <!-- stat:corpus_hours -->
+
+Each pair carries how often the term was mangled *and* how often it was said correctly, plus
 verification provenance.
 
-한국어 금융·주식 유튜브 자동자막에서 실측한 ASR 오인식→교정 쌍입니다. 모든 쌍에 관측
-빈도와 검증 메타데이터(2-LLM 합의 감사, 승격 티어)가 붙어 있습니다.
+한국어 금융·주식 유튜브 자동자막에서 실측한 ASR 오인식→교정 쌍입니다. 모든 쌍에 오표기·정답
+표기 빈도(→ 용어별 오인식률)와 검증 메타데이터(2-LLM 합의 감사, 승격 티어)가 붙어 있습니다.
 
 ## What makes it different
 
@@ -74,9 +84,21 @@ independent LLM auditors judge each candidate, only consensus is adopted, an ext
 check confirms stock names, and pairs are promoted through tiers with instant rollback.
 Details and per-round numbers: [`docs/METHODOLOGY.md`](https://github.com/woongstardev/ko-finance-asr-corrections/blob/main/docs/METHODOLOGY.md).
 
+## Error rates, not just frequencies
+
+Each pair carries `corpus_count` (the misrecognized form) and `right_count` (the verified one)
+from the same scan, so a row states how often the term came out wrong: `FMC → FOMC` 79.7%,
+`엔트로픽 → 앤트로픽` 87.9% <!-- stat:rate:엔트로픽 -->. Ten pairs have `right_count: 0` — across 1,490 videos the captions
+never once produced the correct spelling. Stock rows also carry `ticker` and `market`, so they
+join to price data without matching on a name.
+
+`data/withdrawn.json` lists pairs that shipped and were later removed, with how many of their
+matches were genuine and which narrower key replaced them. A withdrawal says the key was
+unsafe as written, not that every correction it made was wrong.
+
 ## Limitations (read these)
 
-One corpus, one ASR system, one domain; 89 pairs is a seed, not a lexicon; frequency-ranked
+One corpus, one ASR system, one domain; 135 pairs is a seed, not a lexicon; frequency-ranked
 mining skews toward what these channels talk about; `corpus_count` counts surface forms, not
 confirmed errors; some pairs encode a spelling standard rather than a mishearing; tier B pairs
 were verified by auditor consensus, not by a human; **no person-name pairs and no source
@@ -85,7 +107,7 @@ the data as a general Korean ASR error list, because it is not one.
 
 ## Benchmark
 
-A standard-library scorer, a 456-item synthetic evaluation set, and three dictionary baselines
+A standard-library scorer, a 721-item <!-- stat:eval_items --> synthetic evaluation set, and three dictionary baselines
 live in the GitHub repository. Fixes and over-corrections are scored together, because a
 correction dictionary that fixes 100 errors while damaging 20 correct sentences is not a good
 dictionary.
