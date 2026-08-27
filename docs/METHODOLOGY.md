@@ -163,3 +163,31 @@ Two consequences worth stating for anyone reproducing this:
   where the result is not a real entity.
 - The corpus is one domain (Korean stock YouTube), a handful of channels, and one ASR system
   (YouTube auto-captions). See the limitations section in the [README](../README.md).
+
+
+## What the damage looks like, at the jamo level
+
+`scripts/jamo_analysis.py` decomposes each pair into Hangul jamo and measures the edit
+distance between the misrecognized and verified forms. On the 135-pair snapshot:
+
+| Jamo edit distance | Pairs |
+|---|---|
+| 1 | 45 (33.3%) |
+| 2 | 40 (29.6%) |
+| 3 | 28 (20.7%) |
+| 4 or more | 22 (16.3%) |
+
+**Nearly two thirds of these errors are one or two jamo wide.** The most frequent single-jamo
+substitutions are ㅔ→ㅐ, ㅎ→ㅇ and ㄹ→ㄴ — respectively the vowel merger most Korean speakers
+no longer distinguish, h-deletion between voiced sounds, and lateral-nasal confusion. The ASR
+is not hallucinating; it is failing on the same contrasts that are weak in the spoken language,
+and then a language model picks the wrong word from the neighbourhood.
+
+That is also the argument for why a dictionary helps here at all. If the acoustic difference
+between `하이닉스` and `하이니스` is one jamo, no amount of context recovers which listed
+company was meant — but an observation that this specific corruption occurred 672 times does.
+
+Two honest limits. This is **jamo, not pronunciation**: no phonological rules are applied, so
+the analysis under-counts errors that are identical in speech but differ in spelling. And the
+distances are not published as a field — they are a pure function of `(wrong, right)`, and a
+stored copy would be one more number to keep in step with the two that determine it.

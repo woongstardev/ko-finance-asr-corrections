@@ -233,6 +233,30 @@ WITHDRAWN_REASONS = {"over-correction", "ambiguous-target", "artifact"}
 WITHDRAWN_EVIDENCE = {"corpus-counterexample", "user-report", "audit"}
 
 
+def check_biasing_list(payload: dict, path: Path, fail, warn) -> None:
+    """SCHEMA.md → Files. A derived file that nobody regenerates is a stale file.
+
+    `data/biasing-list.txt` is produced from the same pairs; the only way it can
+    be wrong is by being older than they are, so the check is set equality
+    against the verified forms rather than a format check.
+    """
+    if not path.exists():
+        return
+    listed = {
+        line.split("\t")[0]
+        for line in path.read_text(encoding="utf-8").splitlines()
+        if line and not line.startswith("#")
+    }
+    expected = {p.get("right") for p in payload.get("pairs") or []}
+    missing, extra = expected - listed, listed - expected
+    if missing or extra:
+        fail(f"biasing-list.txt is out of date with pairs.json "
+             f"({len(missing)} missing, {len(extra)} stale) — "
+             "run scripts/make_biasing_list.py")
+    else:
+        print(f"  biasing list: {len(listed)} terms, in sync")
+
+
 def check_withdrawn(payload: dict, path: Path, fail, warn) -> None:
     """SCHEMA.md → Withdrawn pairs. Optional file; strict when present.
 
@@ -385,6 +409,7 @@ def main() -> None:
     check_csv(payload, args.dir / "pairs.csv", fail, warn)
     check_person_names(payload, args.ggulmuse, args.require_person_list, fail, warn)
     check_withdrawn(payload, args.dir / "withdrawn.json", fail, warn)
+    check_biasing_list(payload, args.dir / "biasing-list.txt", fail, warn)
     if not args.skip_prose:
         check_prose_stats(payload, fail, warn)
 

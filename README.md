@@ -61,6 +61,15 @@ Read the rates as *this corpus, this ASR system*: the denominator is Korean fina
 auto-captions, not Korean speech in general. And `corpus_count` counts a surface form, not a
 confirmed error — see [Known limitations](#known-limitations).
 
+## Using it as ASR biasing vocabulary
+
+`data/biasing-list.txt` is the verified forms alone, ordered by how badly each is
+misrecognized — a phrase list for contextual biasing, a Whisper `initial_prompt`, or a
+rescoring lexicon. Recent work in this area synthesizes plausible pronunciation variants to
+build such lists; here the variants are the `wrong` column, observed rather than generated,
+with counts attached. Regenerate it with `scripts/make_biasing_list.py`; the validator fails
+if it drifts from `data/pairs.json`.
+
 ## What was taken back out
 
 `data/withdrawn.json` lists pairs that shipped and were later removed — four so far, all after
