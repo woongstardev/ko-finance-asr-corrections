@@ -1,12 +1,12 @@
 {
- "benchmark": "ko-finance-asr-corrections/mini-v0.2",
- "generated_at": "2026-08-23T14:39:43Z",
- "pairs_exported_at": "2026-08-13T21:39:19Z",
- "pair_count": 89,
+ "benchmark": "ko-finance-asr-corrections/mini-v0.3",
+ "generated_at": "2026-08-27T09:00:26Z",
+ "pairs_exported_at": "2026-08-27T08:58:09Z",
+ "pair_count": 130,
  "item_counts": {
-  "error:plain": 267,
-  "error:spacing": 86,
-  "clean": 89,
+  "error:plain": 390,
+  "error:spacing": 129,
+  "clean": 130,
   "trap": 40
  },
  "frames": [
@@ -982,6 +982,80 @@
    "tier": "B"
   },
   {
+   "id": "err-de76c2-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "HBN 관련해서 궁금한 부분이 있습니다.",
+   "expected": "HBM 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "HBN",
+   "wrong": "HBN",
+   "right": "HBM",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-de76c2-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "요즘 HBN 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 HBM 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    6
+   ],
+   "surface": "HBN",
+   "wrong": "HBN",
+   "right": "HBM",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-de76c2-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "오늘 방송에서는 HBN 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 HBM 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    12
+   ],
+   "surface": "HBN",
+   "wrong": "HBN",
+   "right": "HBM",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-de76c2-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "H BN 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "HBM 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    4
+   ],
+   "surface": "H BN",
+   "wrong": "HBN",
+   "right": "HBM",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "cln-de76c2",
+   "kind": "clean",
+   "input": "어제 시장에서 HBM 언급이 많았습니다.",
+   "expected": "어제 시장에서 HBM 언급이 많았습니다.",
+   "wrong": "HBN",
+   "right": "HBM",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
    "id": "err-08dff7-0",
    "kind": "error",
    "variant": "plain",
@@ -1275,6 +1349,80 @@
    "wrong": "MCD",
    "right": "MACD",
    "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-f32e95-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "어제 시장에서 MDI 언급이 많았습니다.",
+   "expected": "어제 시장에서 엔비디아 언급이 많았습니다.",
+   "span": [
+    8,
+    11
+   ],
+   "surface": "MDI",
+   "wrong": "MDI",
+   "right": "엔비디아",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-f32e95-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "MDI 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "엔비디아 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "MDI",
+   "wrong": "MDI",
+   "right": "엔비디아",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-f32e95-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "투자자들이 MDI 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 엔비디아 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    9
+   ],
+   "surface": "MDI",
+   "wrong": "MDI",
+   "right": "엔비디아",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-f32e95-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "요즘 M DI 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 엔비디아 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    7
+   ],
+   "surface": "M DI",
+   "wrong": "MDI",
+   "right": "엔비디아",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "cln-f32e95",
+   "kind": "clean",
+   "input": "엔비디아 관련해서 궁금한 부분이 있습니다.",
+   "expected": "엔비디아 관련해서 궁금한 부분이 있습니다.",
+   "wrong": "MDI",
+   "right": "엔비디아",
+   "category": "stock",
    "tier": "B"
   },
   {
@@ -1722,6 +1870,228 @@
    "tier": "B"
   },
   {
+   "id": "err-2ffa50-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "오늘 방송에서는 SK니스 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 SK하이닉스 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    13
+   ],
+   "surface": "SK니스",
+   "wrong": "SK니스",
+   "right": "SK하이닉스",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-2ffa50-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "어제 시장에서 SK니스 언급이 많았습니다.",
+   "expected": "어제 시장에서 SK하이닉스 언급이 많았습니다.",
+   "span": [
+    8,
+    12
+   ],
+   "surface": "SK니스",
+   "wrong": "SK니스",
+   "right": "SK하이닉스",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-2ffa50-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "SK니스 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "SK하이닉스 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    4
+   ],
+   "surface": "SK니스",
+   "wrong": "SK니스",
+   "right": "SK하이닉스",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-2ffa50-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "SK 니스 관련해서 궁금한 부분이 있습니다.",
+   "expected": "SK하이닉스 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    5
+   ],
+   "surface": "SK 니스",
+   "wrong": "SK니스",
+   "right": "SK하이닉스",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "cln-2ffa50",
+   "kind": "clean",
+   "input": "투자자들이 SK하이닉스 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 SK하이닉스 이슈에 주목하고 있습니다.",
+   "wrong": "SK니스",
+   "right": "SK하이닉스",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-2afa0d-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "투자자들이 SK닉스 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 SK하이닉스 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    10
+   ],
+   "surface": "SK닉스",
+   "wrong": "SK닉스",
+   "right": "SK하이닉스",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-2afa0d-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "SK닉스 관련해서 궁금한 부분이 있습니다.",
+   "expected": "SK하이닉스 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    4
+   ],
+   "surface": "SK닉스",
+   "wrong": "SK닉스",
+   "right": "SK하이닉스",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-2afa0d-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "요즘 SK닉스 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 SK하이닉스 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    7
+   ],
+   "surface": "SK닉스",
+   "wrong": "SK닉스",
+   "right": "SK하이닉스",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-2afa0d-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "어제 시장에서 SK 닉스 언급이 많았습니다.",
+   "expected": "어제 시장에서 SK하이닉스 언급이 많았습니다.",
+   "span": [
+    8,
+    13
+   ],
+   "surface": "SK 닉스",
+   "wrong": "SK닉스",
+   "right": "SK하이닉스",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "cln-2afa0d",
+   "kind": "clean",
+   "input": "오늘 방송에서는 SK하이닉스 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 SK하이닉스 이야기를 해보겠습니다.",
+   "wrong": "SK닉스",
+   "right": "SK하이닉스",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-6eea6b-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "요즘 SK하닉스 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 SK하이닉스 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    8
+   ],
+   "surface": "SK하닉스",
+   "wrong": "SK하닉스",
+   "right": "SK하이닉스",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-6eea6b-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "오늘 방송에서는 SK하닉스 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 SK하이닉스 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    14
+   ],
+   "surface": "SK하닉스",
+   "wrong": "SK하닉스",
+   "right": "SK하이닉스",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-6eea6b-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "어제 시장에서 SK하닉스 언급이 많았습니다.",
+   "expected": "어제 시장에서 SK하이닉스 언급이 많았습니다.",
+   "span": [
+    8,
+    13
+   ],
+   "surface": "SK하닉스",
+   "wrong": "SK하닉스",
+   "right": "SK하이닉스",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-6eea6b-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "투자자들이 SK 하닉스 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 SK하이닉스 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    12
+   ],
+   "surface": "SK 하닉스",
+   "wrong": "SK하닉스",
+   "right": "SK하이닉스",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "cln-6eea6b",
+   "kind": "clean",
+   "input": "SK하이닉스 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "SK하이닉스 부분은 조금 더 지켜봐야 합니다.",
+   "wrong": "SK하닉스",
+   "right": "SK하이닉스",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
    "id": "err-17696d-0",
    "kind": "error",
    "variant": "plain",
@@ -1870,77 +2240,151 @@
    "tier": "A"
   },
   {
-   "id": "err-7c411f-0",
+   "id": "err-ddc67a-0",
    "kind": "error",
    "variant": "plain",
-   "input": "요즘 SPB 쪽 흐름이 어떻습니까?",
-   "expected": "요즘 SPV 쪽 흐름이 어떻습니까?",
+   "input": "SMP 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "에스앤피 부분은 조금 더 지켜봐야 합니다.",
    "span": [
-    3,
-    6
+    0,
+    3
    ],
-   "surface": "SPB",
-   "wrong": "SPB",
-   "right": "SPV",
-   "category": "term",
+   "surface": "SMP",
+   "wrong": "SMP",
+   "right": "에스앤피",
+   "category": "stock",
    "tier": "B"
   },
   {
-   "id": "err-7c411f-1",
+   "id": "err-ddc67a-1",
    "kind": "error",
    "variant": "plain",
-   "input": "오늘 방송에서는 SPB 이야기를 해보겠습니다.",
-   "expected": "오늘 방송에서는 SPV 이야기를 해보겠습니다.",
-   "span": [
-    9,
-    12
-   ],
-   "surface": "SPB",
-   "wrong": "SPB",
-   "right": "SPV",
-   "category": "term",
-   "tier": "B"
-  },
-  {
-   "id": "err-7c411f-2",
-   "kind": "error",
-   "variant": "plain",
-   "input": "어제 시장에서 SPB 언급이 많았습니다.",
-   "expected": "어제 시장에서 SPV 언급이 많았습니다.",
-   "span": [
-    8,
-    11
-   ],
-   "surface": "SPB",
-   "wrong": "SPB",
-   "right": "SPV",
-   "category": "term",
-   "tier": "B"
-  },
-  {
-   "id": "err-7c411f-s",
-   "kind": "error",
-   "variant": "spacing",
-   "input": "투자자들이 S PB 이슈에 주목하고 있습니다.",
-   "expected": "투자자들이 SPV 이슈에 주목하고 있습니다.",
+   "input": "투자자들이 SMP 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 에스앤피 이슈에 주목하고 있습니다.",
    "span": [
     6,
-    10
+    9
    ],
-   "surface": "S PB",
-   "wrong": "SPB",
-   "right": "SPV",
-   "category": "term",
+   "surface": "SMP",
+   "wrong": "SMP",
+   "right": "에스앤피",
+   "category": "stock",
    "tier": "B"
   },
   {
-   "id": "cln-7c411f",
+   "id": "err-ddc67a-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "SMP 관련해서 궁금한 부분이 있습니다.",
+   "expected": "에스앤피 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "SMP",
+   "wrong": "SMP",
+   "right": "에스앤피",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-ddc67a-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "오늘 방송에서는 S MP 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 에스앤피 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    13
+   ],
+   "surface": "S MP",
+   "wrong": "SMP",
+   "right": "에스앤피",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "cln-ddc67a",
    "kind": "clean",
-   "input": "SPV 부분은 조금 더 지켜봐야 합니다.",
-   "expected": "SPV 부분은 조금 더 지켜봐야 합니다.",
-   "wrong": "SPB",
-   "right": "SPV",
-   "category": "term",
+   "input": "요즘 에스앤피 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 에스앤피 쪽 흐름이 어떻습니까?",
+   "wrong": "SMP",
+   "right": "에스앤피",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-f54fa9-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "요즘 S아닉스 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 SK하이닉스 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    7
+   ],
+   "surface": "S아닉스",
+   "wrong": "S아닉스",
+   "right": "SK하이닉스",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-f54fa9-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "오늘 방송에서는 S아닉스 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 SK하이닉스 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    13
+   ],
+   "surface": "S아닉스",
+   "wrong": "S아닉스",
+   "right": "SK하이닉스",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-f54fa9-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "어제 시장에서 S아닉스 언급이 많았습니다.",
+   "expected": "어제 시장에서 SK하이닉스 언급이 많았습니다.",
+   "span": [
+    8,
+    12
+   ],
+   "surface": "S아닉스",
+   "wrong": "S아닉스",
+   "right": "SK하이닉스",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-f54fa9-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "투자자들이 S아 닉스 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 SK하이닉스 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    11
+   ],
+   "surface": "S아 닉스",
+   "wrong": "S아닉스",
+   "right": "SK하이닉스",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "cln-f54fa9",
+   "kind": "clean",
+   "input": "SK하이닉스 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "SK하이닉스 부분은 조금 더 지켜봐야 합니다.",
+   "wrong": "S아닉스",
+   "right": "SK하이닉스",
+   "category": "stock",
    "tier": "B"
   },
   {
@@ -2015,6 +2459,80 @@
    "wrong": "XAI",
    "right": "xAI",
    "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-bb89ee-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "가이더스 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "가이던스 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    4
+   ],
+   "surface": "가이더스",
+   "wrong": "가이더스",
+   "right": "가이던스",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-bb89ee-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "투자자들이 가이더스 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 가이던스 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    10
+   ],
+   "surface": "가이더스",
+   "wrong": "가이더스",
+   "right": "가이던스",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-bb89ee-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "가이더스 관련해서 궁금한 부분이 있습니다.",
+   "expected": "가이던스 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    4
+   ],
+   "surface": "가이더스",
+   "wrong": "가이더스",
+   "right": "가이던스",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-bb89ee-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "오늘 방송에서는 가이 더스 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 가이던스 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    14
+   ],
+   "surface": "가이 더스",
+   "wrong": "가이더스",
+   "right": "가이던스",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "cln-bb89ee",
+   "kind": "clean",
+   "input": "요즘 가이던스 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 가이던스 쪽 흐름이 어떻습니까?",
+   "wrong": "가이더스",
+   "right": "가이던스",
+   "category": "term",
    "tier": "B"
   },
   {
@@ -2240,6 +2758,80 @@
    "tier": "A"
   },
   {
+   "id": "err-fbd844-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "공매돌 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "공매도 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "공매돌",
+   "wrong": "공매돌",
+   "right": "공매도",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-fbd844-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "투자자들이 공매돌 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 공매도 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    9
+   ],
+   "surface": "공매돌",
+   "wrong": "공매돌",
+   "right": "공매도",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-fbd844-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "공매돌 관련해서 궁금한 부분이 있습니다.",
+   "expected": "공매도 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "공매돌",
+   "wrong": "공매돌",
+   "right": "공매도",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-fbd844-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "오늘 방송에서는 공 매돌 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 공매도 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    13
+   ],
+   "surface": "공 매돌",
+   "wrong": "공매돌",
+   "right": "공매도",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "cln-fbd844",
+   "kind": "clean",
+   "input": "요즘 공매도 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 공매도 쪽 흐름이 어떻습니까?",
+   "wrong": "공매돌",
+   "right": "공매도",
+   "category": "term",
+   "tier": "B"
+  },
+  {
    "id": "err-4bdaf9-0",
    "kind": "error",
    "variant": "plain",
@@ -2386,6 +2978,80 @@
    "right": "기술적 분석",
    "category": "other",
    "tier": "A"
+  },
+  {
+   "id": "err-6b535f-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "어제 시장에서 김에비디아 언급이 많았습니다.",
+   "expected": "어제 시장에서 엔비디아 언급이 많았습니다.",
+   "span": [
+    8,
+    13
+   ],
+   "surface": "김에비디아",
+   "wrong": "김에비디아",
+   "right": "엔비디아",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-6b535f-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "김에비디아 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "엔비디아 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    5
+   ],
+   "surface": "김에비디아",
+   "wrong": "김에비디아",
+   "right": "엔비디아",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-6b535f-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "투자자들이 김에비디아 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 엔비디아 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    11
+   ],
+   "surface": "김에비디아",
+   "wrong": "김에비디아",
+   "right": "엔비디아",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-6b535f-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "요즘 김에 비디아 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 엔비디아 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    9
+   ],
+   "surface": "김에 비디아",
+   "wrong": "김에비디아",
+   "right": "엔비디아",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "cln-6b535f",
+   "kind": "clean",
+   "input": "엔비디아 관련해서 궁금한 부분이 있습니다.",
+   "expected": "엔비디아 관련해서 궁금한 부분이 있습니다.",
+   "wrong": "김에비디아",
+   "right": "엔비디아",
+   "category": "stock",
+   "tier": "B"
   },
   {
    "id": "err-cd881a-0",
@@ -2832,6 +3498,80 @@
    "tier": "A"
   },
   {
+   "id": "err-a31d84-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "단도체 관련해서 궁금한 부분이 있습니다.",
+   "expected": "반도체 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "단도체",
+   "wrong": "단도체",
+   "right": "반도체",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-a31d84-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "요즘 단도체 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 반도체 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    6
+   ],
+   "surface": "단도체",
+   "wrong": "단도체",
+   "right": "반도체",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-a31d84-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "오늘 방송에서는 단도체 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 반도체 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    12
+   ],
+   "surface": "단도체",
+   "wrong": "단도체",
+   "right": "반도체",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-a31d84-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "단 도체 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "반도체 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    4
+   ],
+   "surface": "단 도체",
+   "wrong": "단도체",
+   "right": "반도체",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "cln-a31d84",
+   "kind": "clean",
+   "input": "어제 시장에서 반도체 언급이 많았습니다.",
+   "expected": "어제 시장에서 반도체 언급이 많았습니다.",
+   "wrong": "단도체",
+   "right": "반도체",
+   "category": "term",
+   "tier": "B"
+  },
+  {
    "id": "err-37f395-0",
    "kind": "error",
    "variant": "plain",
@@ -3050,6 +3790,80 @@
    "expected": "요즘 라이엇 쪽 흐름이 어떻습니까?",
    "wrong": "라이언 라이엇",
    "right": "라이엇",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-cba950-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "오늘 방송에서는 마이러크럼 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 마이크론 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    14
+   ],
+   "surface": "마이러크럼",
+   "wrong": "마이러크럼",
+   "right": "마이크론",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-cba950-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "어제 시장에서 마이러크럼 언급이 많았습니다.",
+   "expected": "어제 시장에서 마이크론 언급이 많았습니다.",
+   "span": [
+    8,
+    13
+   ],
+   "surface": "마이러크럼",
+   "wrong": "마이러크럼",
+   "right": "마이크론",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-cba950-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "마이러크럼 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "마이크론 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    5
+   ],
+   "surface": "마이러크럼",
+   "wrong": "마이러크럼",
+   "right": "마이크론",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-cba950-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "마이 러크럼 관련해서 궁금한 부분이 있습니다.",
+   "expected": "마이크론 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    6
+   ],
+   "surface": "마이 러크럼",
+   "wrong": "마이러크럼",
+   "right": "마이크론",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "cln-cba950",
+   "kind": "clean",
+   "input": "투자자들이 마이크론 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 마이크론 이슈에 주목하고 있습니다.",
+   "wrong": "마이러크럼",
+   "right": "마이크론",
    "category": "stock",
    "tier": "B"
   },
@@ -3276,6 +4090,80 @@
    "tier": "B"
   },
   {
+   "id": "err-6691e6-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "매도체 관련해서 궁금한 부분이 있습니다.",
+   "expected": "반도체 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "매도체",
+   "wrong": "매도체",
+   "right": "반도체",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-6691e6-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "요즘 매도체 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 반도체 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    6
+   ],
+   "surface": "매도체",
+   "wrong": "매도체",
+   "right": "반도체",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-6691e6-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "오늘 방송에서는 매도체 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 반도체 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    12
+   ],
+   "surface": "매도체",
+   "wrong": "매도체",
+   "right": "반도체",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-6691e6-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "매 도체 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "반도체 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    4
+   ],
+   "surface": "매 도체",
+   "wrong": "매도체",
+   "right": "반도체",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "cln-6691e6",
+   "kind": "clean",
+   "input": "어제 시장에서 반도체 언급이 많았습니다.",
+   "expected": "어제 시장에서 반도체 언급이 많았습니다.",
+   "wrong": "매도체",
+   "right": "반도체",
+   "category": "term",
+   "tier": "B"
+  },
+  {
    "id": "err-66e734-0",
    "kind": "error",
    "variant": "plain",
@@ -3498,62 +4386,374 @@
    "tier": "A"
   },
   {
-   "id": "err-bc8a2d-0",
+   "id": "err-29f1d0-0",
    "kind": "error",
    "variant": "plain",
-   "input": "투자자들이 바위 이슈에 주목하고 있습니다.",
-   "expected": "투자자들이 바이오 이슈에 주목하고 있습니다.",
-   "span": [
-    6,
-    8
-   ],
-   "surface": "바위",
-   "wrong": "바위",
-   "right": "바이오",
-   "category": "other",
-   "tier": "A"
-  },
-  {
-   "id": "err-bc8a2d-1",
-   "kind": "error",
-   "variant": "plain",
-   "input": "바위 관련해서 궁금한 부분이 있습니다.",
-   "expected": "바이오 관련해서 궁금한 부분이 있습니다.",
+   "input": "반도지 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "반도체 부분은 조금 더 지켜봐야 합니다.",
    "span": [
     0,
-    2
+    3
    ],
-   "surface": "바위",
-   "wrong": "바위",
-   "right": "바이오",
-   "category": "other",
-   "tier": "A"
+   "surface": "반도지",
+   "wrong": "반도지",
+   "right": "반도체",
+   "category": "term",
+   "tier": "B"
   },
   {
-   "id": "err-bc8a2d-2",
+   "id": "err-29f1d0-1",
    "kind": "error",
    "variant": "plain",
-   "input": "요즘 바위 쪽 흐름이 어떻습니까?",
-   "expected": "요즘 바이오 쪽 흐름이 어떻습니까?",
+   "input": "투자자들이 반도지 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 반도체 이슈에 주목하고 있습니다.",
    "span": [
-    3,
-    5
+    6,
+    9
    ],
-   "surface": "바위",
-   "wrong": "바위",
-   "right": "바이오",
-   "category": "other",
-   "tier": "A"
+   "surface": "반도지",
+   "wrong": "반도지",
+   "right": "반도체",
+   "category": "term",
+   "tier": "B"
   },
   {
-   "id": "cln-bc8a2d",
+   "id": "err-29f1d0-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "반도지 관련해서 궁금한 부분이 있습니다.",
+   "expected": "반도체 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "반도지",
+   "wrong": "반도지",
+   "right": "반도체",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-29f1d0-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "오늘 방송에서는 반 도지 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 반도체 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    13
+   ],
+   "surface": "반 도지",
+   "wrong": "반도지",
+   "right": "반도체",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "cln-29f1d0",
    "kind": "clean",
-   "input": "오늘 방송에서는 바이오 이야기를 해보겠습니다.",
-   "expected": "오늘 방송에서는 바이오 이야기를 해보겠습니다.",
-   "wrong": "바위",
-   "right": "바이오",
-   "category": "other",
-   "tier": "A"
+   "input": "요즘 반도체 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 반도체 쪽 흐름이 어떻습니까?",
+   "wrong": "반도지",
+   "right": "반도체",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-e66046-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "반조체 관련해서 궁금한 부분이 있습니다.",
+   "expected": "반도체 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "반조체",
+   "wrong": "반조체",
+   "right": "반도체",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-e66046-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "요즘 반조체 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 반도체 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    6
+   ],
+   "surface": "반조체",
+   "wrong": "반조체",
+   "right": "반도체",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-e66046-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "오늘 방송에서는 반조체 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 반도체 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    12
+   ],
+   "surface": "반조체",
+   "wrong": "반조체",
+   "right": "반도체",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-e66046-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "반 조체 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "반도체 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    4
+   ],
+   "surface": "반 조체",
+   "wrong": "반조체",
+   "right": "반도체",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "cln-e66046",
+   "kind": "clean",
+   "input": "어제 시장에서 반도체 언급이 많았습니다.",
+   "expected": "어제 시장에서 반도체 언급이 많았습니다.",
+   "wrong": "반조체",
+   "right": "반도체",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-984a9b-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "어제 시장에서 밤도체 언급이 많았습니다.",
+   "expected": "어제 시장에서 반도체 언급이 많았습니다.",
+   "span": [
+    8,
+    11
+   ],
+   "surface": "밤도체",
+   "wrong": "밤도체",
+   "right": "반도체",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-984a9b-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "밤도체 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "반도체 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "밤도체",
+   "wrong": "밤도체",
+   "right": "반도체",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-984a9b-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "투자자들이 밤도체 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 반도체 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    9
+   ],
+   "surface": "밤도체",
+   "wrong": "밤도체",
+   "right": "반도체",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-984a9b-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "요즘 밤 도체 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 반도체 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    7
+   ],
+   "surface": "밤 도체",
+   "wrong": "밤도체",
+   "right": "반도체",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "cln-984a9b",
+   "kind": "clean",
+   "input": "반도체 관련해서 궁금한 부분이 있습니다.",
+   "expected": "반도체 관련해서 궁금한 부분이 있습니다.",
+   "wrong": "밤도체",
+   "right": "반도체",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-6fdddd-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "요즘 밸루에이션 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 밸류에이션 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    8
+   ],
+   "surface": "밸루에이션",
+   "wrong": "밸루에이션",
+   "right": "밸류에이션",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-6fdddd-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "오늘 방송에서는 밸루에이션 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 밸류에이션 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    14
+   ],
+   "surface": "밸루에이션",
+   "wrong": "밸루에이션",
+   "right": "밸류에이션",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-6fdddd-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "어제 시장에서 밸루에이션 언급이 많았습니다.",
+   "expected": "어제 시장에서 밸류에이션 언급이 많았습니다.",
+   "span": [
+    8,
+    13
+   ],
+   "surface": "밸루에이션",
+   "wrong": "밸루에이션",
+   "right": "밸류에이션",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-6fdddd-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "투자자들이 밸루 에이션 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 밸류에이션 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    12
+   ],
+   "surface": "밸루 에이션",
+   "wrong": "밸루에이션",
+   "right": "밸류에이션",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "cln-6fdddd",
+   "kind": "clean",
+   "input": "밸류에이션 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "밸류에이션 부분은 조금 더 지켜봐야 합니다.",
+   "wrong": "밸루에이션",
+   "right": "밸류에이션",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-2660a3-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "어제 시장에서 변동상 언급이 많았습니다.",
+   "expected": "어제 시장에서 변동성 언급이 많았습니다.",
+   "span": [
+    8,
+    11
+   ],
+   "surface": "변동상",
+   "wrong": "변동상",
+   "right": "변동성",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-2660a3-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "변동상 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "변동성 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "변동상",
+   "wrong": "변동상",
+   "right": "변동성",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-2660a3-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "투자자들이 변동상 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 변동성 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    9
+   ],
+   "surface": "변동상",
+   "wrong": "변동상",
+   "right": "변동성",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-2660a3-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "요즘 변 동상 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 변동성 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    7
+   ],
+   "surface": "변 동상",
+   "wrong": "변동상",
+   "right": "변동성",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "cln-2660a3",
+   "kind": "clean",
+   "input": "변동성 관련해서 궁금한 부분이 있습니다.",
+   "expected": "변동성 관련해서 궁금한 부분이 있습니다.",
+   "wrong": "변동상",
+   "right": "변동성",
+   "category": "term",
+   "tier": "B"
   },
   {
    "id": "err-f7a6b8-0",
@@ -3704,6 +4904,154 @@
    "tier": "A"
   },
   {
+   "id": "err-c12353-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "투자자들이 본동성 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 변동성 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    9
+   ],
+   "surface": "본동성",
+   "wrong": "본동성",
+   "right": "변동성",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-c12353-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "본동성 관련해서 궁금한 부분이 있습니다.",
+   "expected": "변동성 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "본동성",
+   "wrong": "본동성",
+   "right": "변동성",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-c12353-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "요즘 본동성 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 변동성 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    6
+   ],
+   "surface": "본동성",
+   "wrong": "본동성",
+   "right": "변동성",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-c12353-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "어제 시장에서 본 동성 언급이 많았습니다.",
+   "expected": "어제 시장에서 변동성 언급이 많았습니다.",
+   "span": [
+    8,
+    12
+   ],
+   "surface": "본 동성",
+   "wrong": "본동성",
+   "right": "변동성",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "cln-c12353",
+   "kind": "clean",
+   "input": "오늘 방송에서는 변동성 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 변동성 이야기를 해보겠습니다.",
+   "wrong": "본동성",
+   "right": "변동성",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-39dbd1-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "투자자들이 브드컴 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 브로드컴 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    9
+   ],
+   "surface": "브드컴",
+   "wrong": "브드컴",
+   "right": "브로드컴",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-39dbd1-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "브드컴 관련해서 궁금한 부분이 있습니다.",
+   "expected": "브로드컴 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "브드컴",
+   "wrong": "브드컴",
+   "right": "브로드컴",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-39dbd1-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "요즘 브드컴 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 브로드컴 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    6
+   ],
+   "surface": "브드컴",
+   "wrong": "브드컴",
+   "right": "브로드컴",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-39dbd1-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "어제 시장에서 브 드컴 언급이 많았습니다.",
+   "expected": "어제 시장에서 브로드컴 언급이 많았습니다.",
+   "span": [
+    8,
+    12
+   ],
+   "surface": "브 드컴",
+   "wrong": "브드컴",
+   "right": "브로드컴",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "cln-39dbd1",
+   "kind": "clean",
+   "input": "오늘 방송에서는 브로드컴 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 브로드컴 이야기를 해보겠습니다.",
+   "wrong": "브드컴",
+   "right": "브로드컴",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
    "id": "err-1beb8f-0",
    "kind": "error",
    "variant": "plain",
@@ -3778,6 +5126,80 @@
    "tier": "A"
   },
   {
+   "id": "err-ae6182-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "오늘 방송에서는 비슷하라 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 비스타라 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    13
+   ],
+   "surface": "비슷하라",
+   "wrong": "비슷하라",
+   "right": "비스타라",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-ae6182-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "어제 시장에서 비슷하라 언급이 많았습니다.",
+   "expected": "어제 시장에서 비스타라 언급이 많았습니다.",
+   "span": [
+    8,
+    12
+   ],
+   "surface": "비슷하라",
+   "wrong": "비슷하라",
+   "right": "비스타라",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-ae6182-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "비슷하라 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "비스타라 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    4
+   ],
+   "surface": "비슷하라",
+   "wrong": "비슷하라",
+   "right": "비스타라",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-ae6182-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "비슷 하라 관련해서 궁금한 부분이 있습니다.",
+   "expected": "비스타라 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    5
+   ],
+   "surface": "비슷 하라",
+   "wrong": "비슷하라",
+   "right": "비스타라",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "cln-ae6182",
+   "kind": "clean",
+   "input": "투자자들이 비스타라 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 비스타라 이슈에 주목하고 있습니다.",
+   "wrong": "비슷하라",
+   "right": "비스타라",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
    "id": "err-0f221d-0",
    "kind": "error",
    "variant": "plain",
@@ -3847,6 +5269,228 @@
    "input": "삼성전자 관련해서 궁금한 부분이 있습니다.",
    "expected": "삼성전자 관련해서 궁금한 부분이 있습니다.",
    "wrong": "삼성근자",
+   "right": "삼성전자",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-973105-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "요즘 삼성원자 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 삼성전자 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    7
+   ],
+   "surface": "삼성원자",
+   "wrong": "삼성원자",
+   "right": "삼성전자",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-973105-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "오늘 방송에서는 삼성원자 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 삼성전자 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    13
+   ],
+   "surface": "삼성원자",
+   "wrong": "삼성원자",
+   "right": "삼성전자",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-973105-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "어제 시장에서 삼성원자 언급이 많았습니다.",
+   "expected": "어제 시장에서 삼성전자 언급이 많았습니다.",
+   "span": [
+    8,
+    12
+   ],
+   "surface": "삼성원자",
+   "wrong": "삼성원자",
+   "right": "삼성전자",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-973105-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "투자자들이 삼성 원자 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 삼성전자 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    11
+   ],
+   "surface": "삼성 원자",
+   "wrong": "삼성원자",
+   "right": "삼성전자",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "cln-973105",
+   "kind": "clean",
+   "input": "삼성전자 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "삼성전자 부분은 조금 더 지켜봐야 합니다.",
+   "wrong": "삼성원자",
+   "right": "삼성전자",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-0d232a-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "삼성자 관련해서 궁금한 부분이 있습니다.",
+   "expected": "삼성전자 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "삼성자",
+   "wrong": "삼성자",
+   "right": "삼성전자",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-0d232a-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "요즘 삼성자 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 삼성전자 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    6
+   ],
+   "surface": "삼성자",
+   "wrong": "삼성자",
+   "right": "삼성전자",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-0d232a-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "오늘 방송에서는 삼성자 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 삼성전자 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    12
+   ],
+   "surface": "삼성자",
+   "wrong": "삼성자",
+   "right": "삼성전자",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-0d232a-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "삼 성자 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "삼성전자 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    4
+   ],
+   "surface": "삼 성자",
+   "wrong": "삼성자",
+   "right": "삼성전자",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "cln-0d232a",
+   "kind": "clean",
+   "input": "어제 시장에서 삼성전자 언급이 많았습니다.",
+   "expected": "어제 시장에서 삼성전자 언급이 많았습니다.",
+   "wrong": "삼성자",
+   "right": "삼성전자",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-e8b514-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "삼성전나 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "삼성전자 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    4
+   ],
+   "surface": "삼성전나",
+   "wrong": "삼성전나",
+   "right": "삼성전자",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-e8b514-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "투자자들이 삼성전나 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 삼성전자 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    10
+   ],
+   "surface": "삼성전나",
+   "wrong": "삼성전나",
+   "right": "삼성전자",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-e8b514-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "삼성전나 관련해서 궁금한 부분이 있습니다.",
+   "expected": "삼성전자 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    4
+   ],
+   "surface": "삼성전나",
+   "wrong": "삼성전나",
+   "right": "삼성전자",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-e8b514-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "오늘 방송에서는 삼성 전나 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 삼성전자 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    14
+   ],
+   "surface": "삼성 전나",
+   "wrong": "삼성전나",
+   "right": "삼성전자",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "cln-e8b514",
+   "kind": "clean",
+   "input": "요즘 삼성전자 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 삼성전자 쪽 흐름이 어떻습니까?",
+   "wrong": "삼성전나",
    "right": "삼성전자",
    "category": "stock",
    "tier": "B"
@@ -4296,6 +5940,154 @@
    "tier": "B"
   },
   {
+   "id": "err-5cffcc-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "오늘 방송에서는 스페이스섹스 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 스페이스X 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    15
+   ],
+   "surface": "스페이스섹스",
+   "wrong": "스페이스섹스",
+   "right": "스페이스X",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-5cffcc-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "어제 시장에서 스페이스섹스 언급이 많았습니다.",
+   "expected": "어제 시장에서 스페이스X 언급이 많았습니다.",
+   "span": [
+    8,
+    14
+   ],
+   "surface": "스페이스섹스",
+   "wrong": "스페이스섹스",
+   "right": "스페이스X",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-5cffcc-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "스페이스섹스 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "스페이스X 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    6
+   ],
+   "surface": "스페이스섹스",
+   "wrong": "스페이스섹스",
+   "right": "스페이스X",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-5cffcc-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "스페이 스섹스 관련해서 궁금한 부분이 있습니다.",
+   "expected": "스페이스X 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    7
+   ],
+   "surface": "스페이 스섹스",
+   "wrong": "스페이스섹스",
+   "right": "스페이스X",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "cln-5cffcc",
+   "kind": "clean",
+   "input": "투자자들이 스페이스X 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 스페이스X 이슈에 주목하고 있습니다.",
+   "wrong": "스페이스섹스",
+   "right": "스페이스X",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-64f252-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "스페이스엑스 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "스페이스X 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    6
+   ],
+   "surface": "스페이스엑스",
+   "wrong": "스페이스엑스",
+   "right": "스페이스X",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-64f252-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "투자자들이 스페이스엑스 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 스페이스X 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    12
+   ],
+   "surface": "스페이스엑스",
+   "wrong": "스페이스엑스",
+   "right": "스페이스X",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-64f252-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "스페이스엑스 관련해서 궁금한 부분이 있습니다.",
+   "expected": "스페이스X 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    6
+   ],
+   "surface": "스페이스엑스",
+   "wrong": "스페이스엑스",
+   "right": "스페이스X",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-64f252-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "오늘 방송에서는 스페이 스엑스 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 스페이스X 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    16
+   ],
+   "surface": "스페이 스엑스",
+   "wrong": "스페이스엑스",
+   "right": "스페이스X",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "cln-64f252",
+   "kind": "clean",
+   "input": "요즘 스페이스X 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 스페이스X 쪽 흐름이 어떻습니까?",
+   "wrong": "스페이스엑스",
+   "right": "스페이스X",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
    "id": "err-2fce77-0",
    "kind": "error",
    "variant": "plain",
@@ -4365,6 +6157,80 @@
    "input": "요즘 시가총액 쪽 흐름이 어떻습니까?",
    "expected": "요즘 시가총액 쪽 흐름이 어떻습니까?",
    "wrong": "시가 총의",
+   "right": "시가총액",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-9786d6-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "시카총 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "시가총액 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "시카총",
+   "wrong": "시카총",
+   "right": "시가총액",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-9786d6-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "투자자들이 시카총 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 시가총액 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    9
+   ],
+   "surface": "시카총",
+   "wrong": "시카총",
+   "right": "시가총액",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-9786d6-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "시카총 관련해서 궁금한 부분이 있습니다.",
+   "expected": "시가총액 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "시카총",
+   "wrong": "시카총",
+   "right": "시가총액",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-9786d6-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "오늘 방송에서는 시 카총 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 시가총액 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    13
+   ],
+   "surface": "시 카총",
+   "wrong": "시카총",
+   "right": "시가총액",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "cln-9786d6",
+   "kind": "clean",
+   "input": "요즘 시가총액 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 시가총액 쪽 흐름이 어떻습니까?",
+   "wrong": "시카총",
    "right": "시가총액",
    "category": "term",
    "tier": "B"
@@ -4592,6 +6458,80 @@
    "tier": "B"
   },
   {
+   "id": "err-e44f17-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "어제 시장에서 아이비 언급이 많았습니다.",
+   "expected": "어제 시장에서 IBM 언급이 많았습니다.",
+   "span": [
+    8,
+    11
+   ],
+   "surface": "아이비",
+   "wrong": "아이비",
+   "right": "IBM",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-e44f17-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "아이비 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "IBM 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "아이비",
+   "wrong": "아이비",
+   "right": "IBM",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-e44f17-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "투자자들이 아이비 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 IBM 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    9
+   ],
+   "surface": "아이비",
+   "wrong": "아이비",
+   "right": "IBM",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-e44f17-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "요즘 아 이비 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 IBM 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    7
+   ],
+   "surface": "아 이비",
+   "wrong": "아이비",
+   "right": "IBM",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "cln-e44f17",
+   "kind": "clean",
+   "input": "IBM 관련해서 궁금한 부분이 있습니다.",
+   "expected": "IBM 관련해서 궁금한 부분이 있습니다.",
+   "wrong": "아이비",
+   "right": "IBM",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
    "id": "err-15af89-0",
    "kind": "error",
    "variant": "plain",
@@ -4648,6 +6588,154 @@
    "right": "업황",
    "category": "term",
    "tier": "A"
+  },
+  {
+   "id": "err-44916c-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "에스키아닉스 관련해서 궁금한 부분이 있습니다.",
+   "expected": "SK하이닉스 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    6
+   ],
+   "surface": "에스키아닉스",
+   "wrong": "에스키아닉스",
+   "right": "SK하이닉스",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-44916c-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "요즘 에스키아닉스 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 SK하이닉스 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    9
+   ],
+   "surface": "에스키아닉스",
+   "wrong": "에스키아닉스",
+   "right": "SK하이닉스",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-44916c-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "오늘 방송에서는 에스키아닉스 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 SK하이닉스 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    15
+   ],
+   "surface": "에스키아닉스",
+   "wrong": "에스키아닉스",
+   "right": "SK하이닉스",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-44916c-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "에스키 아닉스 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "SK하이닉스 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    7
+   ],
+   "surface": "에스키 아닉스",
+   "wrong": "에스키아닉스",
+   "right": "SK하이닉스",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "cln-44916c",
+   "kind": "clean",
+   "input": "어제 시장에서 SK하이닉스 언급이 많았습니다.",
+   "expected": "어제 시장에서 SK하이닉스 언급이 많았습니다.",
+   "wrong": "에스키아닉스",
+   "right": "SK하이닉스",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-3cd15c-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "엔비어 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "엔비디아 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "엔비어",
+   "wrong": "엔비어",
+   "right": "엔비디아",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-3cd15c-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "투자자들이 엔비어 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 엔비디아 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    9
+   ],
+   "surface": "엔비어",
+   "wrong": "엔비어",
+   "right": "엔비디아",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-3cd15c-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "엔비어 관련해서 궁금한 부분이 있습니다.",
+   "expected": "엔비디아 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "엔비어",
+   "wrong": "엔비어",
+   "right": "엔비디아",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-3cd15c-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "오늘 방송에서는 엔 비어 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 엔비디아 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    13
+   ],
+   "surface": "엔 비어",
+   "wrong": "엔비어",
+   "right": "엔비디아",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "cln-3cd15c",
+   "kind": "clean",
+   "input": "요즘 엔비디아 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 엔비디아 쪽 흐름이 어떻습니까?",
+   "wrong": "엔비어",
+   "right": "엔비디아",
+   "category": "stock",
+   "tier": "B"
   },
   {
    "id": "err-e23de2-0",
@@ -4798,6 +6886,80 @@
    "tier": "A"
   },
   {
+   "id": "err-a728e8-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "엘파벳 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "알파벳 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "엘파벳",
+   "wrong": "엘파벳",
+   "right": "알파벳",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-a728e8-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "투자자들이 엘파벳 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 알파벳 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    9
+   ],
+   "surface": "엘파벳",
+   "wrong": "엘파벳",
+   "right": "알파벳",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-a728e8-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "엘파벳 관련해서 궁금한 부분이 있습니다.",
+   "expected": "알파벳 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "엘파벳",
+   "wrong": "엘파벳",
+   "right": "알파벳",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-a728e8-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "오늘 방송에서는 엘 파벳 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 알파벳 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    13
+   ],
+   "surface": "엘 파벳",
+   "wrong": "엘파벳",
+   "right": "알파벳",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "cln-a728e8",
+   "kind": "clean",
+   "input": "요즘 알파벳 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 알파벳 쪽 흐름이 어떻습니까?",
+   "wrong": "엘파벳",
+   "right": "알파벳",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
    "id": "err-08bdb7-0",
    "kind": "error",
    "variant": "plain",
@@ -4870,6 +7032,228 @@
    "right": "역추세",
    "category": "other",
    "tier": "A"
+  },
+  {
+   "id": "err-7f0c63-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "요즘 영업익 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 영업이익 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    6
+   ],
+   "surface": "영업익",
+   "wrong": "영업익",
+   "right": "영업이익",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-7f0c63-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "오늘 방송에서는 영업익 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 영업이익 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    12
+   ],
+   "surface": "영업익",
+   "wrong": "영업익",
+   "right": "영업이익",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-7f0c63-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "어제 시장에서 영업익 언급이 많았습니다.",
+   "expected": "어제 시장에서 영업이익 언급이 많았습니다.",
+   "span": [
+    8,
+    11
+   ],
+   "surface": "영업익",
+   "wrong": "영업익",
+   "right": "영업이익",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-7f0c63-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "투자자들이 영 업익 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 영업이익 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    10
+   ],
+   "surface": "영 업익",
+   "wrong": "영업익",
+   "right": "영업이익",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "cln-7f0c63",
+   "kind": "clean",
+   "input": "영업이익 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "영업이익 부분은 조금 더 지켜봐야 합니다.",
+   "wrong": "영업익",
+   "right": "영업이익",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-d4540c-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "오늘 방송에서는 오남이 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 모나미 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    12
+   ],
+   "surface": "오남이",
+   "wrong": "오남이",
+   "right": "모나미",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-d4540c-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "어제 시장에서 오남이 언급이 많았습니다.",
+   "expected": "어제 시장에서 모나미 언급이 많았습니다.",
+   "span": [
+    8,
+    11
+   ],
+   "surface": "오남이",
+   "wrong": "오남이",
+   "right": "모나미",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-d4540c-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "오남이 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "모나미 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "오남이",
+   "wrong": "오남이",
+   "right": "모나미",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-d4540c-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "오 남이 관련해서 궁금한 부분이 있습니다.",
+   "expected": "모나미 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    4
+   ],
+   "surface": "오 남이",
+   "wrong": "오남이",
+   "right": "모나미",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "cln-d4540c",
+   "kind": "clean",
+   "input": "투자자들이 모나미 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 모나미 이슈에 주목하고 있습니다.",
+   "wrong": "오남이",
+   "right": "모나미",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-58ba2f-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "어제 시장에서 오라늄 언급이 많았습니다.",
+   "expected": "어제 시장에서 우라늄 언급이 많았습니다.",
+   "span": [
+    8,
+    11
+   ],
+   "surface": "오라늄",
+   "wrong": "오라늄",
+   "right": "우라늄",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-58ba2f-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "오라늄 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "우라늄 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "오라늄",
+   "wrong": "오라늄",
+   "right": "우라늄",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-58ba2f-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "투자자들이 오라늄 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 우라늄 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    9
+   ],
+   "surface": "오라늄",
+   "wrong": "오라늄",
+   "right": "우라늄",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-58ba2f-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "요즘 오 라늄 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 우라늄 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    7
+   ],
+   "surface": "오 라늄",
+   "wrong": "오라늄",
+   "right": "우라늄",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "cln-58ba2f",
+   "kind": "clean",
+   "input": "우라늄 관련해서 궁금한 부분이 있습니다.",
+   "expected": "우라늄 관련해서 궁금한 부분이 있습니다.",
+   "wrong": "오라늄",
+   "right": "우라늄",
+   "category": "stock",
+   "tier": "B"
   },
   {
    "id": "err-8bb3e8-0",
@@ -4946,6 +7330,80 @@
    "tier": "A"
   },
   {
+   "id": "err-7c13e9-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "요즘 우라님 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 우라늄 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    6
+   ],
+   "surface": "우라님",
+   "wrong": "우라님",
+   "right": "우라늄",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-7c13e9-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "오늘 방송에서는 우라님 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 우라늄 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    12
+   ],
+   "surface": "우라님",
+   "wrong": "우라님",
+   "right": "우라늄",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-7c13e9-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "어제 시장에서 우라님 언급이 많았습니다.",
+   "expected": "어제 시장에서 우라늄 언급이 많았습니다.",
+   "span": [
+    8,
+    11
+   ],
+   "surface": "우라님",
+   "wrong": "우라님",
+   "right": "우라늄",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-7c13e9-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "투자자들이 우 라님 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 우라늄 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    10
+   ],
+   "surface": "우 라님",
+   "wrong": "우라님",
+   "right": "우라늄",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "cln-7c13e9",
+   "kind": "clean",
+   "input": "우라늄 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "우라늄 부분은 조금 더 지켜봐야 합니다.",
+   "wrong": "우라님",
+   "right": "우라늄",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
    "id": "err-fbb815-0",
    "kind": "error",
    "variant": "plain",
@@ -5016,6 +7474,80 @@
    "expected": "원익IPS 부분은 조금 더 지켜봐야 합니다.",
    "wrong": "워닝 IPS",
    "right": "원익IPS",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-0724f1-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "투자자들이 유라늄 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 우라늄 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    9
+   ],
+   "surface": "유라늄",
+   "wrong": "유라늄",
+   "right": "우라늄",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-0724f1-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "유라늄 관련해서 궁금한 부분이 있습니다.",
+   "expected": "우라늄 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "유라늄",
+   "wrong": "유라늄",
+   "right": "우라늄",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-0724f1-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "요즘 유라늄 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 우라늄 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    6
+   ],
+   "surface": "유라늄",
+   "wrong": "유라늄",
+   "right": "우라늄",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-0724f1-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "어제 시장에서 유 라늄 언급이 많았습니다.",
+   "expected": "어제 시장에서 우라늄 언급이 많았습니다.",
+   "span": [
+    8,
+    12
+   ],
+   "surface": "유 라늄",
+   "wrong": "유라늄",
+   "right": "우라늄",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "cln-0724f1",
+   "kind": "clean",
+   "input": "오늘 방송에서는 우라늄 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 우라늄 이야기를 해보겠습니다.",
+   "wrong": "유라늄",
+   "right": "우라늄",
    "category": "stock",
    "tier": "B"
   },
@@ -5164,6 +7696,80 @@
    "expected": "장기채 관련해서 궁금한 부분이 있습니다.",
    "wrong": "장기체",
    "right": "장기채",
+   "category": "other",
+   "tier": "A"
+  },
+  {
+   "id": "err-c40057-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "요즘 제약 바위 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 제약 바이오 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    8
+   ],
+   "surface": "제약 바위",
+   "wrong": "제약 바위",
+   "right": "제약 바이오",
+   "category": "other",
+   "tier": "A"
+  },
+  {
+   "id": "err-c40057-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "오늘 방송에서는 제약 바위 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 제약 바이오 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    14
+   ],
+   "surface": "제약 바위",
+   "wrong": "제약 바위",
+   "right": "제약 바이오",
+   "category": "other",
+   "tier": "A"
+  },
+  {
+   "id": "err-c40057-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "어제 시장에서 제약 바위 언급이 많았습니다.",
+   "expected": "어제 시장에서 제약 바이오 언급이 많았습니다.",
+   "span": [
+    8,
+    13
+   ],
+   "surface": "제약 바위",
+   "wrong": "제약 바위",
+   "right": "제약 바이오",
+   "category": "other",
+   "tier": "A"
+  },
+  {
+   "id": "err-c40057-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "투자자들이 제약바위 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 제약 바이오 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    10
+   ],
+   "surface": "제약바위",
+   "wrong": "제약 바위",
+   "right": "제약 바이오",
+   "category": "other",
+   "tier": "A"
+  },
+  {
+   "id": "cln-c40057",
+   "kind": "clean",
+   "input": "제약 바이오 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "제약 바이오 부분은 조금 더 지켜봐야 합니다.",
+   "wrong": "제약 바위",
+   "right": "제약 바이오",
    "category": "other",
    "tier": "A"
   },
@@ -5612,6 +8218,154 @@
    "tier": "A"
   },
   {
+   "id": "err-4ae1cd-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "어제 시장에서 채치T 언급이 많았습니다.",
+   "expected": "어제 시장에서 챗지피티 언급이 많았습니다.",
+   "span": [
+    8,
+    11
+   ],
+   "surface": "채치T",
+   "wrong": "채치T",
+   "right": "챗지피티",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-4ae1cd-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "채치T 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "챗지피티 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "채치T",
+   "wrong": "채치T",
+   "right": "챗지피티",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-4ae1cd-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "투자자들이 채치T 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 챗지피티 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    9
+   ],
+   "surface": "채치T",
+   "wrong": "채치T",
+   "right": "챗지피티",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-4ae1cd-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "요즘 채 치T 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 챗지피티 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    7
+   ],
+   "surface": "채 치T",
+   "wrong": "채치T",
+   "right": "챗지피티",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "cln-4ae1cd",
+   "kind": "clean",
+   "input": "챗지피티 관련해서 궁금한 부분이 있습니다.",
+   "expected": "챗지피티 관련해서 궁금한 부분이 있습니다.",
+   "wrong": "채치T",
+   "right": "챗지피티",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-8e00ff-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "요즘 컨센스 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 컨센서스 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    6
+   ],
+   "surface": "컨센스",
+   "wrong": "컨센스",
+   "right": "컨센서스",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-8e00ff-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "오늘 방송에서는 컨센스 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 컨센서스 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    12
+   ],
+   "surface": "컨센스",
+   "wrong": "컨센스",
+   "right": "컨센서스",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-8e00ff-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "어제 시장에서 컨센스 언급이 많았습니다.",
+   "expected": "어제 시장에서 컨센서스 언급이 많았습니다.",
+   "span": [
+    8,
+    11
+   ],
+   "surface": "컨센스",
+   "wrong": "컨센스",
+   "right": "컨센서스",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-8e00ff-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "투자자들이 컨 센스 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 컨센서스 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    10
+   ],
+   "surface": "컨 센스",
+   "wrong": "컨센스",
+   "right": "컨센서스",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "cln-8e00ff",
+   "kind": "clean",
+   "input": "컨센서스 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "컨센서스 부분은 조금 더 지켜봐야 합니다.",
+   "wrong": "컨센스",
+   "right": "컨센서스",
+   "category": "term",
+   "tier": "B"
+  },
+  {
    "id": "err-a02ac0-0",
    "kind": "error",
    "variant": "plain",
@@ -5908,6 +8662,154 @@
    "tier": "A"
   },
   {
+   "id": "err-d5a995-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "어제 시장에서 코이브 언급이 많았습니다.",
+   "expected": "어제 시장에서 코어위브 언급이 많았습니다.",
+   "span": [
+    8,
+    11
+   ],
+   "surface": "코이브",
+   "wrong": "코이브",
+   "right": "코어위브",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-d5a995-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "코이브 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "코어위브 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "코이브",
+   "wrong": "코이브",
+   "right": "코어위브",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-d5a995-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "투자자들이 코이브 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 코어위브 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    9
+   ],
+   "surface": "코이브",
+   "wrong": "코이브",
+   "right": "코어위브",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-d5a995-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "요즘 코 이브 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 코어위브 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    7
+   ],
+   "surface": "코 이브",
+   "wrong": "코이브",
+   "right": "코어위브",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "cln-d5a995",
+   "kind": "clean",
+   "input": "코어위브 관련해서 궁금한 부분이 있습니다.",
+   "expected": "코어위브 관련해서 궁금한 부분이 있습니다.",
+   "wrong": "코이브",
+   "right": "코어위브",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-5eafb4-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "오늘 방송에서는 파운트리 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 파운드리 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    13
+   ],
+   "surface": "파운트리",
+   "wrong": "파운트리",
+   "right": "파운드리",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-5eafb4-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "어제 시장에서 파운트리 언급이 많았습니다.",
+   "expected": "어제 시장에서 파운드리 언급이 많았습니다.",
+   "span": [
+    8,
+    12
+   ],
+   "surface": "파운트리",
+   "wrong": "파운트리",
+   "right": "파운드리",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-5eafb4-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "파운트리 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "파운드리 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    4
+   ],
+   "surface": "파운트리",
+   "wrong": "파운트리",
+   "right": "파운드리",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "err-5eafb4-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "파운 트리 관련해서 궁금한 부분이 있습니다.",
+   "expected": "파운드리 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    5
+   ],
+   "surface": "파운 트리",
+   "wrong": "파운트리",
+   "right": "파운드리",
+   "category": "term",
+   "tier": "B"
+  },
+  {
+   "id": "cln-5eafb4",
+   "kind": "clean",
+   "input": "투자자들이 파운드리 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 파운드리 이슈에 주목하고 있습니다.",
+   "wrong": "파운트리",
+   "right": "파운드리",
+   "category": "term",
+   "tier": "B"
+  },
+  {
    "id": "err-8c2a7d-0",
    "kind": "error",
    "variant": "plain",
@@ -5980,64 +8882,6 @@
    "right": "펀더멘털",
    "category": "term",
    "tier": "B"
-  },
-  {
-   "id": "err-21214d-0",
-   "kind": "error",
-   "variant": "plain",
-   "input": "어제 시장에서 하스 언급이 많았습니다.",
-   "expected": "어제 시장에서 하이닉스 언급이 많았습니다.",
-   "span": [
-    8,
-    10
-   ],
-   "surface": "하스",
-   "wrong": "하스",
-   "right": "하이닉스",
-   "category": "stock",
-   "tier": "A"
-  },
-  {
-   "id": "err-21214d-1",
-   "kind": "error",
-   "variant": "plain",
-   "input": "하스 부분은 조금 더 지켜봐야 합니다.",
-   "expected": "하이닉스 부분은 조금 더 지켜봐야 합니다.",
-   "span": [
-    0,
-    2
-   ],
-   "surface": "하스",
-   "wrong": "하스",
-   "right": "하이닉스",
-   "category": "stock",
-   "tier": "A"
-  },
-  {
-   "id": "err-21214d-2",
-   "kind": "error",
-   "variant": "plain",
-   "input": "투자자들이 하스 이슈에 주목하고 있습니다.",
-   "expected": "투자자들이 하이닉스 이슈에 주목하고 있습니다.",
-   "span": [
-    6,
-    8
-   ],
-   "surface": "하스",
-   "wrong": "하스",
-   "right": "하이닉스",
-   "category": "stock",
-   "tier": "A"
-  },
-  {
-   "id": "cln-21214d",
-   "kind": "clean",
-   "input": "하이닉스 관련해서 궁금한 부분이 있습니다.",
-   "expected": "하이닉스 관련해서 궁금한 부분이 있습니다.",
-   "wrong": "하스",
-   "right": "하이닉스",
-   "category": "stock",
-   "tier": "A"
   },
   {
    "id": "err-d64c7b-0",
@@ -6188,6 +9032,154 @@
    "tier": "B"
   },
   {
+   "id": "err-922dda-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "하이니프 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "하이닉스 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    4
+   ],
+   "surface": "하이니프",
+   "wrong": "하이니프",
+   "right": "하이닉스",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-922dda-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "투자자들이 하이니프 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 하이닉스 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    10
+   ],
+   "surface": "하이니프",
+   "wrong": "하이니프",
+   "right": "하이닉스",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-922dda-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "하이니프 관련해서 궁금한 부분이 있습니다.",
+   "expected": "하이닉스 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    4
+   ],
+   "surface": "하이니프",
+   "wrong": "하이니프",
+   "right": "하이닉스",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-922dda-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "오늘 방송에서는 하이 니프 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 하이닉스 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    14
+   ],
+   "surface": "하이 니프",
+   "wrong": "하이니프",
+   "right": "하이닉스",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "cln-922dda",
+   "kind": "clean",
+   "input": "요즘 하이닉스 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 하이닉스 쪽 흐름이 어떻습니까?",
+   "wrong": "하이니프",
+   "right": "하이닉스",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-6f3c95-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "투자자들이 하이렉스 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 하이닉스 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    10
+   ],
+   "surface": "하이렉스",
+   "wrong": "하이렉스",
+   "right": "하이닉스",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-6f3c95-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "하이렉스 관련해서 궁금한 부분이 있습니다.",
+   "expected": "하이닉스 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    4
+   ],
+   "surface": "하이렉스",
+   "wrong": "하이렉스",
+   "right": "하이닉스",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-6f3c95-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "요즘 하이렉스 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 하이닉스 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    7
+   ],
+   "surface": "하이렉스",
+   "wrong": "하이렉스",
+   "right": "하이닉스",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-6f3c95-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "어제 시장에서 하이 렉스 언급이 많았습니다.",
+   "expected": "어제 시장에서 하이닉스 언급이 많았습니다.",
+   "span": [
+    8,
+    13
+   ],
+   "surface": "하이 렉스",
+   "wrong": "하이렉스",
+   "right": "하이닉스",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "cln-6f3c95",
+   "kind": "clean",
+   "input": "오늘 방송에서는 하이닉스 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 하이닉스 이야기를 해보겠습니다.",
+   "wrong": "하이렉스",
+   "right": "하이닉스",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
    "id": "err-9c7820-0",
    "kind": "error",
    "variant": "plain",
@@ -6260,6 +9252,80 @@
    "right": "하이퍼스케일러들",
    "category": "other",
    "tier": "A"
+  },
+  {
+   "id": "err-9306d0-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "하인스 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "하이닉스 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "하인스",
+   "wrong": "하인스",
+   "right": "하이닉스",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-9306d0-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "투자자들이 하인스 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 하이닉스 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    9
+   ],
+   "surface": "하인스",
+   "wrong": "하인스",
+   "right": "하이닉스",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-9306d0-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "하인스 관련해서 궁금한 부분이 있습니다.",
+   "expected": "하이닉스 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "하인스",
+   "wrong": "하인스",
+   "right": "하이닉스",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "err-9306d0-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "오늘 방송에서는 하 인스 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 하이닉스 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    13
+   ],
+   "surface": "하 인스",
+   "wrong": "하인스",
+   "right": "하이닉스",
+   "category": "stock",
+   "tier": "B"
+  },
+  {
+   "id": "cln-9306d0",
+   "kind": "clean",
+   "input": "요즘 하이닉스 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 하이닉스 쪽 흐름이 어떻습니까?",
+   "wrong": "하인스",
+   "right": "하이닉스",
+   "category": "stock",
+   "tier": "B"
   },
   {
    "id": "err-12c6f9-0",

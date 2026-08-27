@@ -30,7 +30,7 @@ export ANTHROPIC_API_KEY=...                                       # or an API k
 python3 benchmark/llm_reference.py --runs 3
 ```
 
-## The evaluation set (482 items) <!-- stat:eval_items -->
+## The evaluation set (689 items) <!-- stat:eval_items -->
 
 No caption text appears anywhere in this benchmark. Source transcripts are not
 redistributable and the dataset's hard line excludes them, so every sentence is either a
@@ -97,10 +97,16 @@ penalty measures.
 
 | System | Recall | plain | spacing | Mangled | Over-corr. | Over-corr. rate | Precision (proxy) | **Net score** |
 |---|---|---|---|---|---|---|---|---|
-| naive | 75.9% | 267/267 | 1/86 | 1 | 25 | 5.2% | 91.2% | **68.8%** |
-| boundary | 100.0% | 267/267 | 86/86 | 0 | 40 | 8.3% | 89.8% | **88.7%** |
-| guarded (min key 4) | 68.0% | 180/267 | 60/86 | 0 | 15 | 3.1% | 94.1% | **63.7%** |
-| Claude Opus 5 (no dictionary) | 63.8% ±0.3 | — | — | 113.7 | 9.3 | 1.9% | 64.7% | **61.2% ±0.2** |
+| naive | 75.3% | 390/390 | 1/129 | 0 | 20 | 3.9% | 93.1% | **71.5%** |
+| boundary | 100.0% | 390/390 | 129/129 | 0 | 35 | 6.7% | 91.2% | **93.3%** |
+| guarded (min key 4) | 60.1% | 234/390 | 78/129 | 0 | 15 | 2.9% | 92.9% | **57.2%** |
+| Claude Opus 5 (no dictionary) † | 63.8% ±0.3 | — | — | 113.7 | 9.3 | 1.9% | 64.7% | **61.2% ±0.2** |
+
+† Measured on `mini-v0.2` (482 items, 89 pairs) and carried forward unchanged. Prediction
+files are not committed (`predictions/` is generated), so an LLM row cannot be rescored
+against a new eval set the way a dictionary row can — it has to be re-run against the API.
+The 207 items added in v0.3 are exactly the pairs the dictionary learned after that run,
+which makes them a held-out set for the next LLM row rather than a gap to backfill.
 
 The LLM row is `claude-opus-5` at effort `medium`, given the sentence and no dictionary, mean
 over 3 runs (spread is the population standard deviation). Reached through the Claude Code
@@ -131,12 +137,17 @@ What the table says:
    reaches them; context will.
 4. The one `mangled` case is instructive. On `SK하이하스`, naive replacement applies
    `하스 → 하이닉스` inside a longer key and emits `SK하이하이닉스`. Cascading rules are a real
-   failure mode, and a fix-only metric would have scored it as merely a miss.
+   failure mode, and a fix-only metric would have scored it as merely a miss. **In v0.3 that
+   case is gone** — `하스 → 하이닉스` was withdrawn upstream after a full-corpus recheck found
+   it firing inside `하이퍼스케일러들`, so naive now mangles nothing. The trap remains in the
+   set: it documents a failure mode of the method, which outlives the pair that exposed it.
 
 ### Dictionary versus LLM
 
-This is the comparison the benchmark exists to make, and the answer at this snapshot is
-**the dictionary wins, and not narrowly** — 88.7% against 61.2% net.
+This is the comparison the benchmark exists to make, and the answer is **the dictionary wins,
+and not narrowly** — 88.7% against 61.2% net. Both figures are `mini-v0.2`, scored on the same
+482 items: the dictionary's v0.3 score is higher still (93.3%), but quoting it against an LLM
+run from a smaller eval set would be comparing two different exams.
 
 The interesting part is that the LLM wins the axis the dictionary was supposed to lose:
 
@@ -174,13 +185,21 @@ The discriminating signal is the over-correction axis. See limitations.
 The trap set grew from 14 to 40 and the eval set from 456 to 482 items, so **v0.2 numbers are
 not comparable to v0 numbers.** Both are recorded here rather than quietly overwritten:
 
-| System | Net score v0 (14 traps) | Net score v0.2 (40 traps) |
-|---|---|---|
-| naive | 72.8% | 68.8% |
-| boundary | 96.0% | 88.7% |
-| guarded | 67.4% | 63.7% |
+| System | v0 (89 pairs, 14 traps) | v0.2 (89 pairs, 40 traps) | v0.3 (130 pairs, 40 traps) |
+|---|---|---|---|
+| naive | 72.8% | 68.8% | 71.5% |
+| boundary | 96.0% | 88.7% | **93.3%** |
+| guarded | 67.4% | 63.7% | 57.2% |
 
-Quote the benchmark identifier (`ko-finance-asr-corrections/mini-v0.2`, in `eval-set.json`)
+v0.2 → v0.3 moves for three reasons at once, and they pull in different directions. 41 net new
+pairs enlarge the error set; three unsafe keys were withdrawn or narrowed, which is why
+boundary's over-corrections fall 40 → 35 and its net score rises; and `guarded` drops hardest
+because the ≥4-character rule now discards 52 of 130 pairs rather than 28 of 89 — the new
+pairs are mostly short stock-name fragments. That is the length guard failing on a larger
+sample, not a new problem: v0.2 already found that residual false positives come from
+whitespace flexibility, which a length floor cannot reach.
+
+Quote the benchmark identifier (`ko-finance-asr-corrections/mini-v0.3`, in `eval-set.json`)
 with any number taken from here. A benchmark whose numbers move without a version is worse
 than no benchmark.
 
