@@ -20,6 +20,8 @@ tuple plus the snapshot version.
 | `tier` | `"A"` \| `"B"` | **Authority level.** A = a person approved this pair. B = promoted automatically, without a person in the loop, on the strength of `evidence` plus a verbatim registry match. Tier says who stands behind the pair, not how it was verified — that is `evidence` |
 | `evidence` | `"human"` \| `"auditor-consensus"` \| `"goldset-alignment"` | **How the pair was verified.** `human` = a person judged it directly. `auditor-consensus` = two LLM auditors judged it independently and agreed, and `right` matched an external registry verbatim. `goldset-alignment` = the same misrecognition was observed in an aligned (auto-caption, official-caption) pair for the same utterance. A value of `unknown` means the exporter met an upstream verification path this schema has not described yet, and is a bug to be fixed, not a category |
 | `category` | `"stock"` \| `"term"` \| `"number"` \| `"other"` | Vocabulary kind. `stock`/`term` = verbatim registry/glossary match; `number` = amount/figure damage; `other` = domain colloquialisms, foreign companies outside the KRX registry, multi-word phrases |
+| `ticker` | string \| null | Registry identity of the **corrected** term — a KRX code (`005930`), a US ticker (`NVDA`) or an index symbol (`^GSPC`). Null wherever the registry does not resolve the term, which is most `term`/`number`/`other` rows and a few foreign names; 57 of 135 pairs carry one. The misrecognized form is never looked up — by definition it is in no registry |
+| `market` | string \| null | Listing venue for that identity (`KOSPI`, `KOSDAQ`, `NASDAQ`, `NYSE`, …). Same nullability as `ticker`; the two always travel together |
 | `auditor_models` | string[] | Model identifiers of the independent auditors that agreed. **Orthogonal to `tier`**: it is non-empty whenever two auditors agreed, which can also happen on a tier A pair that a person then approved on top of that consensus (one shipped pair, `업항 → 업황`, is exactly this). Do not infer tier from this field |
 | `approved_at` | date | Promotion date |
 | `word_boundary` | bool | Whether replacement requires word-boundary match |
@@ -60,7 +62,12 @@ pair**.
 - `data/withdrawn.json` — pairs removed from the snapshot, with what replaced them
 
 Top-level metadata in `pairs.json`: `exported_at`, `pair_count`, and `corpus`
-(`scanned_videos`, `counted_at`) describing the frequency scan the counts came from.
+(`scanned_videos`, `counted_at`) describing the frequency scan the counts came from, plus an
+optional profile of that corpus (`channels`, `hours`, `mean_video_minutes`) written by
+`scripts/corpus_profile.py`. The profile is **aggregate only** — how many channels, not which
+ones — because a count describes the corpus while a list would identify its sources. It is
+optional but never partial: the validator rejects a snapshot carrying some of the three keys
+and not the others.
 
 `scanned_videos` is the size of that cumulative mirror at export time, and it is
 published rather than merely used because the mirror can lag live intake by a few

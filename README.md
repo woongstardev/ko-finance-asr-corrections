@@ -50,6 +50,13 @@ Ten pairs have `right_count: 0`, which is a stronger statement than a high rate:
 videos the auto-captions never once produced the correct spelling. `보스턴 다이내믹스` and
 `서브프라임 모기지` are in that group.
 
+The corpus behind those rates:
+
+- **1,490 videos** <!-- stat:scanned_videos -->
+- **43 channels** <!-- stat:corpus_channels --> — a count, not a list; the profile describes the
+  corpus without identifying its sources
+- **672.3 hours** <!-- stat:corpus_hours --> of speech, averaging 27 minutes a video
+
 Read the rates as *this corpus, this ASR system*: the denominator is Korean finance YouTube
 auto-captions, not Korean speech in general. And `corpus_count` counts a surface form, not a
 confirmed error — see [Known limitations](#known-limitations).

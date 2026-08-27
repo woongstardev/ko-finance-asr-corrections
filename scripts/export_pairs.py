@@ -51,6 +51,8 @@ PUBLIC_FIELDS = [
     "tier",
     "evidence",
     "category",
+    "ticker",
+    "market",
     "auditor_models",
     "approved_at",
     "word_boundary",
@@ -66,6 +68,13 @@ EVIDENCE_BY_SOURCE = {
     "auditor": "auditor-consensus",
     "goldset": "goldset-alignment",
 }
+
+
+def _registry_identity(registry, right: str) -> dict:
+    entry = registry.stock(right)
+    if entry is None:
+        return {"ticker": None, "market": None}
+    return {"ticker": entry.ticker or None, "market": entry.market or None}
 
 
 def categorize(right: str, kind: str | None) -> str:
@@ -108,6 +117,25 @@ def load_exclusions() -> set[str]:
     return names
 
 
+def load_corpus_profile() -> dict:
+    """Optional aggregate shape of the corpus (scripts/corpus_profile.py).
+
+    Kept separate from the counts artifact because it is produced by this
+    repository rather than upstream, and because a snapshot is still valid
+    without it — the profile describes the corpus, the counts describe the pairs.
+    """
+    path = os.environ.get("OSS_CORPUS_PROFILE_PATH")
+    if not path:
+        return {}
+    profile = Path(path).expanduser()
+    if not profile.exists():
+        print(f"WARNING: corpus profile not found: {profile}", file=sys.stderr)
+        return {}
+    payload = json.loads(profile.read_text(encoding="utf-8"))
+    return {k: payload[k] for k in ("channels", "hours", "mean_video_minutes")
+            if k in payload}
+
+
 def load_corpus_counts() -> tuple[dict[str, int], dict]:
     """상류 코퍼스 재계수 산출물. 없으면 corpus_count는 null로 배포된다."""
     if not OSS_COUNTS_PATH.exists():
@@ -141,6 +169,7 @@ def main() -> None:
     rows = load_dictionary_rows()
     exclusions = load_exclusions()
     corpus_counts, corpus_meta = load_corpus_counts()
+    corpus_meta = {**corpus_meta, **load_corpus_profile()} if corpus_meta else corpus_meta
 
     shipped: list[dict] = []
     dropped_person: list[str] = []
@@ -174,6 +203,11 @@ def main() -> None:
                 "wrong": e.wrong,
                 "right": e.right,
                 "corpus_count": corpus_counts.get(e.wrong),
+                # Registry identity of the corrected term, so a row joins to price
+                # or filing data without a name match. Only the verified form is
+                # looked up - the misrecognized one is by definition not in any
+                # registry - and non-stock rows stay null rather than guessing.
+                **_registry_identity(registry, e.right),
                 # The same scan counts the verified form, which is what turns a
                 # frequency list into an error rate: how often the term was said
                 # correctly against how often it came out mangled. Absent from

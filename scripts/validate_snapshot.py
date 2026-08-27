@@ -44,6 +44,10 @@ FIELDS: dict[str, object] = {
     # did not carry the verified form, while 0 is an observation — the correct
     # spelling was never once transcribed correctly in the whole corpus.
     "right_count": (int, type(None)),
+    # SCHEMA.md → field table. Registry identity of the corrected term; null for
+    # every row the registry does not resolve, which is most non-stock rows.
+    "ticker": (str, type(None)),
+    "market": (str, type(None)),
     "observed_count": int,
     "tier": str,
     "evidence": str,
@@ -113,6 +117,18 @@ def check_pairs(payload: dict, fail, warn) -> None:
     # corpus_count went to 0, and both this validator and the benchmark gate
     # passed the result — zero is a legal int and the benchmark never reads the
     # counts. Frequency is the headline claim of this dataset; it fails loudly now.
+    # SCHEMA.md → Files. The profile is optional, but a partial one is a bug:
+    # it is written by one script in one pass, so a missing half means something
+    # truncated it.
+    profile_keys = {"channels", "hours", "mean_video_minutes"}
+    present = profile_keys & set(corpus)
+    if present and present != profile_keys:
+        fail(f"corpus profile is partial: has {sorted(present)}, missing "
+             f"{sorted(profile_keys - present)} (SCHEMA.md → Files)")
+    for key in present:
+        if not isinstance(corpus[key], (int, float)) or corpus[key] <= 0:
+            fail(f"corpus.{key} must be a positive number, got {corpus[key]!r}")
+
     counted = [
         pair.get("corpus_count") for pair in pairs
         if isinstance(pair.get("corpus_count"), int)
@@ -285,9 +301,12 @@ def check_prose_stats(payload: dict, fail, warn) -> None:
         wrong, right = pair.get("corpus_count"), pair.get("right_count")
         if isinstance(wrong, int) and isinstance(right, int) and wrong + right:
             rates[pair["wrong"]] = f"{wrong / (wrong + right) * 100:.1f}"
+    corpus = payload.get("corpus") or {}
     stats: dict[str, object] = {
         "pair_count": payload.get("pair_count"),
-        "scanned_videos": (payload.get("corpus") or {}).get("scanned_videos"),
+        "scanned_videos": corpus.get("scanned_videos"),
+        "corpus_channels": corpus.get("channels"),
+        "corpus_hours": corpus.get("hours"),
     }
     eval_path = REPO / "benchmark" / "eval-set.json"
     if eval_path.exists():
@@ -327,7 +346,11 @@ def check_prose_stats(payload: dict, fail, warn) -> None:
                 else:
                     fail(f"{rel}:{lineno}: unknown stat marker {match.group(0)}")
                     continue
-                numbers = {n.replace(",", "") for n in re.findall(r"\d[\d,]*", line)}
+                # Decimals as well as integers: a corpus is 672.3 hours, and
+                # scanning for \d[\d,]* alone would read that as 672 and 3 and
+                # fail a line that is perfectly correct.
+                numbers = {n.replace(",", "")
+                           for n in re.findall(r"\d[\d,]*(?:\.\d+)?", line)}
                 if str(value) not in numbers:
                     fail(f"{rel}:{lineno}: marked for {stat}"
                          f"{':' + arg if arg else ''} = {value}, but the line says "
