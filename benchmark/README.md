@@ -91,7 +91,8 @@ penalty measures.
 - **naive** — plain substring replacement, all 135 pairs.
 - **boundary** — whitespace-flexible matching with a non-alphanumeric guard on ASCII keys.
   This mirrors how the upstream pipeline matches.
-- **guarded** — boundary, minus any key shorter than 4 characters (83 of 135 pairs survive).
+- **guarded** — boundary, minus any key shorter than 4 characters (83 <!-- stat:guarded_keys -->
+  of 135 <!-- stat:pair_count --> pairs survive).
   Short Korean keys are where blind replacement does its damage, and Korean is agglutinative,
   so there is no word boundary to fall back on.
 

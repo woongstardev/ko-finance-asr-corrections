@@ -78,7 +78,7 @@ STAT_MARKER = re.compile(r"<!--\s*stat:([A-Za-z_]+)(?::([^\s>]+))?\s*-->")
 # it is a copy of claims that live elsewhere, and it is read by people who never
 # see this repository. It was three snapshots out of date when it joined the list.
 MARKED_FILES = ("README.md", "docs/SCHEMA.md", "benchmark/README.md",
-                "docs/hf-dataset-card.md")
+                "docs/hf-dataset-card.md", "docs/METHODOLOGY.md")
 
 
 def exclusion_names(ggulmuse: Path) -> tuple[set[str], list[Path]]:
@@ -330,12 +330,28 @@ def check_prose_stats(payload: dict, fail, warn) -> None:
         if isinstance(wrong, int) and isinstance(right, int) and wrong + right:
             rates[pair["wrong"]] = f"{wrong / (wrong + right) * 100:.1f}"
     corpus = payload.get("corpus") or {}
+    # Composition counts are here because they are exactly what drifted twice:
+    # marked lines followed the snapshot automatically while sentences describing
+    # the same snapshot in words did not.
+    tiers = [p.get("tier") for p in pairs]
     stats: dict[str, object] = {
         "pair_count": payload.get("pair_count"),
         "scanned_videos": corpus.get("scanned_videos"),
         "corpus_channels": corpus.get("channels"),
         "corpus_hours": corpus.get("hours"),
+        "tier_a": tiers.count("A"),
+        "tier_b": tiers.count("B"),
+        # The guarded baseline's population: keys long enough to survive a
+        # four-character floor. Quoted in benchmark/README.md, and it moves every
+        # time the snapshot gains short keys.
+        "guarded_keys": sum(1 for p in pairs
+                            if len((p.get("wrong") or "").replace(" ", "")) >= 4),
     }
+    categories = {}
+    for pair in pairs:
+        category = pair.get("category")
+        if category:
+            categories[category] = categories.get(category, 0) + 1
     eval_path = REPO / "benchmark" / "eval-set.json"
     if eval_path.exists():
         ev = json.loads(eval_path.read_text(encoding="utf-8"))
@@ -351,7 +367,13 @@ def check_prose_stats(payload: dict, fail, warn) -> None:
             for match in STAT_MARKER.finditer(line):
                 marked += 1
                 stat, arg = match.group(1), match.group(2)
-                if stat == "rate" and arg is not None:
+                if stat == "category" and arg is not None:
+                    if arg not in categories:
+                        fail(f"{rel}:{lineno}: stat:category:{arg} is not a category "
+                             "in this snapshot")
+                        continue
+                    value = categories[arg]
+                elif stat == "rate" and arg is not None:
                     if arg not in rates:
                         fail(f"{rel}:{lineno}: stat:rate:{arg} names a pair with no "
                              "error rate in the snapshot")
@@ -363,7 +385,7 @@ def check_prose_stats(payload: dict, fail, warn) -> None:
                         fail(f"{rel}:{lineno}: marked for rate:{arg} = {rates[arg]}%, "
                              f"but the line says {sorted(written) or 'no rate'}")
                     continue
-                if stat == "count" and arg is not None:
+                elif stat == "count" and arg is not None:
                     if arg not in counts:
                         fail(f"{rel}:{lineno}: stat:count:{arg} names a pair that is "
                              "no longer in the snapshot")

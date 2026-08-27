@@ -87,11 +87,20 @@ expensive, uncertain layer has to get right.
 
 ## Composition of the current snapshot
 
-135 pairs: 49 Tier A (a person approved them), 86 Tier B (promoted automatically). By
-category: 60 `stock`, 42 `other`, 27 `term`, 6 `number`. By verification path: 49 `human`,
-48 `goldset-alignment`, 38 `auditor-consensus` — the alignment path did not exist at the
-first snapshot and is now the second largest, which is why `evidence` had to stop being
-implied by `tier`.
+The snapshot holds 135 pairs <!-- stat:pair_count -->:
+
+| Split | Count |
+|---|---|
+| Tier A — a person approved it | 49 <!-- stat:tier_a --> |
+| Tier B — promoted automatically | 86 <!-- stat:tier_b --> |
+| `stock` | 60 <!-- stat:category:stock --> |
+| `other` | 42 <!-- stat:category:other --> |
+| `term` | 27 <!-- stat:category:term --> |
+| `number` | 6 <!-- stat:category:number --> |
+
+By verification path: 49 `human`, 48 `goldset-alignment`, 38 `auditor-consensus` — the
+alignment path did not exist at the first snapshot and is now the second largest, which is why
+`evidence` had to stop being implied by `tier`.
 
 Every Tier B pair carries both auditor model ids. Tier A pairs usually carry none — but not
 by construction, and one shipped pair (`업항 → 업황`) is Tier A *with* both ids, because a
