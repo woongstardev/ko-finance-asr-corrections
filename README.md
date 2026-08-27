@@ -61,7 +61,15 @@ Benchmark `mini-v0.3` (130 pairs, 689 items). Earlier numbers are kept in
 [`benchmark/README.md`](benchmark/README.md) and are not comparable across versions — the
 pair list, the trap set and the item count all moved.
 
-Details, scoring rules and what the numbers mean: [`benchmark/README.md`](benchmark/README.md).
+**And a held-out row, which reverses it.** 41 of the 130 pairs arrived after that LLM run, so
+their 220 items are a slice neither system had seen. On those, the *previous* snapshot's
+dictionary scores **2.3%** and the same model scores **72.9%**. Both results are real: a
+dictionary is worth 100% on the errors it has seen and almost nothing on the ones it has not,
+which is precisely why the pairs are the product here and the lookup is not. Quote this
+dataset for coverage of observed errors, never as evidence that dictionaries generalise.
+
+Details, scoring rules, the held-out table and what the numbers mean:
+[`benchmark/README.md`](benchmark/README.md).
 
 ## Known limitations
 

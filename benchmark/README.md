@@ -203,6 +203,47 @@ Quote the benchmark identifier (`ko-finance-asr-corrections/mini-v0.3`, in `eval
 with any number taken from here. A benchmark whose numbers move without a version is worse
 than no benchmark.
 
+## Held-out: what happens on pairs the dictionary has not learned yet
+
+Every number above is in-domain by construction — the error sentences are generated from the
+same pairs the dictionary looks up, so a lookup scores 100% recall and the benchmark cannot
+say whether the method generalises. The v0.3 snapshot made the first honest test possible
+without withholding anything: 41 pairs arrived after the committed LLM run, so their 220 items
+are a slice **no system in the earlier table had seen**.
+
+Scored 2026-08-27 on those 220 items (176 error, 44 clean, no traps):
+
+| System | Recall | Over-corrections | **Net score** |
+|---|---|---|---|
+| Dictionary of the *previous* snapshot (89 pairs, boundary) | 2.3% (4/176) | 0 | **2.3%** |
+| Same, keys ≥ 4 chars | 0.0% | 0 | **0.0%** |
+| Claude Opus 5, no dictionary, 3 runs | 73.7% ±1.0 | 1.3 (0.6%) | **72.9% ±0.7** |
+| Dictionary of the *current* snapshot (130 pairs) | 100.0% | 0 | 100.0% |
+
+**This reverses the in-domain result, and both halves are true.** A dictionary is worth 100%
+on the errors it has seen and ~2% on the ones it has not; the model is worth ~73% on anything
+that sounds recoverable and cannot be trusted to leave correct text alone forever. They are
+not competitors — the dictionary is what verification *produces*, and this row measures the
+gap it was built to close. The honest summary of both tables is: **quote the dictionary for
+coverage of known errors, and never quote it as evidence that dictionaries generalise.**
+
+Two cautions on reading the LLM row:
+
+- Its recall here (73.7%) is *higher* than its 63.8% on the v0.2 set, which is not improvement
+  — the newer pairs are easier. Most are near-miss variants of terms already in the snapshot
+  (`단도체`/`매도체`/`반조체`/`밤도체` → `반도체`), and a model recovers those from context.
+  Arbitrary mappings like `SKS → SK하이닉스` are what it still cannot do, and the earlier set
+  had proportionally more of them.
+- 31 of 176 error items still come back mangled — a confident wrong term rather than a miss.
+  That failure mode does not shrink with the easier slice.
+
+Reproducing the slice needs no new data: it is the items in `eval-set.json` at `mini-v0.3`
+that are absent from the same file at `mini-v0.2` (`git show 87aed71:benchmark/eval-set.json`).
+Results are committed as `benchmark/results/llm-claude-opus-5-cli-heldout-*.json`; the run cost
+$3.56 for 3 × 220 items and its manifest records the model id, prompt and flags like any other
+LLM row. **Prediction files are not committed** — only results — so this row is re-run rather
+than replayed.
+
 ## How traps are chosen
 
 `benchmark/mine_traps.py` ranks the shipped pairs by over-correction risk and prints the

@@ -177,6 +177,7 @@ def main() -> None:
                     help="cli transport only: hard per-call spend ceiling")
     ap.add_argument("--eval", type=Path, default=DEFAULT_EVAL, dest="eval_path")
     ap.add_argument("--outdir", type=Path, default=DEFAULT_OUTDIR)
+    ap.add_argument("--label", default="", help="suffix for the result slug, e.g. heldout")
     args = ap.parse_args()
 
     api_key = os.environ.get("ANTHROPIC_API_KEY")
@@ -205,7 +206,13 @@ def main() -> None:
         }
         return item["id"], answer_of(request(payload, api_key, args.timeout))
 
+    # A label keeps one model's rows apart when the same model is run against
+    # different eval sets — the monthly held-out slice is the reason this exists:
+    # without it a delta run overwrites the full-set run's predictions and, worse,
+    # its manifest, which is the only record of how that row was produced.
     slug = args.model.replace("/", "-") + ("-cli" if args.transport == "cli" else "")
+    if args.label:
+        slug += f"-{args.label}"
     written = []
     for run in range(1, args.runs + 1):
         started = time.time()

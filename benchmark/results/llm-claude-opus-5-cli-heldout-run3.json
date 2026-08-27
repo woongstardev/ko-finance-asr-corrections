@@ -1,0 +1,55 @@
+{
+ "items": {
+  "total": 220,
+  "error": 176,
+  "guard": 44
+ },
+ "fixed": 129,
+ "missed": 15,
+ "mangled": 32,
+ "over_corrections": {
+  "total": 1,
+  "error_context": 0,
+  "clean": 1,
+  "trap": 0
+ },
+ "recall": 0.7329545454545454,
+ "over_correction_rate": 0.004545454545454545,
+ "precision_proxy": 0.7962962962962963,
+ "net_score": 0.7272727272727273,
+ "missing_predictions": 0,
+ "by_category": {
+  "stock": {
+   "items": 145,
+   "fixed": 78,
+   "missed": 11,
+   "mangled": 27,
+   "over": 0
+  },
+  "term": {
+   "items": 70,
+   "fixed": 47,
+   "missed": 4,
+   "mangled": 5,
+   "over": 0
+  },
+  "other": {
+   "items": 5,
+   "fixed": 4,
+   "missed": 0,
+   "mangled": 0,
+   "over": 1
+  }
+ },
+ "by_variant": {
+  "plain": {
+   "items": 132,
+   "fixed": 100
+  },
+  "spacing": {
+   "items": 44,
+   "fixed": 29
+  }
+ },
+ "system": "llm-heldout-run3"
+}
