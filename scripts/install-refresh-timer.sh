@@ -13,7 +13,8 @@
 # environment at install time, so the units carry no path this script did not
 # compute. Host-specific values are passed in rather than baked in:
 #
-#   GGULMUSE_ROOT=... OSS_REFRESH_TELEGRAM_ENV=... sh scripts/install-refresh-timer.sh
+#   GGULMUSE_ROOT=... GGULMUSE_DATA_DIR=... OSS_CORPUS_DIR=... \
+#     OSS_REFRESH_TELEGRAM_ENV=... sh scripts/install-refresh-timer.sh
 #
 # Requires `loginctl enable-linger $USER` for the timer to fire without an
 # active login session.
@@ -36,7 +37,13 @@ mkdir -p "$UNIT_DIR"
 # Only pass through what the caller actually set — an empty Environment= line
 # would be a syntax error, and a guessed default would be someone else's layout.
 ENV_LINES=""
-for var in GGULMUSE_ROOT OSS_REFRESH_REPORT_DIR OSS_REFRESH_STATE OSS_REFRESH_TELEGRAM_ENV; do
+# GGULMUSE_DATA_DIR points the upstream recount at the corpus (it lives outside
+# the upstream checkout since 2026-08); OSS_CORPUS_DIR and OSS_CORPUS_PROFILE_PATH
+# feed the corpus profile. Without the first of these the recount scans nothing,
+# writes zeroes, and the gates stop the release - which is the safe failure, but
+# a weekly job that always fails is a broken detector.
+for var in GGULMUSE_ROOT GGULMUSE_DATA_DIR OSS_REFRESH_REPORT_DIR OSS_REFRESH_STATE \
+           OSS_REFRESH_TELEGRAM_ENV OSS_CORPUS_DIR OSS_CORPUS_PROFILE_PATH; do
     eval "value=\${$var:-}"
     [ -n "$value" ] && ENV_LINES="${ENV_LINES}Environment=$var=$value
 "

@@ -112,6 +112,7 @@ def diff_pairs(
         elif fields:
             freq_changed.append(k)
     return {
+        "unchanged_count": len(set(old) & set(new)) - len(meta_changed),
         "added": added,
         "removed": removed,
         "meta_changed": meta_changed,
@@ -300,9 +301,23 @@ def update_changelog(today: str, diff: dict) -> None:
         entry_lines.append("")
     if diff["meta_changed"]:
         entry_lines.append("### Changed")
-        entry_lines += [
-            f"- `{fmt_pair(k)}`: {', '.join(fs)} ({today})" for k, fs in diff["meta_changed"]
-        ]
+        # A field added to the schema changes every row at once, and listing 135
+        # identical bullets buries the three that are actually about pairs. When a
+        # field moved on (almost) every pair, say it once as what it was: a schema
+        # addition. The threshold is deliberately not 100% — a handful of rows can
+        # legitimately keep a null.
+        total = diff.get("unchanged_count", 0) + len(diff["meta_changed"])
+        per_field: dict[str, int] = {}
+        for _, fields in diff["meta_changed"]:
+            for f in fields:
+                per_field[f] = per_field.get(f, 0) + 1
+        wholesale = {f for f, n in per_field.items() if total and n >= total * 0.9}
+        for f in sorted(wholesale):
+            entry_lines.append(f"- `{f}` added to every pair ({today})")
+        for k, fields in diff["meta_changed"]:
+            rest = [f for f in fields if f not in wholesale]
+            if rest:
+                entry_lines.append(f"- `{fmt_pair(k)}`: {', '.join(rest)} ({today})")
         entry_lines.append("")
     if not entry_lines:
         return
@@ -348,6 +363,23 @@ def main() -> None:
                 export_env["OSS_COUNTS_PATH"] = str(counts_path)
             out = run_step("recount", recount_cmd)
             print(out, end="")
+
+        # The corpus profile is ours to produce (scripts/corpus_profile.py) and
+        # only possible where the corpus is readable, so it refreshes here rather
+        # than being carried by hand between snapshots. A failure is not fatal:
+        # the profile describes the corpus, and a snapshot without it is still a
+        # valid snapshot.
+        corpus_dir = os.environ.get("OSS_CORPUS_DIR")
+        profile_path = os.environ.get("OSS_CORPUS_PROFILE_PATH")
+        if corpus_dir and profile_path:
+            proc = subprocess.run(
+                [sys.executable, str(REPO / "scripts" / "corpus_profile.py"),
+                 "--corpus", corpus_dir, "--out", profile_path],
+                cwd=REPO, capture_output=True, text=True,
+            )
+            print(proc.stdout, end="")
+            if proc.returncode != 0:
+                sys.stderr.write(f"WARNING: corpus profile failed: {proc.stderr.strip()[:200]}\n")
 
         export_report_path = tmp / "export-report.json"
         out = run_step(
