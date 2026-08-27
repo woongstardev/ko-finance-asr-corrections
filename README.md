@@ -29,7 +29,7 @@ archive. The pairs here are the byproduct of correcting real YouTube auto-captio
 | Path | Contents |
 |---|---|
 | `data/` | Confusion pairs (JSON/CSV): `wrong`, `right`, `observed_count`, `tier`, verification metadata. Stock names & finance terms only — no person names, no source sentences. |
-| `benchmark/` | <!-- stat:eval_items --> Mini benchmark v0.3: pure-stdlib scorer, a 689-item synthetic evaluation set (no caption text), a mechanical trap-risk miner, and three dictionary baselines. Fixes and over-corrections are scored together — see [`benchmark/README.md`](benchmark/README.md). |
+| `benchmark/` | <!-- stat:eval_items --> Mini benchmark v0.4: pure-stdlib scorer, a 721-item synthetic evaluation set (no caption text), a mechanical trap-risk miner, and three dictionary baselines. Fixes and over-corrections are scored together — see [`benchmark/README.md`](benchmark/README.md). |
 | `docs/SCHEMA.md` | Field-by-field schema. |
 | `docs/METHODOLOGY.md` | The no-gold-label verification loop: 2 independent LLM auditors → consensus-only adoption → external registry check → 3-tier promotion → instant rollback. |
 
@@ -57,15 +57,15 @@ confirmed error — see [Known limitations](#known-limitations).
 ## The benchmark in one table
 
 Task: fix the misrecognition, change nothing else. Three ways of using the dataset itself as
-a correction system, scored on 689 synthetic items <!-- stat:eval_items --> (no caption text),
-of which 40 are traps <!-- stat:trap_count --> — ordinary sentences a blind replacement damages. Net score is fixes minus over-corrections,
+a correction system, scored on 721 synthetic items <!-- stat:eval_items --> (no caption text),
+of which 47 are traps <!-- stat:trap_count --> — ordinary sentences a blind replacement damages. Net score is fixes minus over-corrections,
 over error items.
 
 | System | Recall | Over-corrections | **Net score** |
 |---|---|---|---|
-| Plain substring replacement | 75.3% | 20 | **71.5%** |
-| Whitespace-flexible matching | 100.0% | 35 | **93.3%** |
-| Whitespace-flexible, keys ≥ 4 chars | 60.1% | 15 | **57.2%** |
+| Plain substring replacement | 75.3% | 24 | **70.9%** |
+| Whitespace-flexible matching | 100.0% | 41 | **92.4%** |
+| Whitespace-flexible, keys ≥ 4 chars | 61.6% | 15 | **58.8%** |
 | Claude Opus 5, no dictionary (3 runs) | 63.8% | 9.3 | **61.2%** † |
 
 The LLM row is the comparison this benchmark exists to make. A frontier model given only the
@@ -78,7 +78,7 @@ company is an observation, not an inference, and that observation is what this d
 predictions are re-run output, not committed data, so reproducing the row costs an API run
 rather than a replay. The dictionary rows above are `mini-v0.3`.
 
-Benchmark `mini-v0.3` (130 pairs, 689 items). Earlier numbers are kept in
+Benchmark `mini-v0.4` (135 pairs, 721 items). Earlier numbers are kept in
 [`benchmark/README.md`](benchmark/README.md) and are not comparable across versions — the
 pair list, the trap set and the item count all moved.
 

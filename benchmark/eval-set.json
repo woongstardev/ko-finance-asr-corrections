@@ -1,13 +1,13 @@
 {
- "benchmark": "ko-finance-asr-corrections/mini-v0.3",
- "generated_at": "2026-08-27T09:00:26Z",
- "pairs_exported_at": "2026-08-27T08:58:09Z",
- "pair_count": 130,
+ "benchmark": "ko-finance-asr-corrections/mini-v0.4",
+ "generated_at": "2026-08-27T13:47:27Z",
+ "pairs_exported_at": "2026-08-27T13:45:02Z",
+ "pair_count": 135,
  "item_counts": {
-  "error:plain": 390,
-  "error:spacing": 129,
-  "clean": 130,
-  "trap": 40
+  "error:plain": 405,
+  "error:spacing": 134,
+  "clean": 135,
+  "trap": 47
  },
  "frames": [
   "{w} 관련해서 궁금한 부분이 있습니다.",
@@ -5718,76 +5718,446 @@
    "tier": "B"
   },
   {
-   "id": "err-0cf747-0",
+   "id": "err-033969-0",
    "kind": "error",
    "variant": "plain",
-   "input": "요즘 소부 장단 쪽 흐름이 어떻습니까?",
-   "expected": "요즘 소부장 쪽 흐름이 어떻습니까?",
+   "input": "어제 시장에서 소부 장단도 언급이 많았습니다.",
+   "expected": "어제 시장에서 소부장도 언급이 많았습니다.",
+   "span": [
+    8,
+    14
+   ],
+   "surface": "소부 장단도",
+   "wrong": "소부 장단도",
+   "right": "소부장도",
+   "category": "other",
+   "tier": "A"
+  },
+  {
+   "id": "err-033969-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "소부 장단도 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "소부장도 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    6
+   ],
+   "surface": "소부 장단도",
+   "wrong": "소부 장단도",
+   "right": "소부장도",
+   "category": "other",
+   "tier": "A"
+  },
+  {
+   "id": "err-033969-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "투자자들이 소부 장단도 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 소부장도 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    12
+   ],
+   "surface": "소부 장단도",
+   "wrong": "소부 장단도",
+   "right": "소부장도",
+   "category": "other",
+   "tier": "A"
+  },
+  {
+   "id": "err-033969-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "요즘 소부장단도 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 소부장도 쪽 흐름이 어떻습니까?",
    "span": [
     3,
     8
    ],
-   "surface": "소부 장단",
-   "wrong": "소부 장단",
-   "right": "소부장",
+   "surface": "소부장단도",
+   "wrong": "소부 장단도",
+   "right": "소부장도",
    "category": "other",
    "tier": "A"
   },
   {
-   "id": "err-0cf747-1",
+   "id": "cln-033969",
+   "kind": "clean",
+   "input": "소부장도 관련해서 궁금한 부분이 있습니다.",
+   "expected": "소부장도 관련해서 궁금한 부분이 있습니다.",
+   "wrong": "소부 장단도",
+   "right": "소부장도",
+   "category": "other",
+   "tier": "A"
+  },
+  {
+   "id": "err-3f59b2-0",
    "kind": "error",
    "variant": "plain",
-   "input": "오늘 방송에서는 소부 장단 이야기를 해보겠습니다.",
-   "expected": "오늘 방송에서는 소부장 이야기를 해보겠습니다.",
+   "input": "소부 장단들 관련해서 궁금한 부분이 있습니다.",
+   "expected": "소부장들 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    6
+   ],
+   "surface": "소부 장단들",
+   "wrong": "소부 장단들",
+   "right": "소부장들",
+   "category": "other",
+   "tier": "A"
+  },
+  {
+   "id": "err-3f59b2-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "요즘 소부 장단들 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 소부장들 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    9
+   ],
+   "surface": "소부 장단들",
+   "wrong": "소부 장단들",
+   "right": "소부장들",
+   "category": "other",
+   "tier": "A"
+  },
+  {
+   "id": "err-3f59b2-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "오늘 방송에서는 소부 장단들 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 소부장들 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    15
+   ],
+   "surface": "소부 장단들",
+   "wrong": "소부 장단들",
+   "right": "소부장들",
+   "category": "other",
+   "tier": "A"
+  },
+  {
+   "id": "err-3f59b2-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "소부장단들 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "소부장들 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    5
+   ],
+   "surface": "소부장단들",
+   "wrong": "소부 장단들",
+   "right": "소부장들",
+   "category": "other",
+   "tier": "A"
+  },
+  {
+   "id": "cln-3f59b2",
+   "kind": "clean",
+   "input": "어제 시장에서 소부장들 언급이 많았습니다.",
+   "expected": "어제 시장에서 소부장들 언급이 많았습니다.",
+   "wrong": "소부 장단들",
+   "right": "소부장들",
+   "category": "other",
+   "tier": "A"
+  },
+  {
+   "id": "err-26820e-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "오늘 방송에서는 소부 장단안에서 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 소부장 안에서 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    17
+   ],
+   "surface": "소부 장단안에서",
+   "wrong": "소부 장단안에서",
+   "right": "소부장 안에서",
+   "category": "other",
+   "tier": "A"
+  },
+  {
+   "id": "err-26820e-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "어제 시장에서 소부 장단안에서 언급이 많았습니다.",
+   "expected": "어제 시장에서 소부장 안에서 언급이 많았습니다.",
+   "span": [
+    8,
+    16
+   ],
+   "surface": "소부 장단안에서",
+   "wrong": "소부 장단안에서",
+   "right": "소부장 안에서",
+   "category": "other",
+   "tier": "A"
+  },
+  {
+   "id": "err-26820e-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "소부 장단안에서 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "소부장 안에서 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    8
+   ],
+   "surface": "소부 장단안에서",
+   "wrong": "소부 장단안에서",
+   "right": "소부장 안에서",
+   "category": "other",
+   "tier": "A"
+  },
+  {
+   "id": "err-26820e-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "소부장단안에서 관련해서 궁금한 부분이 있습니다.",
+   "expected": "소부장 안에서 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    7
+   ],
+   "surface": "소부장단안에서",
+   "wrong": "소부 장단안에서",
+   "right": "소부장 안에서",
+   "category": "other",
+   "tier": "A"
+  },
+  {
+   "id": "cln-26820e",
+   "kind": "clean",
+   "input": "투자자들이 소부장 안에서 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 소부장 안에서 이슈에 주목하고 있습니다.",
+   "wrong": "소부 장단안에서",
+   "right": "소부장 안에서",
+   "category": "other",
+   "tier": "A"
+  },
+  {
+   "id": "err-cddee4-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "소부 장단에 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "소부장에 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    6
+   ],
+   "surface": "소부 장단에",
+   "wrong": "소부 장단에",
+   "right": "소부장에",
+   "category": "other",
+   "tier": "A"
+  },
+  {
+   "id": "err-cddee4-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "투자자들이 소부 장단에 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 소부장에 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    12
+   ],
+   "surface": "소부 장단에",
+   "wrong": "소부 장단에",
+   "right": "소부장에",
+   "category": "other",
+   "tier": "A"
+  },
+  {
+   "id": "err-cddee4-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "소부 장단에 관련해서 궁금한 부분이 있습니다.",
+   "expected": "소부장에 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    6
+   ],
+   "surface": "소부 장단에",
+   "wrong": "소부 장단에",
+   "right": "소부장에",
+   "category": "other",
+   "tier": "A"
+  },
+  {
+   "id": "err-cddee4-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "오늘 방송에서는 소부장단에 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 소부장에 이야기를 해보겠습니다.",
    "span": [
     9,
     14
    ],
-   "surface": "소부 장단",
-   "wrong": "소부 장단",
-   "right": "소부장",
+   "surface": "소부장단에",
+   "wrong": "소부 장단에",
+   "right": "소부장에",
    "category": "other",
    "tier": "A"
   },
   {
-   "id": "err-0cf747-2",
+   "id": "cln-cddee4",
+   "kind": "clean",
+   "input": "요즘 소부장에 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 소부장에 쪽 흐름이 어떻습니까?",
+   "wrong": "소부 장단에",
+   "right": "소부장에",
+   "category": "other",
+   "tier": "A"
+  },
+  {
+   "id": "err-5b8deb-0",
    "kind": "error",
    "variant": "plain",
-   "input": "어제 시장에서 소부 장단 언급이 많았습니다.",
-   "expected": "어제 시장에서 소부장 언급이 많았습니다.",
+   "input": "투자자들이 소부 장단을 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 소부장을 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    12
+   ],
+   "surface": "소부 장단을",
+   "wrong": "소부 장단을",
+   "right": "소부장을",
+   "category": "other",
+   "tier": "A"
+  },
+  {
+   "id": "err-5b8deb-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "소부 장단을 관련해서 궁금한 부분이 있습니다.",
+   "expected": "소부장을 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    6
+   ],
+   "surface": "소부 장단을",
+   "wrong": "소부 장단을",
+   "right": "소부장을",
+   "category": "other",
+   "tier": "A"
+  },
+  {
+   "id": "err-5b8deb-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "요즘 소부 장단을 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 소부장을 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    9
+   ],
+   "surface": "소부 장단을",
+   "wrong": "소부 장단을",
+   "right": "소부장을",
+   "category": "other",
+   "tier": "A"
+  },
+  {
+   "id": "err-5b8deb-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "어제 시장에서 소부장단을 언급이 많았습니다.",
+   "expected": "어제 시장에서 소부장을 언급이 많았습니다.",
    "span": [
     8,
     13
    ],
-   "surface": "소부 장단",
-   "wrong": "소부 장단",
-   "right": "소부장",
+   "surface": "소부장단을",
+   "wrong": "소부 장단을",
+   "right": "소부장을",
    "category": "other",
    "tier": "A"
   },
   {
-   "id": "err-0cf747-s",
+   "id": "cln-5b8deb",
+   "kind": "clean",
+   "input": "오늘 방송에서는 소부장을 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 소부장을 이야기를 해보겠습니다.",
+   "wrong": "소부 장단을",
+   "right": "소부장을",
+   "category": "other",
+   "tier": "A"
+  },
+  {
+   "id": "err-dfb94c-0",
    "kind": "error",
-   "variant": "spacing",
-   "input": "투자자들이 소부장단 이슈에 주목하고 있습니다.",
-   "expected": "투자자들이 소부장 이슈에 주목하고 있습니다.",
+   "variant": "plain",
+   "input": "소부 장단이 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "소부장이 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    6
+   ],
+   "surface": "소부 장단이",
+   "wrong": "소부 장단이",
+   "right": "소부장이",
+   "category": "other",
+   "tier": "A"
+  },
+  {
+   "id": "err-dfb94c-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "투자자들이 소부 장단이 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 소부장이 이슈에 주목하고 있습니다.",
    "span": [
     6,
-    10
+    12
    ],
-   "surface": "소부장단",
-   "wrong": "소부 장단",
-   "right": "소부장",
+   "surface": "소부 장단이",
+   "wrong": "소부 장단이",
+   "right": "소부장이",
    "category": "other",
    "tier": "A"
   },
   {
-   "id": "cln-0cf747",
+   "id": "err-dfb94c-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "소부 장단이 관련해서 궁금한 부분이 있습니다.",
+   "expected": "소부장이 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    6
+   ],
+   "surface": "소부 장단이",
+   "wrong": "소부 장단이",
+   "right": "소부장이",
+   "category": "other",
+   "tier": "A"
+  },
+  {
+   "id": "err-dfb94c-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "오늘 방송에서는 소부장단이 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 소부장이 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    14
+   ],
+   "surface": "소부장단이",
+   "wrong": "소부 장단이",
+   "right": "소부장이",
+   "category": "other",
+   "tier": "A"
+  },
+  {
+   "id": "cln-dfb94c",
    "kind": "clean",
-   "input": "소부장 부분은 조금 더 지켜봐야 합니다.",
-   "expected": "소부장 부분은 조금 더 지켜봐야 합니다.",
-   "wrong": "소부 장단",
-   "right": "소부장",
+   "input": "요즘 소부장이 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 소부장이 쪽 흐름이 어떻습니까?",
+   "wrong": "소부 장단이",
+   "right": "소부장이",
    "category": "other",
    "tier": "A"
   },
@@ -10062,6 +10432,84 @@
    ],
    "category": "trap",
    "why": "Second context for 수납매 (see trp-storage-stall). This key is the third most frequent in the snapshot (x160), so its false-positive surface matters."
+  },
+  {
+   "id": "trp-ivy-league",
+   "kind": "trap",
+   "input": "창업자 두 명 모두 아이비리그 출신이라는 점이 자주 언급됩니다.",
+   "expected": "창업자 두 명 모두 아이비리그 출신이라는 점이 자주 언급됩니다.",
+   "triggers": [
+    "아이비"
+   ],
+   "category": "trap",
+   "why": "'아이비' is an ordinary word (ivy) and 아이비리그 is the usual Korean rendering of Ivy League. 아이비→IBM would emit 'IBM리그'."
+  },
+  {
+   "id": "trp-samsung-am",
+   "kind": "trap",
+   "input": "삼성 자산운용이 내놓은 상품 구성을 먼저 살펴보겠습니다.",
+   "expected": "삼성 자산운용이 내놓은 상품 구성을 먼저 살펴보겠습니다.",
+   "triggers": [
+    "삼성자"
+   ],
+   "category": "trap",
+   "why": "Whitespace-flexible matching spans the word boundary in '삼성 자산운용', so 삼성자→삼성전자 would produce '삼성전자산운용' - a real asset manager renamed into a chipmaker."
+  },
+  {
+   "id": "trp-sell-fill",
+   "kind": "trap",
+   "input": "장 마감 직전에 매도 체결이 몰리면서 호가가 밀렸습니다.",
+   "expected": "장 마감 직전에 매도 체결이 몰리면서 호가가 밀렸습니다.",
+   "triggers": [
+    "매도체"
+   ],
+   "category": "trap",
+   "why": "'매도 체결' is everyday market vocabulary; the key spans its boundary, and 매도체→반도체 would emit '반도체결'."
+  },
+  {
+   "id": "trp-single-conductor",
+   "kind": "trap",
+   "input": "송전 구간에서는 단도체보다 복도체 방식이 손실 면에서 유리합니다.",
+   "expected": "송전 구간에서는 단도체보다 복도체 방식이 손실 면에서 유리합니다.",
+   "triggers": [
+    "단도체"
+   ],
+   "category": "trap",
+   "why": "단도체 (single conductor) is a real transmission-line term, and this corpus talks about grid equipment constantly. 단도체→반도체 would rewrite a power-engineering sentence into a semiconductor one."
+  },
+  {
+   "id": "trp-smp-power",
+   "kind": "trap",
+   "input": "SMP가 오르면 발전 자회사를 둔 기업의 실적이 먼저 개선됩니다.",
+   "expected": "SMP가 오르면 발전 자회사를 둔 기업의 실적이 먼저 개선됩니다.",
+   "triggers": [
+    "SMP"
+   ],
+   "category": "trap",
+   "why": "SMP is the System Marginal Price of Korea's electricity market, an ordinary term in utility coverage. SMP→에스앤피 would turn a power-price sentence into an index one."
+  },
+  {
+   "id": "trp-mdi-chemical",
+   "kind": "trap",
+   "input": "MDI 스프레드가 회복되면서 화학 업종 전반의 마진이 개선되고 있습니다.",
+   "expected": "MDI 스프레드가 회복되면서 화학 업종 전반의 마진이 개선되고 있습니다.",
+   "triggers": [
+    "MDI"
+   ],
+   "category": "trap",
+   "why": "MDI is a chemical feedstock quoted routinely in chemical-sector commentary. MDI→엔비디아 would replace it with a chipmaker."
+  },
+  {
+   "id": "trp-sobujang-unit",
+   "kind": "trap",
+   "input": "이번 장세는 소부장 단위로 움직였다기보다 대형주 중심이었습니다.",
+   "expected": "이번 장세는 소부장 단위로 움직였다기보다 대형주 중심이었습니다.",
+   "triggers": [
+    "소부 장단",
+    "소부장 단"
+   ],
+   "category": "trap",
+   "why": "'소부장 단위' is ordinary usage, and the retired 소부 장단→소부장 key spanned into it. The pair was replaced upstream by inflected keys; this trap keeps the regression visible if a base key ever returns."
   }
  ]
 }

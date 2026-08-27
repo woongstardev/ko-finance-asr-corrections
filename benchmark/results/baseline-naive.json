@@ -1,22 +1,22 @@
 {
  "items": {
-  "total": 689,
-  "error": 519,
-  "guard": 170
+  "total": 721,
+  "error": 539,
+  "guard": 182
  },
- "fixed": 391,
- "missed": 128,
+ "fixed": 406,
+ "missed": 133,
  "mangled": 0,
  "over_corrections": {
-  "total": 20,
+  "total": 24,
   "error_context": 0,
   "clean": 0,
-  "trap": 20
+  "trap": 24
  },
- "recall": 0.7533718689788054,
- "over_correction_rate": 0.02902757619738752,
- "precision_proxy": 0.9513381995133819,
- "net_score": 0.7148362235067437,
+ "recall": 0.7532467532467533,
+ "over_correction_rate": 0.033287101248266296,
+ "precision_proxy": 0.9441860465116279,
+ "net_score": 0.7087198515769945,
  "missing_predictions": 0,
  "by_category": {
   "number": {
@@ -27,9 +27,9 @@
    "over": 0
   },
   "other": {
-   "items": 185,
-   "fixed": 111,
-   "missed": 37,
+   "items": 210,
+   "fixed": 126,
+   "missed": 42,
    "mangled": 0,
    "over": 0
   },
@@ -48,20 +48,20 @@
    "over": 0
   },
   "trap": {
-   "items": 40,
+   "items": 47,
    "fixed": 0,
    "missed": 0,
    "mangled": 0,
-   "over": 20
+   "over": 24
   }
  },
  "by_variant": {
   "plain": {
-   "items": 390,
-   "fixed": 390
+   "items": 405,
+   "fixed": 405
   },
   "spacing": {
-   "items": 129,
+   "items": 134,
    "fixed": 1
   }
  },

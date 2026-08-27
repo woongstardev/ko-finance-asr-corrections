@@ -30,7 +30,7 @@ export ANTHROPIC_API_KEY=...                                       # or an API k
 python3 benchmark/llm_reference.py --runs 3
 ```
 
-## The evaluation set (689 items) <!-- stat:eval_items -->
+## The evaluation set (721 items) <!-- stat:eval_items -->
 
 No caption text appears anywhere in this benchmark. Source transcripts are not
 redistributable and the dataset's hard line excludes them, so every sentence is either a
@@ -41,7 +41,7 @@ template fill or hand-authored for this repo.
 | `error` / plain | 267 | Six carrier templates filled with a pair's `wrong` form, 3 per pair | Replace the slot with `right` |
 | `error` / spacing | 86 | The same, with the spacing of `wrong` damaged — a space inserted mid-word, or a phrase's space removed | Replace the slot with `right` |
 | `clean` | 89 | A template filled with `right` — already correct | Change nothing |
-| `trap` | 40 | <!-- stat:trap_count --> Hand-authored sentences where a pair's `wrong` string is legitimate Korean (`엔트로피` the physics term, `바위` the rock, `MCD` the McDonald's ticker, `FFC` the flat cable, `블랙락 시티`, `사업 항목`, `지진 난 주`) | Change nothing |
+| `trap` | 47 | <!-- stat:trap_count --> Hand-authored sentences where a pair's `wrong` string is legitimate Korean (`엔트로피` the physics term, `MCD` the McDonald's ticker, `FFC` the flat cable, `블랙락 시티`, `사업 항목`, `지진 난 주`, `아이비리그`, `삼성 자산운용`, `매도 체결`, `단도체` the transmission conductor, `SMP` the electricity price, `MDI` the chemical) | Change nothing |
 
 The spacing variants are not synthetic difficulty for its own sake: YouTube auto-captions
 drop the space at event boundaries essentially always, which is why the upstream matcher is
@@ -97,9 +97,9 @@ penalty measures.
 
 | System | Recall | plain | spacing | Mangled | Over-corr. | Over-corr. rate | Precision (proxy) | **Net score** |
 |---|---|---|---|---|---|---|---|---|
-| naive | 75.3% | 390/390 | 1/129 | 0 | 20 | 3.9% | 93.1% | **71.5%** |
-| boundary | 100.0% | 390/390 | 129/129 | 0 | 35 | 6.7% | 91.2% | **93.3%** |
-| guarded (min key 4) | 60.1% | 234/390 | 78/129 | 0 | 15 | 2.9% | 92.9% | **57.2%** |
+| naive | 75.3% | 405/405 | 1/134 | 0 | 24 | 4.5% | 94.4% | **70.9%** |
+| boundary | 100.0% | 405/405 | 134/134 | 0 | 41 | 7.6% | 92.9% | **92.4%** |
+| guarded (min key 4) | 61.6% | 249/405 | 83/134 | 0 | 15 | 2.8% | 95.7% | **58.8%** |
 | Claude Opus 5 (no dictionary) † | 63.8% ±0.3 | — | — | 113.7 | 9.3 | 1.9% | 64.7% | **61.2% ±0.2** |
 
 † Measured on `mini-v0.2` (482 items, 89 pairs) and carried forward unchanged. Prediction
@@ -185,11 +185,11 @@ The discriminating signal is the over-correction axis. See limitations.
 The trap set grew from 14 to 40 and the eval set from 456 to 482 items, so **v0.2 numbers are
 not comparable to v0 numbers.** Both are recorded here rather than quietly overwritten:
 
-| System | v0 (89 pairs, 14 traps) | v0.2 (89 pairs, 40 traps) | v0.3 (130 pairs, 40 traps) |
-|---|---|---|---|
-| naive | 72.8% | 68.8% | 71.5% |
-| boundary | 96.0% | 88.7% | **93.3%** |
-| guarded | 67.4% | 63.7% | 57.2% |
+| System | v0 (89 pairs, 14 traps) | v0.2 (89, 40 traps) | v0.3 (130, 40 traps) | v0.4 (135, 47 traps) |
+|---|---|---|---|---|
+| naive | 72.8% | 68.8% | 71.5% | 70.9% |
+| boundary | 96.0% | 88.7% | 93.3% | **92.4%** |
+| guarded | 67.4% | 63.7% | 57.2% | 58.8% |
 
 v0.2 → v0.3 moves for three reasons at once, and they pull in different directions. 41 net new
 pairs enlarge the error set; three unsafe keys were withdrawn or narrowed, which is why
@@ -199,9 +199,34 @@ pairs are mostly short stock-name fragments. That is the length guard failing on
 sample, not a new problem: v0.2 already found that residual false positives come from
 whitespace flexibility, which a length floor cannot reach.
 
-Quote the benchmark identifier (`ko-finance-asr-corrections/mini-v0.3`, in `eval-set.json`)
+Quote the benchmark identifier (`ko-finance-asr-corrections/mini-v0.4`, in `eval-set.json`)
 with any number taken from here. A benchmark whose numbers move without a version is worse
 than no benchmark.
+
+### What v0.4's traps caught
+
+Seven traps were added from the miner's uncovered list, and six of them damage the boundary
+baseline outright:
+
+| Sentence contains | Becomes | Because |
+|---|---|---|
+| `아이비리그 출신` | `IBM리그 출신` | `아이비 → IBM` fires inside an ordinary word |
+| `삼성 자산운용` | `삼성전자산운용` | `삼성자 → 삼성전자` spans the space |
+| `매도 체결` | `반도체결` | `매도체 → 반도체` spans the space |
+| `단도체보다 복도체` | `반도체보다 복도체` | `단도체` is a transmission-line term, not a misrecognition |
+| `SMP가 오르면` | `에스앤피가 오르면` | SMP is Korea's electricity system marginal price |
+| `MDI 스프레드` | `엔비디아 스프레드` | MDI is a chemical feedstock |
+
+Two things follow. First, four of the six span a word boundary rather than sitting inside a
+long word — the same shape v0.2 identified as the residual failure mode, now with five more
+examples. Second, `guarded` scores 15 over-corrections on this set, unchanged from v0.3,
+**because its length floor throws all six of these pairs away**. Avoiding a trap by discarding
+the pair is not precision; it costs 38.4% recall, which is why the guarded row is the worst
+net score in the table despite the best precision.
+
+The seventh trap, `소부장 단위`, passes cleanly. It documents a key that used to span into it
+(`소부 장단 → 소부장`) and was replaced upstream by inflected keys; the sentence stays in the
+set so the fix stays visible if a base key ever returns.
 
 ## Held-out: what happens on pairs the dictionary has not learned yet
 
