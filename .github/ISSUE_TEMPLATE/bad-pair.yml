@@ -11,6 +11,17 @@ body:
         (adding new pairs never is). Recall happens upstream first, then the snapshot is
         re-exported, so please report the pair rather than sending a PR against `data/`.
 
+        **Check [`data/withdrawn.json`](../../blob/main/data/withdrawn.json) first** — the pair
+        may already be gone, or narrowed to a longer key that no longer reaches your sentence.
+
+        Three outcomes are possible, and which one you get depends on numbers rather than
+        opinion: the key is **withdrawn** if no safe form of it exists, **narrowed** to a
+        longer or inflected key if one does, or **kept** if the damage it does is rarer than
+        the corrections it would cost. `바위 → 바이오` was narrowed because 34 of its 71
+        corpus matches were genuine; `삼성자 → 삼성전자` was kept because it damages 22
+        sentences out of 1,010. So the more you can say about *how often* the misfire happens
+        in your own text, the faster this gets decided.
+
         ⛔ **Do not paste caption text.** If you need to show the failure, write a **short
         example sentence of your own** that contains the trigger. A constructed example is
         enough to reproduce a string replacement.
@@ -44,6 +55,21 @@ body:
         - Other
     validations:
       required: true
+  - type: dropdown
+    id: frequency
+    attributes:
+      label: How often does this misfire in your own text?
+      description: >
+        A rough share is enough. Verdicts weigh how often the key damages text against how
+        many real corrections withdrawing it would cost, so this is the field that decides.
+      options:
+        - Most of the time this key appears, it is wrong
+        - Roughly half
+        - Occasionally — the key is usually right
+        - One occurrence, I have not counted
+        - I do not know
+    validations:
+      required: false
   - type: input
     id: version
     attributes:
