@@ -29,6 +29,13 @@ jobs:
       # validate_snapshot reads a list that lives outside this repo, so in CI it
       # warns rather than passing silently; the release path runs it with
       # --require-person-list, where a missing list is a failure.
+      # Every rule in the gates, one synthetic violation each. The gates above
+      # only prove the *current* snapshot passes; these prove a broken one would
+      # not - which is the property that actually failed on 2026-08-27, when a
+      # snapshot with every frequency zeroed sailed through all three.
+      - name: Gate regression tests
+        run: python3 scripts/test_gates.py
+
       - name: Snapshot contract and prose numbers
         run: python3 scripts/validate_snapshot.py
 

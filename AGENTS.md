@@ -29,6 +29,7 @@ Everything is standard-library Python 3.10+. There is nothing to install.
 
 ```bash
 python3 benchmark/test_score.py         # scorer unit tests
+python3 scripts/test_gates.py           # gate regression tests (one violation per rule)
 python3 scripts/validate_snapshot.py    # schema contract, keys, json/csv agreement, prose numbers
 python3 scripts/benchmark_gate.py       # release gate: eval set grew only, no new cascades
 python3 scripts/release_check.py        # publication boundary
@@ -47,7 +48,7 @@ python3 scripts/jamo_analysis.py        # what the errors look like at jamo leve
 text, so it refuses to write anywhere inside this repository — reviews live beside
 the refresh reports, outside git. Every pair withdrawn so far was found this way.
 
-CI runs the first three on every push.
+CI runs the first four on every push.
 
 ## Conventions
 
