@@ -40,6 +40,10 @@ FIELDS: dict[str, object] = {
     "wrong": str,
     "right": str,
     "corpus_count": (int, type(None)),  # nullable when the counts artifact was absent
+    # SCHEMA.md → field table. Same scan, same nullability: null means the artifact
+    # did not carry the verified form, while 0 is an observation — the correct
+    # spelling was never once transcribed correctly in the whole corpus.
+    "right_count": (int, type(None)),
     "observed_count": int,
     "tier": str,
     "evidence": str,
@@ -211,7 +215,17 @@ def check_person_names(payload: dict, ggulmuse: Path, require: bool, fail, warn)
 
 def check_prose_stats(payload: dict, fail, warn) -> None:
     """Every marked prose line must quote the live number."""
-    counts = {p["wrong"]: p.get("corpus_count") for p in payload.get("pairs") or []}
+    pairs = payload.get("pairs") or []
+    counts = {p["wrong"]: p.get("corpus_count") for p in pairs}
+    # SCHEMA.md → right_count. An error rate is the one number here a reader is
+    # most likely to quote back, and it is derived from two fields that both move
+    # every month, so prose that states one gets checked like any other stat.
+    # Rounded to one decimal, the way the prose writes it.
+    rates = {}
+    for pair in pairs:
+        wrong, right = pair.get("corpus_count"), pair.get("right_count")
+        if isinstance(wrong, int) and isinstance(right, int) and wrong + right:
+            rates[pair["wrong"]] = f"{wrong / (wrong + right) * 100:.1f}"
     stats: dict[str, object] = {
         "pair_count": payload.get("pair_count"),
         "scanned_videos": (payload.get("corpus") or {}).get("scanned_videos"),
@@ -231,6 +245,18 @@ def check_prose_stats(payload: dict, fail, warn) -> None:
             for match in STAT_MARKER.finditer(line):
                 marked += 1
                 stat, arg = match.group(1), match.group(2)
+                if stat == "rate" and arg is not None:
+                    if arg not in rates:
+                        fail(f"{rel}:{lineno}: stat:rate:{arg} names a pair with no "
+                             "error rate in the snapshot")
+                        continue
+                    # The rate is written as 87.9, so match the decimal form found
+                    # on the line rather than the integer scan used below.
+                    written = set(re.findall(r"\d+\.\d", line))
+                    if rates[arg] not in written:
+                        fail(f"{rel}:{lineno}: marked for rate:{arg} = {rates[arg]}%, "
+                             f"but the line says {sorted(written) or 'no rate'}")
+                    continue
                 if stat == "count" and arg is not None:
                     if arg not in counts:
                         fail(f"{rel}:{lineno}: stat:count:{arg} names a pair that is "

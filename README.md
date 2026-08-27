@@ -33,6 +33,27 @@ archive. The pairs here are the byproduct of correcting real YouTube auto-captio
 | `docs/SCHEMA.md` | Field-by-field schema. |
 | `docs/METHODOLOGY.md` | The no-gold-label verification loop: 2 independent LLM auditors → consensus-only adoption → external registry check → 3-tier promotion → instant rollback. |
 
+## How often does the ASR actually get it wrong?
+
+Each pair carries both counts — the misrecognized form and the verified one — from the same
+scan, so a pair states an error rate rather than just a frequency. This is the part no one
+outside the pipeline can produce: it takes the corpus, not the dictionary.
+
+| Pair | Wrong | Right | **Error rate** |
+|---|---|---|---|
+| `엔트로픽 → 앤트로픽` | 406 | 56 | **87.9%** <!-- stat:rate:엔트로픽 --> |
+| `장기체 → 장기채` | 394 | 68 | **85.3%** <!-- stat:rate:장기체 --> |
+| `FMC → FOMC` | 498 | 127 | **79.7%** <!-- stat:rate:FMC --> |
+| `휴먼노이드 → 휴머노이드` | 312 | 86 | **78.4%** <!-- stat:rate:휴먼노이드 --> |
+
+Ten pairs have `right_count: 0`, which is a stronger statement than a high rate: across 1,490
+videos the auto-captions never once produced the correct spelling. `보스턴 다이내믹스` and
+`서브프라임 모기지` are in that group.
+
+Read the rates as *this corpus, this ASR system*: the denominator is Korean finance YouTube
+auto-captions, not Korean speech in general. And `corpus_count` counts a surface form, not a
+confirmed error — see [Known limitations](#known-limitations).
+
 ## The benchmark in one table
 
 Task: fix the misrecognition, change nothing else. Three ways of using the dataset itself as
@@ -78,7 +99,7 @@ Stated up front, because a niche dataset earns trust by being explicit about its
 - **One corpus, one ASR system, one domain.** Every pair comes from YouTube auto-captions of
   Korean stock/investing channels — 1,490 videos as of the current snapshot. <!-- stat:scanned_videos --> A different ASR
   engine mishears differently, so these pairs are not a general Korean ASR error list.
-- **130 pairs is small.** <!-- stat:pair_count --> This is a frequency-annotated seed, not a comprehensive lexicon. It
+- **135 pairs is small.** <!-- stat:pair_count --> This is a frequency-annotated seed, not a comprehensive lexicon. It
   grows with monthly snapshots as the upstream pipeline verifies more pairs.
 - **Skewed by construction.** Frequency-ranked mining favours what the channels talk about
   most, so semiconductor and index vocabulary dominates, and a single company can account for

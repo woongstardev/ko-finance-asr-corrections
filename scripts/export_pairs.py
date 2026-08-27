@@ -46,6 +46,7 @@ PUBLIC_FIELDS = [
     "wrong",
     "right",
     "corpus_count",
+    "right_count",
     "observed_count",
     "tier",
     "evidence",
@@ -173,6 +174,13 @@ def main() -> None:
                 "wrong": e.wrong,
                 "right": e.right,
                 "corpus_count": corpus_counts.get(e.wrong),
+                # The same scan counts the verified form, which is what turns a
+                # frequency list into an error rate: how often the term was said
+                # correctly against how often it came out mangled. Absent from
+                # the artifact until an upstream pipeline task added it, so a
+                # missing key still exports as null rather than as a zero it
+                # would be read as an observation.
+                "right_count": corpus_counts.get(e.right),
                 "observed_count": e.observed_count,
                 "tier": e.tier,
                 "evidence": evidence,

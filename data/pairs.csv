@@ -1,131 +1,136 @@
-wrong,right,corpus_count,observed_count,tier,evidence,category,auditor_models,approved_at,word_boundary,apply_scope
-삼성자,삼성전자,977,3,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
-펀더멘탈,펀더멘털,812,9,B,goldset-alignment,term,,2026-08-14T02:45:29.364191+00:00,True,unique
-하이니스,하이닉스,672,3,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
-SK닉스,SK하이닉스,610,3,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
-FMC,FOMC,498,14,B,goldset-alignment,term,,2026-08-14T02:45:29.364191+00:00,True,unique
-변합기,변압기,469,0,B,auditor-consensus,term,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T03:44:01.304425+00:00,True,unique
-업항,업황,413,3,A,human,term,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T04:39:11.34+00:00,True,all
-엔트로픽,앤트로픽,406,4,A,human,other,,2026-08-12T04:38:44.255+00:00,True,all
-수납매,순환매,395,2,A,human,other,,2026-08-12T04:41:49.087+00:00,True,all
-장기체,장기채,394,2,A,human,other,,2026-08-12T04:40:52.208+00:00,True,all
-밸루에이션,밸류에이션,390,6,B,goldset-alignment,term,,2026-08-14T02:45:29.364191+00:00,True,unique
-M비디아,엔비디아,361,3,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
-휴먼노이드,휴머노이드,312,0,B,auditor-consensus,term,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T03:44:01.304425+00:00,True,unique
-SMP,에스앤피,272,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
-미국체,미국채,196,2,A,human,other,,2026-08-12T04:42:18.012+00:00,True,all
-해치 펀드,헤지 펀드,157,2,A,human,other,,2026-08-12T11:33:50.753+00:00,True,all
-SKS,SK하이닉스,142,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
-SK하닉스,SK하이닉스,121,2,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
-하인스,하이닉스,115,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
-삼성원자,삼성전자,114,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
-엔트로피,앤트로픽,103,2,A,human,other,,2026-08-12T04:40:37.476+00:00,True,all
-실험률,실업률,99,2,A,human,other,,2026-08-12T04:40:30.93+00:00,True,all
-영업익,영업이익,97,1,B,goldset-alignment,term,,2026-08-14T02:45:29.364191+00:00,True,unique
-스페이스엑스,스페이스X,95,4,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
-하이네스,하이닉스,83,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T03:44:01.304425+00:00,True,unique
-보스턴 다이네믹스,보스턴 다이내믹스,69,2,A,human,other,,2026-08-12T11:32:15.561+00:00,True,all
-하이퍼스러들,하이퍼스케일러들,64,2,A,human,other,,2026-08-12T04:41:12.395+00:00,True,all
-시가 총의,시가총액,53,0,B,auditor-consensus,term,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T03:44:01.304425+00:00,True,unique
-SK 하이네스,SK 하이닉스,50,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T03:44:01.304425+00:00,True,unique
-소부 장단,소부장,44,2,A,human,other,,2026-08-12T04:40:20.962+00:00,True,all
-SK 하이스,SK하이닉스,41,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-11T23:15:41.649703+00:00,True,all
-올리브형,올리브영,40,2,A,human,other,,2026-08-12T04:41:00.736+00:00,True,all
-K뷰T,K뷰티,37,3,A,human,other,,2026-08-12T04:39:16.004+00:00,True,all
-지정확정 리스크,지정학적 리스크,35,2,A,human,other,,2026-08-12T11:32:41.294+00:00,True,all
-SK 하인,SK하이닉스,35,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T00:13:33.031664+00:00,True,unique
-블랙락,블랙록,34,3,A,human,other,,2026-08-12T04:38:55.418+00:00,True,all
-XAI,xAI,34,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T03:44:01.304425+00:00,True,unique
-제약 바위,제약 바이오,34,0,A,human,other,,2026-08-27T08:45:07.847105+00:00,True,all
-지진난주,지지난주,31,3,A,human,other,,2026-08-12T04:39:00.462+00:00,True,all
-코이브,코어위브,25,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
-마이콘 테크놀로지,마이크론 테크놀로지,21,2,A,human,other,,2026-08-12T04:42:01.731+00:00,True,all
-HBN,HBM,19,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
-아이비,IBM,19,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
-하잉스,하이닉스,19,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-11T23:15:41.649703+00:00,True,all
-시카총,시가총액,18,1,B,goldset-alignment,term,,2026-08-14T02:45:29.364191+00:00,True,unique
-아모래 퍼시픽,아모레퍼시픽,18,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-11T23:15:41.649703+00:00,True,all
-컨센스,컨센서스,17,1,B,goldset-alignment,term,,2026-08-14T02:45:29.364191+00:00,True,unique
-채치T,챗지피티,16,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
-가이더스,가이던스,15,1,B,goldset-alignment,term,,2026-08-14T02:45:29.364191+00:00,True,unique
-신형증권,신영증권,14,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-11T23:15:41.649703+00:00,True,all
-워닝 IPS,원익IPS,13,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T03:44:01.304425+00:00,True,unique
-기적 분석,기술적 분석,11,3,A,human,other,,2026-08-12T04:39:36.122+00:00,True,all
-코싹이,코스닥이,10,2,A,human,other,,2026-08-12T04:43:47.605+00:00,True,all
-반조체,반도체,10,1,B,goldset-alignment,term,,2026-08-14T02:45:29.364191+00:00,True,unique
-변동상,변동성,10,1,B,goldset-alignment,term,,2026-08-14T02:45:29.364191+00:00,True,unique
-단도체,반도체,8,1,B,goldset-alignment,term,,2026-08-14T02:45:29.364191+00:00,True,unique
-반도지,반도체,8,1,B,goldset-alignment,term,,2026-08-14T02:45:29.364191+00:00,True,unique
-ACBM,HBM,8,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-11T23:15:41.649703+00:00,True,all
-지정확전 리스크,지정학적 리스크,7,2,A,human,other,,2026-08-12T11:33:12.597+00:00,True,all
-SK니스,SK하이닉스,7,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
-해제 펀드,헤지 펀드,6,2,A,human,other,,2026-08-12T11:33:33.354+00:00,True,all
-"5,억짜리",5천억짜리,6,1,A,human,number,,2026-08-12T04:45:49.679+00:00,True,all
-SK하잉,SK하이닉스,6,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-11T23:15:41.649703+00:00,True,all
-서브라임 모기지,서브프라임 모기지,6,0,B,auditor-consensus,term,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T00:13:33.031664+00:00,True,unique
-역초세,역추세,5,2,A,human,other,,2026-08-12T04:42:23.949+00:00,True,all
-삼성근자,삼성전자,5,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T03:44:01.304425+00:00,True,unique
-스페이스섹스,스페이스X,4,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
-유상진자,유상증자,4,0,B,auditor-consensus,term,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T03:44:01.304425+00:00,True,unique
-MCD,MACD,3,0,B,auditor-consensus,term,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T00:13:33.031664+00:00,True,unique
-공배도,공매도,3,0,B,auditor-consensus,term,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T00:13:33.031664+00:00,True,unique
-남마토건,남화토건,3,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-11T23:15:41.649703+00:00,True,all
-셀트리오,셀트리온,3,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-11T23:15:41.649703+00:00,True,all
-등뜸이는,등 떠미는,2,2,A,human,other,,2026-08-12T04:41:57.326+00:00,True,all
-마이크 테크놀로지,마이크론 테크놀로지,2,2,A,human,other,,2026-08-12T04:40:11.301+00:00,True,all
-종목면,종목명,2,2,A,human,other,,2026-08-12T04:41:06.43+00:00,True,all
-코스하고,코스닥으로,2,2,A,human,other,,2026-08-12T04:43:41.089+00:00,True,all
-갤러시,갤럭시,2,1,A,human,other,,2026-08-12T04:48:00.428+00:00,True,all
-나상은,나스닥은,2,1,A,human,other,,2026-08-12T04:48:40.82+00:00,True,all
-매도체,반도체,2,1,B,goldset-alignment,term,,2026-08-14T02:45:29.364191+00:00,True,unique
-삼성전나,삼성전자,2,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
-HCBM,HBM,2,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-11T23:15:41.649703+00:00,True,all
-나마토건,남화토건,2,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-11T23:15:41.649703+00:00,True,all
-대원전설,대원전선,2,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-11T23:15:41.649703+00:00,True,all
-주성 엔지리어링,주성엔지니어링,2,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T03:44:01.304425+00:00,True,unique
-코스고,코스닥,2,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-11T23:15:41.649703+00:00,True,all
-ACDS,HTS,1,2,A,human,other,,2026-08-12T04:44:45.899+00:00,True,all
-머비의 법칙,머피의 법칙,1,2,A,human,other,,2026-08-12T04:42:06.34+00:00,True,all
-머표 법칙,머피의 법칙,1,2,A,human,other,,2026-08-12T04:42:11.532+00:00,True,all
-줄린이의 법칙,주린이의 법칙,1,2,A,human,other,,2026-08-12T04:42:28.749+00:00,True,all
-코사 넣어,코스닥 넣어,1,2,A,human,other,,2026-08-12T04:42:51.127+00:00,True,all
-"3,억짜리",3천억짜리,1,1,A,human,number,,2026-08-12T04:45:28.339+00:00,True,all
-3무기,3분기,1,1,A,human,number,,2026-08-12T04:45:41.239+00:00,True,all
-4쪽 보행,사족 보행,1,1,A,human,other,,2026-08-12T04:45:53.891+00:00,True,all
-70 750조,750조,1,1,A,human,number,,2026-08-12T04:46:18.823+00:00,True,all
-7라노급,7나노급,1,1,A,human,number,,2026-08-12T04:46:23.817+00:00,True,all
-SM0봉,S&P500 일봉,1,1,A,human,number,,2026-08-12T04:46:45.994+00:00,True,all
-감만해도,감안해도,1,1,A,human,other,,2026-08-12T04:47:55.805+00:00,True,all
-경원자,경영자,1,1,A,human,other,,2026-08-12T04:48:07.968+00:00,True,all
-노크먼트,노코멘트,1,1,A,human,other,,2026-08-12T04:48:49.439+00:00,True,all
-밤도체,반도체,1,1,B,goldset-alignment,term,,2026-08-14T02:45:29.364191+00:00,True,unique
-브드컴,브로드컴,1,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
-에스키아닉스,SK하이닉스,1,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
-오남이,모나미,1,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
-오라늄,우라늄,1,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
-AMAMD,AMD,1,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T03:44:01.304425+00:00,True,unique
-AM대,AMD,1,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T03:44:01.304425+00:00,True,unique
-DT 5,DDR5,1,0,B,auditor-consensus,term,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T00:13:33.031664+00:00,True,unique
-FFC,FOMC,1,0,B,auditor-consensus,term,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T03:44:01.304425+00:00,True,unique
-IS%,ISC,1,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T03:44:01.304425+00:00,True,unique
-SK 하이하스,SK하이닉스,1,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-11T23:15:41.649703+00:00,True,all
-남마토원,남화토건,1,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-11T23:15:41.649703+00:00,True,all
-남화통원,남화토건,1,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-11T23:15:41.649703+00:00,True,all
-라이언 라이엇,라이엇,1,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T03:44:01.304425+00:00,True,unique
-마이크로님,마이크론,1,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-11T23:15:41.649703+00:00,True,all
-삼성제카인,삼성전자,1,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T03:44:01.304425+00:00,True,unique
-슈머로이드,휴머노이드,1,0,B,auditor-consensus,term,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T03:44:01.304425+00:00,True,unique
-비슷하라,비스타라,0,2,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
-우라님,우라늄,0,2,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
-MDI,엔비디아,0,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
-S아닉스,SK하이닉스,0,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
-공매돌,공매도,0,1,B,goldset-alignment,term,,2026-08-14T02:45:29.364191+00:00,True,unique
-김에비디아,엔비디아,0,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
-마이러크럼,마이크론,0,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
-본동성,변동성,0,1,B,goldset-alignment,term,,2026-08-14T02:45:29.364191+00:00,True,unique
-엔비어,엔비디아,0,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
-엘파벳,알파벳,0,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
-유라늄,우라늄,0,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
-파운트리,파운드리,0,1,B,goldset-alignment,term,,2026-08-14T02:45:29.364191+00:00,True,unique
-하이니프,하이닉스,0,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
-하이렉스,하이닉스,0,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
+wrong,right,corpus_count,right_count,observed_count,tier,evidence,category,auditor_models,approved_at,word_boundary,apply_scope
+삼성자,삼성전자,977,9313,3,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
+펀더멘탈,펀더멘털,812,9,9,B,goldset-alignment,term,,2026-08-14T02:45:29.364191+00:00,True,unique
+하이니스,하이닉스,672,7885,3,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
+SK닉스,SK하이닉스,610,2665,3,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
+FMC,FOMC,498,127,14,B,goldset-alignment,term,,2026-08-14T02:45:29.364191+00:00,True,unique
+변합기,변압기,469,3,0,B,auditor-consensus,term,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T03:44:01.304425+00:00,True,unique
+업항,업황,413,21,3,A,human,term,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T04:39:11.34+00:00,True,all
+엔트로픽,앤트로픽,406,56,4,A,human,other,,2026-08-12T04:38:44.255+00:00,True,all
+수납매,순환매,395,464,2,A,human,other,,2026-08-12T04:41:49.087+00:00,True,all
+장기체,장기채,394,68,2,A,human,other,,2026-08-12T04:40:52.208+00:00,True,all
+밸루에이션,밸류에이션,390,220,6,B,goldset-alignment,term,,2026-08-14T02:45:29.364191+00:00,True,unique
+M비디아,엔비디아,361,3362,3,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
+휴먼노이드,휴머노이드,312,86,0,B,auditor-consensus,term,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T03:44:01.304425+00:00,True,unique
+SMP,에스앤피,272,2,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
+미국체,미국채,196,131,2,A,human,other,,2026-08-12T04:42:18.012+00:00,True,all
+해치 펀드,헤지 펀드,157,2,2,A,human,other,,2026-08-12T11:33:50.753+00:00,True,all
+SKS,SK하이닉스,142,2665,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
+SK하닉스,SK하이닉스,121,2665,2,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
+하인스,하이닉스,115,7885,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
+삼성원자,삼성전자,114,9313,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
+엔트로피,앤트로픽,103,56,2,A,human,other,,2026-08-12T04:40:37.476+00:00,True,all
+실험률,실업률,99,10,2,A,human,other,,2026-08-12T04:40:30.93+00:00,True,all
+영업익,영업이익,97,1445,1,B,goldset-alignment,term,,2026-08-14T02:45:29.364191+00:00,True,unique
+스페이스엑스,스페이스X,95,419,4,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
+하이네스,하이닉스,83,7885,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T03:44:01.304425+00:00,True,unique
+보스턴 다이네믹스,보스턴 다이내믹스,69,0,2,A,human,other,,2026-08-12T11:32:15.561+00:00,True,all
+하이퍼스러들,하이퍼스케일러들,64,288,2,A,human,other,,2026-08-12T04:41:12.395+00:00,True,all
+시가 총의,시가총액,53,685,0,B,auditor-consensus,term,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T03:44:01.304425+00:00,True,unique
+SK 하이네스,SK 하이닉스,50,2665,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T03:44:01.304425+00:00,True,unique
+SK 하이스,SK하이닉스,41,2665,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-11T23:15:41.649703+00:00,True,all
+올리브형,올리브영,40,6,2,A,human,other,,2026-08-12T04:41:00.736+00:00,True,all
+K뷰T,K뷰티,37,74,3,A,human,other,,2026-08-12T04:39:16.004+00:00,True,all
+지정확정 리스크,지정학적 리스크,35,61,2,A,human,other,,2026-08-12T11:32:41.294+00:00,True,all
+SK 하인,SK하이닉스,35,2665,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T00:13:33.031664+00:00,True,unique
+블랙락,블랙록,34,248,3,A,human,other,,2026-08-12T04:38:55.418+00:00,True,all
+XAI,xAI,34,0,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T03:44:01.304425+00:00,True,unique
+제약 바위,제약 바이오,34,824,0,A,human,other,,2026-08-27T08:45:07.847105+00:00,True,all
+지진난주,지지난주,31,73,3,A,human,other,,2026-08-12T04:39:00.462+00:00,True,all
+코이브,코어위브,25,36,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
+마이콘 테크놀로지,마이크론 테크놀로지,21,106,2,A,human,other,,2026-08-12T04:42:01.731+00:00,True,all
+HBN,HBM,19,1140,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
+아이비,IBM,19,34,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
+하잉스,하이닉스,19,7885,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-11T23:15:41.649703+00:00,True,all
+시카총,시가총액,18,685,1,B,goldset-alignment,term,,2026-08-14T02:45:29.364191+00:00,True,unique
+소부 장단에,소부장에,18,64,0,A,human,other,,2026-08-27T09:30:57.71453+00:00,True,all
+아모래 퍼시픽,아모레퍼시픽,18,10,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-11T23:15:41.649703+00:00,True,all
+컨센스,컨센서스,17,179,1,B,goldset-alignment,term,,2026-08-14T02:45:29.364191+00:00,True,unique
+채치T,챗지피티,16,2,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
+가이더스,가이던스,15,481,1,B,goldset-alignment,term,,2026-08-14T02:45:29.364191+00:00,True,unique
+신형증권,신영증권,14,4,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-11T23:15:41.649703+00:00,True,all
+워닝 IPS,원익IPS,13,83,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T03:44:01.304425+00:00,True,unique
+기적 분석,기술적 분석,11,43,3,A,human,other,,2026-08-12T04:39:36.122+00:00,True,all
+코싹이,코스닥이,10,1144,2,A,human,other,,2026-08-12T04:43:47.605+00:00,True,all
+반조체,반도체,10,12132,1,B,goldset-alignment,term,,2026-08-14T02:45:29.364191+00:00,True,unique
+변동상,변동성,10,3074,1,B,goldset-alignment,term,,2026-08-14T02:45:29.364191+00:00,True,unique
+단도체,반도체,8,12132,1,B,goldset-alignment,term,,2026-08-14T02:45:29.364191+00:00,True,unique
+반도지,반도체,8,12132,1,B,goldset-alignment,term,,2026-08-14T02:45:29.364191+00:00,True,unique
+ACBM,HBM,8,1140,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-11T23:15:41.649703+00:00,True,all
+지정확전 리스크,지정학적 리스크,7,61,2,A,human,other,,2026-08-12T11:33:12.597+00:00,True,all
+SK니스,SK하이닉스,7,2665,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
+해제 펀드,헤지 펀드,6,2,2,A,human,other,,2026-08-12T11:33:33.354+00:00,True,all
+"5,억짜리",5천억짜리,6,6,1,A,human,number,,2026-08-12T04:45:49.679+00:00,True,all
+SK하잉,SK하이닉스,6,2665,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-11T23:15:41.649703+00:00,True,all
+서브라임 모기지,서브프라임 모기지,6,0,0,B,auditor-consensus,term,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T00:13:33.031664+00:00,True,unique
+소부 장단이,소부장이,6,243,0,A,human,other,,2026-08-27T09:30:57.796349+00:00,True,all
+역초세,역추세,5,9,2,A,human,other,,2026-08-12T04:42:23.949+00:00,True,all
+삼성근자,삼성전자,5,9313,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T03:44:01.304425+00:00,True,unique
+스페이스섹스,스페이스X,4,419,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
+유상진자,유상증자,4,228,0,B,auditor-consensus,term,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T03:44:01.304425+00:00,True,unique
+MCD,MACD,3,22,0,B,auditor-consensus,term,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T00:13:33.031664+00:00,True,unique
+공배도,공매도,3,313,0,B,auditor-consensus,term,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T00:13:33.031664+00:00,True,unique
+남마토건,남화토건,3,1,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-11T23:15:41.649703+00:00,True,all
+셀트리오,셀트리온,3,181,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-11T23:15:41.649703+00:00,True,all
+소부 장단들,소부장들,3,94,0,A,human,other,,2026-08-27T09:30:57.951247+00:00,True,all
+등뜸이는,등 떠미는,2,0,2,A,human,other,,2026-08-12T04:41:57.326+00:00,True,all
+마이크 테크놀로지,마이크론 테크놀로지,2,106,2,A,human,other,,2026-08-12T04:40:11.301+00:00,True,all
+종목면,종목명,2,103,2,A,human,other,,2026-08-12T04:41:06.43+00:00,True,all
+코스하고,코스닥으로,2,116,2,A,human,other,,2026-08-12T04:43:41.089+00:00,True,all
+갤러시,갤럭시,2,116,1,A,human,other,,2026-08-12T04:48:00.428+00:00,True,all
+나상은,나스닥은,2,114,1,A,human,other,,2026-08-12T04:48:40.82+00:00,True,all
+매도체,반도체,2,12132,1,B,goldset-alignment,term,,2026-08-14T02:45:29.364191+00:00,True,unique
+삼성전나,삼성전자,2,9313,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
+HCBM,HBM,2,1140,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-11T23:15:41.649703+00:00,True,all
+나마토건,남화토건,2,1,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-11T23:15:41.649703+00:00,True,all
+대원전설,대원전선,2,25,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-11T23:15:41.649703+00:00,True,all
+소부 장단도,소부장도,2,95,0,A,human,other,,2026-08-27T09:30:57.86765+00:00,True,all
+소부 장단안에서,소부장 안에서,2,24,0,A,human,other,,2026-08-27T09:30:57.632248+00:00,True,all
+주성 엔지리어링,주성엔지니어링,2,82,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T03:44:01.304425+00:00,True,unique
+코스고,코스닥,2,6039,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-11T23:15:41.649703+00:00,True,all
+ACDS,HTS,1,82,2,A,human,other,,2026-08-12T04:44:45.899+00:00,True,all
+머비의 법칙,머피의 법칙,1,0,2,A,human,other,,2026-08-12T04:42:06.34+00:00,True,all
+머표 법칙,머피의 법칙,1,0,2,A,human,other,,2026-08-12T04:42:11.532+00:00,True,all
+줄린이의 법칙,주린이의 법칙,1,0,2,A,human,other,,2026-08-12T04:42:28.749+00:00,True,all
+코사 넣어,코스닥 넣어,1,0,2,A,human,other,,2026-08-12T04:42:51.127+00:00,True,all
+"3,억짜리",3천억짜리,1,2,1,A,human,number,,2026-08-12T04:45:28.339+00:00,True,all
+3무기,3분기,1,970,1,A,human,number,,2026-08-12T04:45:41.239+00:00,True,all
+4쪽 보행,사족 보행,1,21,1,A,human,other,,2026-08-12T04:45:53.891+00:00,True,all
+70 750조,750조,1,12,1,A,human,number,,2026-08-12T04:46:18.823+00:00,True,all
+7라노급,7나노급,1,0,1,A,human,number,,2026-08-12T04:46:23.817+00:00,True,all
+SM0봉,S&P500 일봉,1,0,1,A,human,number,,2026-08-12T04:46:45.994+00:00,True,all
+감만해도,감안해도,1,12,1,A,human,other,,2026-08-12T04:47:55.805+00:00,True,all
+경원자,경영자,1,34,1,A,human,other,,2026-08-12T04:48:07.968+00:00,True,all
+노크먼트,노코멘트,1,6,1,A,human,other,,2026-08-12T04:48:49.439+00:00,True,all
+밤도체,반도체,1,12132,1,B,goldset-alignment,term,,2026-08-14T02:45:29.364191+00:00,True,unique
+브드컴,브로드컴,1,150,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
+에스키아닉스,SK하이닉스,1,2665,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
+오남이,모나미,1,7,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
+오라늄,우라늄,1,23,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
+AMAMD,AMD,1,349,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T03:44:01.304425+00:00,True,unique
+AM대,AMD,1,349,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T03:44:01.304425+00:00,True,unique
+DT 5,DDR5,1,37,0,B,auditor-consensus,term,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T00:13:33.031664+00:00,True,unique
+FFC,FOMC,1,127,0,B,auditor-consensus,term,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T03:44:01.304425+00:00,True,unique
+IS%,ISC,1,52,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T03:44:01.304425+00:00,True,unique
+SK 하이하스,SK하이닉스,1,2665,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-11T23:15:41.649703+00:00,True,all
+남마토원,남화토건,1,1,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-11T23:15:41.649703+00:00,True,all
+남화통원,남화토건,1,1,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-11T23:15:41.649703+00:00,True,all
+라이언 라이엇,라이엇,1,5,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T03:44:01.304425+00:00,True,unique
+마이크로님,마이크론,1,1005,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-11T23:15:41.649703+00:00,True,all
+삼성제카인,삼성전자,1,9313,0,B,auditor-consensus,stock,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T03:44:01.304425+00:00,True,unique
+소부 장단을,소부장을,1,51,0,A,human,other,,2026-08-27T09:30:58.045968+00:00,True,all
+슈머로이드,휴머노이드,1,86,0,B,auditor-consensus,term,claude-code/opus;codex/gpt-5.6-sol,2026-08-12T03:44:01.304425+00:00,True,unique
+비슷하라,비스타라,0,0,2,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
+우라님,우라늄,0,23,2,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
+MDI,엔비디아,0,3362,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
+S아닉스,SK하이닉스,0,2665,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
+공매돌,공매도,0,313,1,B,goldset-alignment,term,,2026-08-14T02:45:29.364191+00:00,True,unique
+김에비디아,엔비디아,0,3362,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
+마이러크럼,마이크론,0,1005,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
+본동성,변동성,0,3074,1,B,goldset-alignment,term,,2026-08-14T02:45:29.364191+00:00,True,unique
+엔비어,엔비디아,0,3362,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
+엘파벳,알파벳,0,477,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
+유라늄,우라늄,0,23,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
+파운트리,파운드리,0,318,1,B,goldset-alignment,term,,2026-08-14T02:45:29.364191+00:00,True,unique
+하이니프,하이닉스,0,7885,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
+하이렉스,하이닉스,0,7885,1,B,goldset-alignment,stock,,2026-08-14T02:45:29.364191+00:00,True,unique
