@@ -164,6 +164,42 @@ def fmt_pair(k: tuple[str, str]) -> str:
     return f"{k[0]} → {k[1]}"
 
 
+def check_corpus_coverage(candidate_dir: Path, write: bool) -> str:
+    """Did the frequency scan behind this candidate actually reach the corpus?
+
+    2026-08-27: the upstream transcript tree vanished between two runs. The
+    recount scanned 0 videos, wrote an all-zero counts artifact over the
+    canonical one, and the export carried 132 pairs whose every corpus_count was
+    0. Both gates passed — the schema gate because 0 is a legal int (fixed since)
+    and the benchmark gate because scoring never reads the counts.
+
+    A collapse is visible only against the previous snapshot, which is why this
+    lives here rather than in validate_snapshot.py: half the corpus disappearing
+    is as wrong as all of it, and only the published snapshot knows how big the
+    corpus was yesterday.
+    """
+    candidate = json.loads((candidate_dir / "pairs.json").read_text(encoding="utf-8"))
+    published = json.loads((REPO / "data" / "pairs.json").read_text(encoding="utf-8"))
+    now = (candidate.get("corpus") or {}).get("scanned_videos") or 0
+    before = (published.get("corpus") or {}).get("scanned_videos") or 0
+
+    problem = ""
+    if now <= 0:
+        problem = "the recount reached 0 videos"
+    elif before and now < before // 2:
+        problem = f"the corpus shrank {before} → {now} videos (more than half)"
+
+    if not problem:
+        return f"corpus: ok ({now} videos)"
+    message = (f"corpus coverage: {problem} — the frequencies in this candidate "
+               "come from a scan that did not see the corpus. Check the upstream "
+               "transcript tree before retrying")
+    if write:
+        sys.exit(f"corpus gate failed — snapshot not written: {message}")
+    sys.stderr.write(f"WARN: {message}\n")
+    return f"corpus: FAILED ({problem})"
+
+
 def run_gates(candidate_dir: Path, write: bool) -> str:
     """Schema contract + benchmark regression, on the candidate export.
 
@@ -172,7 +208,7 @@ def run_gates(candidate_dir: Path, write: bool) -> str:
     snapshot untouched, not require a revert.
     """
     mode: list[str] = [] if write else ["--warn-only"]
-    summary = []
+    summary = [check_corpus_coverage(candidate_dir, write)]
     for name, cmd in (
         ("schema", [sys.executable, str(REPO / "scripts" / "validate_snapshot.py"),
                     "--dir", str(candidate_dir), "--skip-prose",

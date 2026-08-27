@@ -103,6 +103,31 @@ def check_pairs(payload: dict, fail, warn) -> None:
     if not isinstance(corpus.get("scanned_videos"), int):
         fail("corpus.scanned_videos missing or not an int (SCHEMA.md → Files)")
 
+    # SCHEMA.md → corpus_count. A scan that reached nothing is not a snapshot with
+    # small numbers, it is a broken scan. 2026-08-27: the upstream transcript tree
+    # disappeared between two runs, the recount reported 0 videos, every
+    # corpus_count went to 0, and both this validator and the benchmark gate
+    # passed the result — zero is a legal int and the benchmark never reads the
+    # counts. Frequency is the headline claim of this dataset; it fails loudly now.
+    counted = [
+        pair.get("corpus_count") for pair in pairs
+        if isinstance(pair.get("corpus_count"), int)
+        and not isinstance(pair.get("corpus_count"), bool)
+    ]
+    scanned = corpus.get("scanned_videos")
+    if pairs and counted:
+        if isinstance(scanned, int) and scanned <= 0:
+            fail("corpus.scanned_videos is 0 but corpus_count is populated — the "
+                 "frequency scan reached no transcripts (SCHEMA.md → corpus_count)")
+        if not any(counted):
+            fail(f"every corpus_count is 0 across {len(counted)} pair(s) — a pair "
+                 "ships because it was observed, so an all-zero column means the "
+                 "counts artifact is broken, not the corpus "
+                 "(SCHEMA.md → corpus_count)")
+    elif pairs and isinstance(scanned, int) and scanned <= 0:
+        warn("no corpus_count on any pair and scanned_videos is 0 — exported "
+             "without a counts artifact (SCHEMA.md allows null, but check it)")
+
     seen: dict[tuple[str, str], int] = {}
     for idx, pair in enumerate(pairs):
         where = f"pair[{idx}] {pair.get('wrong')!r}->{pair.get('right')!r}"

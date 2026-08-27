@@ -38,6 +38,16 @@ tuple plus the snapshot version.
 Top-level metadata in `pairs.json`: `exported_at`, `pair_count`, and `corpus`
 (`scanned_videos`, `counted_at`) describing the frequency scan the counts came from.
 
+**A snapshot with populated `corpus_count` values has `scanned_videos > 0`, and its
+counts are not all zero.** Both are enforced by `scripts/validate_snapshot.py`, and
+`scripts/refresh_snapshot.py` additionally refuses to write a candidate whose corpus
+shrank by more than half. The rule exists because on 2026-08-27 the upstream
+transcript tree disappeared between two runs: the recount reported zero videos, every
+`corpus_count` became 0, and nothing in the release path objected — zero is a legal
+integer and the benchmark never reads the counts. Frequency is a headline claim of
+this dataset, so a scan that reached nothing must fail loudly rather than publish
+quietly.
+
 `first_seen` was dropped before v0.1 — the production dictionary left it empty for most
 rows and backfilling from the corpus was not worth the cost. It is therefore absent from
 the field table above; `scripts/validate_snapshot.py` enforces that list.
