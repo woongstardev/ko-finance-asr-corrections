@@ -1,5 +1,5 @@
 {
- "note": "Hand-authored over-correction traps. Every sentence here is ordinary Korean written for this benchmark - no caption text, no transcript excerpts. Each one contains the `wrong` string of a shipped pair as legitimate text, so a system that replaces blindly will damage it. `triggers` lists the pair(s) that fire. Candidates are ranked mechanically by benchmark/mine_traps.py (cross-pair containment, whitespace-spanning shapes, ASCII keys, short keys); the sentences are written and reviewed by a person, because an unreviewed generated sentence is a trap that reads wrong.",
+ "note": "Hand-authored over-correction traps. Every sentence here is ordinary Korean written for this benchmark - no caption text, no transcript excerpts. Each one contains the `wrong` string of a shipped pair as legitimate text, so a system that replaces blindly will damage it. `triggers` lists the pair(s) that fire. Candidates are ranked mechanically by benchmark/mine_traps.py (cross-pair containment, whitespace-spanning shapes, ASCII keys, short keys); the sentences are written and reviewed by a person, because an unreviewed generated sentence is a trap that reads wrong. Some traps carry `attested`: whether the ordinary-Korean reading was observed in the corpus behind this snapshot, with counts. An unattested trap is not a mistake — it tests whether a key is safe in Korean at large rather than only in these 1,490 videos — but the distinction belongs in the file rather than in someone's memory.",
  "traps": [
   {
    "id": "trp-entropy",
@@ -327,7 +327,11 @@
    "triggers": [
     "아이비"
    ],
-   "why": "'아이비' is an ordinary word (ivy) and 아이비리그 is the usual Korean rendering of Ivy League. 아이비→IBM would emit 'IBM리그'."
+   "why": "'아이비' is an ordinary word (ivy) and 아이비리그 is the usual Korean rendering of Ivy League. 아이비→IBM would emit 'IBM리그'.",
+   "attested": true,
+   "corpus_matches": 12,
+   "of": 19,
+   "note": "The corpus form is IB들 / 아이비트 rather than 아이비리그, but the shape is the same and it is the majority use"
   },
   {
    "id": "trp-samsung-am",
@@ -335,7 +339,11 @@
    "triggers": [
     "삼성자"
    ],
-   "why": "Whitespace-flexible matching spans the word boundary in '삼성 자산운용', so 삼성자→삼성전자 would produce '삼성전자산운용' - a real asset manager renamed into a chipmaker."
+   "why": "Whitespace-flexible matching spans the word boundary in '삼성 자산운용', so 삼성자→삼성전자 would produce '삼성전자산운용' - a real asset manager renamed into a chipmaker.",
+   "attested": true,
+   "corpus_matches": 22,
+   "of": 1010,
+   "note": "삼성 자산운용 / 자회사 / 자본, 2.2% of matches"
   },
   {
    "id": "trp-sell-fill",
@@ -351,7 +359,11 @@
    "triggers": [
     "단도체"
    ],
-   "why": "단도체 (single conductor) is a real transmission-line term, and this corpus talks about grid equipment constantly. 단도체→반도체 would rewrite a power-engineering sentence into a semiconductor one."
+   "why": "단도체 (single conductor) is a real transmission-line term, and this corpus talks about grid equipment constantly. 단도체→반도체 would rewrite a power-engineering sentence into a semiconductor one.",
+   "attested": false,
+   "corpus_matches": 0,
+   "of": 9,
+   "note": "Every corpus match of 단도체 is a misrecognition of 반도체; the transmission-line sense is ordinary Korean but does not occur here. Tests generality beyond this corpus"
   },
   {
    "id": "trp-smp-power",
@@ -359,7 +371,11 @@
    "triggers": [
     "SMP"
    ],
-   "why": "SMP is the System Marginal Price of Korea's electricity market, an ordinary term in utility coverage. SMP→에스앤피 would turn a power-price sentence into an index one."
+   "why": "SMP is the System Marginal Price of Korea's electricity market, an ordinary term in utility coverage. SMP→에스앤피 would turn a power-price sentence into an index one.",
+   "attested": false,
+   "corpus_matches": 0,
+   "of": 279,
+   "note": "SMP in this corpus is always S&P (SMP 500, SMP 글로벌), where the correction is right. The electricity-price sense is real Korean but unattested here"
   },
   {
    "id": "trp-mdi-chemical",

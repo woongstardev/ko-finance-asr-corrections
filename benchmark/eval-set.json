@@ -1,7 +1,7 @@
 {
  "benchmark": "ko-finance-asr-corrections/mini-v0.4",
- "generated_at": "2026-08-27T13:47:27Z",
- "pairs_exported_at": "2026-08-27T13:45:02Z",
+ "generated_at": "2026-08-27T21:48:50Z",
+ "pairs_exported_at": "2026-08-27T14:09:15Z",
  "pair_count": 135,
  "item_counts": {
   "error:plain": 405,

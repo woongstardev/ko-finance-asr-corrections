@@ -34,7 +34,18 @@ python3 scripts/benchmark_gate.py       # release gate: eval set grew only, no n
 python3 scripts/release_check.py        # publication boundary
 python3 benchmark/make_eval_set.py      # regenerate the eval set (append-only)
 python3 benchmark/baselines.py --all    # reference systems -> predictions/
+
+# before a release, against the corpus (path from the environment, never committed):
+OSS_CORPUS_DIR=... python3 scripts/counterexample_scan.py --out <outside the repo>
+OSS_CORPUS_DIR=... python3 scripts/counterexample_scan.py --count 'KEY=REGEX'
+python3 scripts/make_biasing_list.py    # regenerate data/biasing-list.txt
+python3 scripts/jamo_analysis.py        # what the errors look like at jamo level
 ```
+
+`counterexample_scan.py` answers the question verification upstream does not: not
+"is this correction right?" but "where else does this key fire?". It writes caption
+text, so it refuses to write anywhere inside this repository — reviews live beside
+the refresh reports, outside git. Every pair withdrawn so far was found this way.
 
 CI runs the first three on every push.
 
