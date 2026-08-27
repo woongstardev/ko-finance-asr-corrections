@@ -102,9 +102,10 @@ but it cannot recover the specific term: 114 of 353 error items come back as a c
 wrong answer, usually a different plausible finance term. Which misrecognition maps to which
 company is an observation, not an inference, and that observation is what this dataset is.
 
-† The LLM row was measured on `mini-v0.2`'s 482 items and is **not** rescored here: the model
-predictions are re-run output, not committed data, so reproducing the row costs an API run
-rather than a replay. The dictionary rows above are `mini-v0.4`.
+† The LLM row was measured on `mini-v0.2`'s 482 items and is **not** rescored against the
+newer set: an LLM row belongs to the eval set it was produced against, and producing a new one
+costs an API run. Its outputs are committed (`benchmark/results/predictions/`), so the number
+can be checked without an API key. The dictionary rows above are `mini-v0.4`.
 
 Benchmark `mini-v0.4` (135 pairs, 721 items). Earlier numbers are kept in
 [`benchmark/README.md`](benchmark/README.md) and are not comparable across versions — the

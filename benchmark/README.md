@@ -103,9 +103,11 @@ penalty measures.
 | guarded (min key 4) | 61.6% | 249/405 | 83/134 | 0 | 15 | 2.8% | 95.7% | **58.8%** |
 | Claude Opus 5 (no dictionary) † | 63.8% ±0.3 | — | — | 113.7 | 9.3 | 1.9% | 64.7% | **61.2% ±0.2** |
 
-† Measured on `mini-v0.2` (482 items, 89 pairs) and carried forward unchanged. Prediction
-files are not committed (`predictions/` is generated), so an LLM row cannot be rescored
-against a new eval set the way a dictionary row can — it has to be re-run against the API.
+† Measured on `mini-v0.2` (482 items, 89 pairs) and carried forward unchanged: an LLM row is
+tied to the eval set it was produced against, so it moves only when someone pays for another
+run. The outputs themselves **are** committed
+(`benchmark/results/predictions/`), so the row can be rescored offline even though it cannot
+be re-measured for free.
 The 207 items added in v0.3 are exactly the pairs the dictionary learned after that run,
 which makes them a held-out set for the next LLM row rather than a gap to backfill.
 
@@ -267,8 +269,9 @@ Reproducing the slice needs no new data: it is the items in `eval-set.json` at `
 that are absent from the same file at `mini-v0.2` (`git show 87aed71:benchmark/eval-set.json`).
 Results are committed as `benchmark/results/llm-claude-opus-5-cli-heldout-*.json`; the run cost
 $3.56 for 3 × 220 items and its manifest records the model id, prompt and flags like any other
-LLM row. **Prediction files are not committed** — only results — so this row is re-run rather
-than replayed.
+LLM row. The model outputs are committed too, in `benchmark/results/predictions/`, so anyone
+can rescore this row without an API key — the one thing they cannot do for free is produce a
+*new* run of it.
 
 ## How traps are chosen
 
