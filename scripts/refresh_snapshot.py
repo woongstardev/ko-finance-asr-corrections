@@ -190,6 +190,18 @@ def check_corpus_coverage(candidate_dir: Path, write: bool) -> str:
         problem = f"the corpus shrank {before} → {now} videos (more than half)"
 
     if not problem:
+        # The counted tree is cumulative (SCHEMA.md → corpus_count), so it should
+        # never shrink at all. A small drop is not worth blocking a release over —
+        # it usually means the mirror lagged behind live intake — but it is worth
+        # saying out loud, because the same shape at a larger scale is the failure
+        # this gate exists for.
+        if before and now < before:
+            sys.stderr.write(
+                f"WARN: cumulative corpus shrank {before} → {now} videos; a "
+                "cumulative count should only grow, so check the mirror before "
+                "trusting these frequencies\n"
+            )
+            return f"corpus: ok with note ({before} → {now} videos)"
         return f"corpus: ok ({now} videos)"
     message = (f"corpus coverage: {problem} — the frequencies in this candidate "
                "come from a scan that did not see the corpus. Check the upstream "

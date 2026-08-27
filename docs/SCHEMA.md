@@ -14,7 +14,7 @@ tuple plus the snapshot version.
 |---|---|---|
 | `wrong` | string | Misrecognized surface form as observed in YouTube auto-captions (e.g. `변합기`) |
 | `right` | string | Verified correction (e.g. `변압기`) |
-| `corpus_count` | int \| null | **Full-corpus frequency**: total matches of `wrong` across the entire caption corpus (595 videos at last export <!-- stat:scanned_videos -->, growing; whitespace-flexible substring matching, same normalization as the production replacer). Produced by the upstream corpus recount; null if the counts artifact was absent at export. **It counts occurrences of the surface form, not confirmed errors** — for a `wrong` form that is also ordinary Korean, the count would overstate the error rate. No shipped pair is such a form today, but the distinction matters as the snapshot grows |
+| `corpus_count` | int \| null | **Cumulative-corpus frequency**: total matches of `wrong` across every caption transcript the upstream pipeline has processed to date (595 videos at last export <!-- stat:scanned_videos -->, growing; whitespace-flexible substring matching, same normalization as the production replacer). *Cumulative*, not *current*: the counted tree is an append-only mirror that keeps transcripts the live pipeline has since retired under its retention policy — as of 2026-08-27 that difference is 292 videos, so counting the live tree instead would let a routine deletion shrink a published frequency. Produced by the upstream corpus recount; null if the counts artifact was absent at export. **It counts occurrences of the surface form, not confirmed errors** — for a `wrong` form that is also ordinary Korean, the count would overstate the error rate. No shipped pair is such a form today, but the distinction matters as the snapshot grows |
 | `observed_count` | int | Times `wrong` was observed during candidate mining rounds (small numbers by design — not the headline frequency, see `corpus_count`) |
 | `tier` | `"A"` \| `"B"` | **Authority level.** A = a person approved this pair. B = promoted automatically, without a person in the loop, on the strength of `evidence` plus a verbatim registry match. Tier says who stands behind the pair, not how it was verified — that is `evidence` |
 | `evidence` | `"human"` \| `"auditor-consensus"` \| `"goldset-alignment"` | **How the pair was verified.** `human` = a person judged it directly. `auditor-consensus` = two LLM auditors judged it independently and agreed, and `right` matched an external registry verbatim. `goldset-alignment` = the same misrecognition was observed in an aligned (auto-caption, official-caption) pair for the same utterance. A value of `unknown` means the exporter met an upstream verification path this schema has not described yet, and is a bug to be fixed, not a category |
@@ -37,6 +37,12 @@ tuple plus the snapshot version.
 
 Top-level metadata in `pairs.json`: `exported_at`, `pair_count`, and `corpus`
 (`scanned_videos`, `counted_at`) describing the frequency scan the counts came from.
+
+`scanned_videos` is the size of that cumulative mirror at export time, and it is
+published rather than merely used because the mirror can lag live intake by a few
+videos (18 on 2026-08-27). When a frequency looks wrong later, the pair of numbers
+says whether the cause was the definition or the lag; a gate cannot tell them apart
+from inside this repository, since only the upstream host sees the live tree.
 
 **A snapshot with populated `corpus_count` values has `scanned_videos > 0`, and its
 counts are not all zero.** Both are enforced by `scripts/validate_snapshot.py`, and
