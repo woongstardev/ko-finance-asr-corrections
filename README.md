@@ -17,10 +17,10 @@ archive. The pairs here are the byproduct of correcting real YouTube auto-captio
   KEBAP (2.5K pairs, error-type labels, frozen since 2023). No finance-domain resource exists.
 - **No public "confusion pair dictionary with observed frequencies" exists in any language**
   (as of our 2026-08 survey). Frequency is what makes a pair list actionable: it tells you
-  which errors dominate real traffic (e.g. `펀더멘탈→펀더멘털` ×449, <!-- stat:count:펀더멘탈 -->
-  `변합기→변압기` ×333, <!-- stat:count:변합기 -->
-  `FMC→FOMC` ×270 <!-- stat:count:FMC --> — full scan of a
-  595-video caption corpus). <!-- stat:scanned_videos -->
+  which errors dominate real traffic (e.g. `펀더멘탈→펀더멘털` ×812, <!-- stat:count:펀더멘탈 -->
+  `변합기→변압기` ×469, <!-- stat:count:변합기 -->
+  `FMC→FOMC` ×498 <!-- stat:count:FMC --> — full scan of a
+  1,490-video caption corpus). <!-- stat:scanned_videos -->
 - Every pair carries provenance: how it was mined, which auditor models independently agreed,
   and its promotion tier (human-approved / registry-verified).
 
@@ -63,9 +63,9 @@ Details, scoring rules and what the numbers mean: [`benchmark/README.md`](benchm
 Stated up front, because a niche dataset earns trust by being explicit about its edges.
 
 - **One corpus, one ASR system, one domain.** Every pair comes from YouTube auto-captions of
-  Korean stock/investing channels — 595 videos as of the current snapshot. <!-- stat:scanned_videos --> A different ASR
+  Korean stock/investing channels — 1,490 videos as of the current snapshot. <!-- stat:scanned_videos --> A different ASR
   engine mishears differently, so these pairs are not a general Korean ASR error list.
-- **89 pairs is small.** <!-- stat:pair_count --> This is a frequency-annotated seed, not a comprehensive lexicon. It
+- **130 pairs is small.** <!-- stat:pair_count --> This is a frequency-annotated seed, not a comprehensive lexicon. It
   grows with monthly snapshots as the upstream pipeline verifies more pairs.
 - **Skewed by construction.** Frequency-ranked mining favours what the channels talk about
   most, so semiconductor and index vocabulary dominates, and a single company can account for

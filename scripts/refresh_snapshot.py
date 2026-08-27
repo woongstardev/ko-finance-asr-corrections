@@ -189,19 +189,19 @@ def check_corpus_coverage(candidate_dir: Path, write: bool) -> str:
     elif before and now < before // 2:
         problem = f"the corpus shrank {before} → {now} videos (more than half)"
 
+    # The counted tree is cumulative and append-only (SCHEMA.md → corpus_count):
+    # it never loses a transcript, so any decrease at all means the recount looked
+    # at a different tree, not a smaller one. That is the failure a "half the
+    # corpus" threshold misses — counting the live worker tree instead of the
+    # mirror reads as 1,490 → 1,216 and sails through. There is no override flag,
+    # by the same rule as the other gates: a legitimate shrink means the
+    # definition changed, and that belongs in a commit, not an environment
+    # variable.
+    if not problem and before and now < before:
+        problem = (f"the corpus went {before} → {now} videos; a cumulative count "
+                   "cannot shrink, so this recount counted a different tree")
+
     if not problem:
-        # The counted tree is cumulative (SCHEMA.md → corpus_count), so it should
-        # never shrink at all. A small drop is not worth blocking a release over —
-        # it usually means the mirror lagged behind live intake — but it is worth
-        # saying out loud, because the same shape at a larger scale is the failure
-        # this gate exists for.
-        if before and now < before:
-            sys.stderr.write(
-                f"WARN: cumulative corpus shrank {before} → {now} videos; a "
-                "cumulative count should only grow, so check the mirror before "
-                "trusting these frequencies\n"
-            )
-            return f"corpus: ok with note ({before} → {now} videos)"
         return f"corpus: ok ({now} videos)"
     message = (f"corpus coverage: {problem} — the frequencies in this candidate "
                "come from a scan that did not see the corpus. Check the upstream "
