@@ -54,6 +54,18 @@ Read the rates as *this corpus, this ASR system*: the denominator is Korean fina
 auto-captions, not Korean speech in general. And `corpus_count` counts a surface form, not a
 confirmed error — see [Known limitations](#known-limitations).
 
+## What was taken back out
+
+`data/withdrawn.json` lists pairs that shipped and were later removed — four so far, all after
+a full-corpus recheck found sentences they damaged. Two were dropped outright (`하스 → 하이닉스`
+fires inside `하이퍼스케일러들`; `SPB` means both `SPV` and `S&P`) and two were narrowed rather
+than dropped, with the replacement keys named in the file.
+
+**A withdrawal does not mean every application was wrong.** `바위 → 바이오` was correct 34 times
+out of 71 — the rest were the ordinary word for rock — which is exactly why it became
+`제약 바위 → 제약 바이오` instead of disappearing. If you copied an earlier snapshot, this file
+is the list of keys to stop applying, and what to apply instead.
+
 ## The benchmark in one table
 
 Task: fix the misrecognition, change nothing else. Three ways of using the dataset itself as

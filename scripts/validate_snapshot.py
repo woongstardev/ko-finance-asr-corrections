@@ -197,6 +197,65 @@ def check_csv(payload: dict, csv_path: Path, fail, warn) -> None:
                 return  # one report is enough; they are generated together
 
 
+WITHDRAWN_FIELDS: dict[str, object] = {
+    "wrong": str,
+    "right": str,
+    "withdrawn_at": str,
+    "reason": str,
+    "evidence_kind": str,
+    "corpus_count": (int, type(None)),
+    "justified_matches": (int, type(None)),
+    "replaced_by": list,
+    "shipped_in": list,
+    "why": str,
+}
+WITHDRAWN_REASONS = {"over-correction", "ambiguous-target", "artifact"}
+WITHDRAWN_EVIDENCE = {"corpus-counterexample", "user-report", "audit"}
+
+
+def check_withdrawn(payload: dict, path: Path, fail, warn) -> None:
+    """SCHEMA.md → Withdrawn pairs. Optional file; strict when present.
+
+    The rule that matters is the last one: a withdrawn pair must not also be a
+    shipped pair. Withdrawal is the only patch-release trigger this dataset has,
+    so a key reappearing in pairs.json while the history still says it was unsafe
+    is the one way this file can mislead rather than inform.
+    """
+    if not path.exists():
+        return
+    doc = json.loads(path.read_text(encoding="utf-8"))
+    rows = doc.get("withdrawn")
+    if not isinstance(rows, list):
+        fail("withdrawn.json has no 'withdrawn' list (SCHEMA.md → Withdrawn pairs)")
+        return
+
+    shipped = {(p.get("wrong"), p.get("right")) for p in payload.get("pairs") or []}
+    seen: set[tuple] = set()
+    for idx, row in enumerate(rows):
+        where = f"withdrawn[{idx}] {row.get('wrong')!r}->{row.get('right')!r}"
+        for field, expected in WITHDRAWN_FIELDS.items():
+            if field not in row:
+                fail(f"{where}: missing field {field!r} (SCHEMA.md → Withdrawn pairs)")
+            elif not isinstance(row[field], expected):
+                fail(f"{where}: {field!r} is {type(row[field]).__name__}, expected {expected}")
+        if row.get("reason") not in WITHDRAWN_REASONS:
+            fail(f"{where}: reason={row.get('reason')!r} not in {sorted(WITHDRAWN_REASONS)}")
+        if row.get("evidence_kind") not in WITHDRAWN_EVIDENCE:
+            fail(f"{where}: evidence_kind={row.get('evidence_kind')!r} not in "
+                 f"{sorted(WITHDRAWN_EVIDENCE)}")
+        justified, total = row.get("justified_matches"), row.get("corpus_count")
+        if isinstance(justified, int) and isinstance(total, int) and justified > total:
+            fail(f"{where}: justified_matches {justified} exceeds corpus_count {total}")
+        key = (row.get("wrong"), row.get("right"))
+        if key in seen:
+            fail(f"{where}: duplicate entry")
+        seen.add(key)
+        if key in shipped:
+            fail(f"{where}: this pair is also in pairs.json — a key cannot be both "
+                 "withdrawn and shipped (SCHEMA.md → Withdrawn pairs)")
+    print(f"  withdrawn: {len(rows)} entr(y|ies), none shipped")
+
+
 def check_person_names(payload: dict, ggulmuse: Path, require: bool, fail, warn) -> None:
     """Last line of defence, after the exporter's filter (AGENTS.md hard line)."""
     names, sources = exclusion_names(ggulmuse)
@@ -298,6 +357,7 @@ def main() -> None:
     check_pairs(payload, fail, warn)
     check_csv(payload, args.dir / "pairs.csv", fail, warn)
     check_person_names(payload, args.ggulmuse, args.require_person_list, fail, warn)
+    check_withdrawn(payload, args.dir / "withdrawn.json", fail, warn)
     if not args.skip_prose:
         check_prose_stats(payload, fail, warn)
 

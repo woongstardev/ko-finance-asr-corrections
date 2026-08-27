@@ -1,0 +1,67 @@
+{
+ "dataset": "ko-finance-asr-corrections",
+ "note": "Pairs that were promoted, shipped in a snapshot, and later removed. A pair is here because its key was unsafe as written - not because every correction it made was wrong. `justified_matches` says how many of its corpus matches were genuine misrecognitions, and `replaced_by` names the narrower key that took over where one exists. Downstream users should stop applying these keys and, where `replaced_by` is set, apply those instead.",
+ "withdrawn_at": "2026-08-27",
+ "corpus": {
+  "scanned_videos": 1490
+ },
+ "withdrawn": [
+  {
+   "wrong": "하스",
+   "right": "하이닉스",
+   "withdrawn_at": "2026-08-27",
+   "reason": "over-correction",
+   "evidence_kind": "corpus-counterexample",
+   "corpus_count": 42,
+   "justified_matches": null,
+   "replaced_by": [],
+   "shipped_in": [],
+   "why": "Two syllables that occur inside longer words - the counterexample was 하스 spoken within 하이퍼스케일러들. Its own right-hand side is also another pair's wrong form (하이닉스 → SK하이닉스, disabled upstream), so it corrected one misrecognition into another. No narrower form of the key is safe."
+  },
+  {
+   "wrong": "SPB",
+   "right": "SPV",
+   "withdrawn_at": "2026-08-27",
+   "reason": "ambiguous-target",
+   "evidence_kind": "corpus-counterexample",
+   "corpus_count": 8,
+   "justified_matches": null,
+   "replaced_by": [],
+   "shipped_in": [],
+   "why": "The same misheard token stands for two different correct forms in this corpus: SPV (special purpose vehicle) and S&P. A dictionary cannot choose between them, and guessing either way damages the other."
+  },
+  {
+   "wrong": "바위",
+   "right": "바이오",
+   "withdrawn_at": "2026-08-27",
+   "reason": "over-correction",
+   "evidence_kind": "corpus-counterexample",
+   "corpus_count": 71,
+   "justified_matches": 34,
+   "replaced_by": [
+    "제약 바위 → 제약 바이오"
+   ],
+   "shipped_in": [],
+   "why": "바위 is the ordinary word for rock. 34 of its 71 corpus matches were genuine - the misrecognition of 바이오 in a pharma context - and the rest were the plain noun, mostly in road metaphors. Narrowed rather than dropped: the longer key keeps the genuine half and cannot reach the rest."
+  },
+  {
+   "wrong": "소부 장단",
+   "right": "소부장",
+   "withdrawn_at": "2026-08-27",
+   "reason": "over-correction",
+   "evidence_kind": "corpus-counterexample",
+   "corpus_count": 44,
+   "justified_matches": 42,
+   "replaced_by": [
+    "소부 장단도 → 소부장도",
+    "소부 장단들 → 소부장들",
+    "소부 장단에 → 소부장에",
+    "소부 장단을 → 소부장을",
+    "소부 장단이 → 소부장이",
+    "소부 장단안에서 → 소부장 안에서"
+   ],
+   "shipped_in": [],
+   "why": "The key spanned a word boundary into 소부장 단위 / 소부장 단에, which is ordinary usage - 2 of 44 matches. Replaced upstream by six inflected keys that cannot reach those forms; the trade costs about 12 uninflected occurrences and removes both wrong ones."
+  }
+ ]
+}

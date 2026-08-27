@@ -31,10 +31,33 @@ tuple plus the snapshot version.
 - **Source sentences / context examples** — the dataset is the pair + statistics, not the corpus.
 - Tier C (mined-but-unverified) candidates — only pairs that survived verification ship.
 
+## Withdrawn pairs (`data/withdrawn.json`)
+
+Pairs that were promoted, shipped, and later removed. Publishing them is the point: a
+correction dictionary that only shows its successes cannot be audited, and a consumer who
+copied an earlier snapshot needs to know which keys to stop applying.
+
+| Field | Type | Description |
+|---|---|---|
+| `wrong` / `right` | string | The withdrawn pair. Same primary key as `pairs.json`, and the two files must never both contain it |
+| `withdrawn_at` | date | When it left the snapshot |
+| `reason` | `"over-correction"` \| `"ambiguous-target"` \| `"artifact"` | Narrow by design. Free-text reasons would leak upstream review detail, and three categories cover what a consumer can act on |
+| `evidence_kind` | `"corpus-counterexample"` \| `"user-report"` \| `"audit"` | What triggered the withdrawal |
+| `corpus_count` | int \| null | Matches in the corpus at withdrawal, so the blast radius is visible |
+| `justified_matches` | int \| null | How many of those were genuine misrecognitions. **A withdrawal does not mean every application was wrong** — `바위 → 바이오` was right 34 times out of 71 |
+| `replaced_by` | string[] | Narrower keys that took over, empty when the pair was dropped outright. Apply these instead |
+| `shipped_in` | string[] | Snapshot versions that carried it. Empty means it never reached a tagged release |
+| `why` | string | One paragraph, written for a consumer deciding what to do about it |
+
+`scripts/validate_snapshot.py` enforces the field list, both enums, `justified_matches ≤
+corpus_count`, and the rule that matters most: **a withdrawn pair must not also be a shipped
+pair**.
+
 ## Files
 
 - `data/pairs.json` — canonical, full metadata
 - `data/pairs.csv` — flat convenience export (same rows)
+- `data/withdrawn.json` — pairs removed from the snapshot, with what replaced them
 
 Top-level metadata in `pairs.json`: `exported_at`, `pair_count`, and `corpus`
 (`scanned_videos`, `counted_at`) describing the frequency scan the counts came from.
