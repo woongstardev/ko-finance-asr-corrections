@@ -114,12 +114,17 @@ Benchmark `mini-v0.5` (179 pairs, 941 items). Earlier numbers are kept in
 [`benchmark/README.md`](benchmark/README.md) and are not comparable across versions — the
 pair list, the trap set and the item count all moved.
 
-**And a held-out row, which reverses it.** 44 of the 130 pairs arrived after that LLM run, so
-their 220 items are a slice neither system had seen. On those, the *previous* snapshot's
-dictionary scores **2.3%** and the same model scores **72.9%**. Both results are real: a
-dictionary is worth 100% on the errors it has seen and almost nothing on the ones it has not,
-which is precisely why the pairs are the product here and the lookup is not. Quote this
-dataset for coverage of observed errors, never as evidence that dictionaries generalise.
+**And a held-out row, which reverses it.** Every pair that arrives after a measurement is a
+slice that measurement never saw, so each month's additions score the previous snapshot. On
+September's 45 new pairs, the *previous* snapshot's dictionary fixes **none** of the 180 error
+items that are genuinely new — and mangles 8 of them, because a short key it still holds fires
+inside a new misrecognition and leaves the tail behind. A general model (`gpt-5.6-sol`) reaches
+**81.5%** on the same items, and edits 8 of the 45 already-correct sentences, where the
+dictionary edits none. Both results are real: a dictionary is worth 100% on the errors it has
+seen and nothing on the ones it has not, which is precisely why the pairs are the product here
+and the lookup is not. Quote this dataset for coverage of observed errors, never as evidence
+that dictionaries generalise — and take the monthly snapshot rather than pinning one, because
+a stale dictionary does not merely miss, it damages.
 
 Details, scoring rules, the held-out table and what the numbers mean:
 [`benchmark/README.md`](benchmark/README.md).

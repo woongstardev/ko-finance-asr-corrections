@@ -305,6 +305,53 @@ LLM row. The model outputs are committed too, in `benchmark/results/predictions/
 can rescore this row without an API key — the one thing they cannot do for free is produce a
 *new* run of it.
 
+### 2026-09: the second measurement, and the first one that shows damage
+
+The v0.5 snapshot added 45 pairs, so their 225 items (180 error, 45 clean) are the September
+held-out slice. This delta is the opposite shape to August's: 25 of its 29 corrected forms were
+new to the dictionary — 흥구석유, 가온칩스, 성도이엔지, 코리아써키트 — where August's were mostly
+near-miss variants of terms already in it.
+
+| System | Recall | Mangled | Over-corr. | **Net** |
+|---|---|---|---|---|
+| Dictionary of the *previous* snapshot (135 pairs, boundary) | 11.1% (20/180) | **8** | 0 | **11.1%** |
+| Same, keys ≥ 4 chars | 0.0% | 8 | 0 | **0.0%** |
+| `gpt-5.6-sol` via the codex CLI, 3 runs | 81.5% ±0.7 | 31.7 | 8.3 | **76.9% ±0.9** |
+| Dictionary of the *current* snapshot (179 pairs) | 100.0% | 0 | 0 | 100.0% |
+
+**Read the 11.1% as 0%.** All twenty fixes are the same pair: `삼성자 → 삼성전자` was withdrawn
+this month and replaced by five particle-suffixed keys, and the old dictionary lands on those
+five items for free because it still holds the key they were narrowed from. On the other 160
+error items — the pairs that are actually new — the previous snapshot fixes **none**.
+
+**And it damages eight of them.** The old dictionary's short key `SK 하인` fires inside the new
+misrecognitions `SK하인수`/`SK하인스` and leaves the tail behind: "SK하이닉스수". Both earlier
+held-out rows only measured what a stale dictionary *misses*; this one is the first to show
+that a stale dictionary also actively breaks text the next snapshot fixes. It is the strongest
+argument in this repository for consuming the snapshots rather than pinning one.
+
+The model row is a **new row, not a continuation of August's**: different model, different
+harness (see the CLI table above), so it belongs beside the Claude row rather than after it.
+Two things in it are worth more than the headline. Its 81.5% on a slice built from arbitrary
+mappings says that *arbitrary to a dictionary* is not *arbitrary to a model* — 흥구석유 and
+가온칩스 are real listed companies, and a model that knows them can recover the name from a
+mangled surface where lookup has nothing to match. But it returns 31.7 confident wrong answers
+per run and edits 8.3 of the 45 already-correct sentences, both of which the dictionary scores
+at zero. Coverage and restraint are still different axes, and each system is still winning a
+different one.
+
+This row cost nothing beyond a subscription the machine already had, which is the point of the
+`--cli` table: the August row cost $3.56 through the Claude Code CLI, and a monthly measurement
+that depends on somebody paying for it every month is a measurement that stops.
+
+Two caveats it carries and the Claude row does not: the system prompt reaches this model as a
+preamble rather than a system field, and the codex CLI resolves a model id through the
+operator's provider configuration, so the run is pinned to `gpt-5.6-sol` but not isolated from
+that config. Pinning was worth the trade — the first attempt at this row ran on the CLI's
+built-in default with no record of which model that was, and an unpinned row breaks the first
+rule in this section. (It scored 76.9% net, indistinguishable from the pinned run, which is
+luck rather than reassurance.)
+
 ## How traps are chosen
 
 `benchmark/mine_traps.py` ranks the shipped pairs by over-correction risk and prints the

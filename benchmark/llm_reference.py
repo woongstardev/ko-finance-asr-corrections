@@ -171,14 +171,21 @@ def grok_parse(proc: subprocess.CompletedProcess, out: Path) -> tuple[str, float
 
 def codex_argv(prompt: str, model: str, effort: str, budget: float, out: Path) -> list[str]:
     # Codex has no system-prompt flag, so the instructions travel as a preamble
-    # (see SYSTEM_DELIVERY). --ephemeral/--ignore-user-config keep the operator's
-    # own config out of the run, and read-only sandbox plus a repo-free cwd mean
-    # a model that decides to use a tool cannot touch anything.
+    # (see the CLIS table). --ephemeral, --ignore-rules, a read-only sandbox and a
+    # repo-free cwd mean a model that decides to use a tool cannot touch anything.
+    #
+    # The operator's config is deliberately NOT ignored: a model id like
+    # `gpt-5.6-sol` is resolved through the provider table in that config, so
+    # --ignore-user-config makes the run fail rather than isolating it. Pinning
+    # the model matters more than isolating the config - an unpinned row breaks
+    # the first reproducibility rule in benchmark/README.md - so the trade is
+    # taken and recorded: a codex row depends on the operator's provider table,
+    # and the reasoning effort is pinned here rather than inherited silently.
     argv = ["codex", "exec", "--skip-git-repo-check", "--ephemeral",
-            "--ignore-user-config", "--ignore-rules", "--sandbox", "read-only",
+            "--ignore-rules", "--sandbox", "read-only",
             "--color", "never", "--output-last-message", str(out)]
     if model:
-        argv += ["--model", model]
+        argv += ["--model", model, "-c", f"model_reasoning_effort={effort or 'high'}"]
     return argv + [f"{SYSTEM_PROMPT}\n\n{prompt}"]
 
 

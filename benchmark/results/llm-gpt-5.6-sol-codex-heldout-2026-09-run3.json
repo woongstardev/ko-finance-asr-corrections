@@ -1,0 +1,48 @@
+{
+ "items": {
+  "total": 225,
+  "error": 180,
+  "guard": 45
+ },
+ "fixed": 148,
+ "missed": 1,
+ "mangled": 31,
+ "over_corrections": {
+  "total": 8,
+  "error_context": 0,
+  "clean": 8,
+  "trap": 0
+ },
+ "recall": 0.8222222222222222,
+ "over_correction_rate": 0.035555555555555556,
+ "precision_proxy": 0.7914438502673797,
+ "net_score": 0.7777777777777778,
+ "missing_predictions": 0,
+ "by_category": {
+  "stock": {
+   "items": 220,
+   "fixed": 147,
+   "missed": 1,
+   "mangled": 28,
+   "over": 7
+  },
+  "term": {
+   "items": 5,
+   "fixed": 1,
+   "missed": 0,
+   "mangled": 3,
+   "over": 1
+  }
+ },
+ "by_variant": {
+  "plain": {
+   "items": 135,
+   "fixed": 109
+  },
+  "spacing": {
+   "items": 45,
+   "fixed": 39
+  }
+ },
+ "system": "gpt-5.6-sol-codex-run3"
+}

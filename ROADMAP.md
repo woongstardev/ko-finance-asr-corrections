@@ -27,7 +27,9 @@ minor version.
   arrive after a benchmark run have by definition not been seen by it, so each month's delta
   is a held-out set for the systems measured before it. The first measurement (2026-08-27) is
   the reversal the in-domain table cannot show — the previous snapshot's dictionary scores
-  2.3% on new pairs where an LLM scores 72.9%. Continues monthly.
+  2.3% on new pairs where an LLM scores 72.9%. The second (2026-09-02) is sharper: on pairs
+  that are genuinely new the previous snapshot fixes none of 160 and *damages* 8, while a
+  general model reaches 81.5%. Continues monthly.
 - **More traps.** Trap candidates are mined mechanically (`benchmark/mine_traps.py`) and the
   sentences are written by hand; the set grows with the pair list.
 

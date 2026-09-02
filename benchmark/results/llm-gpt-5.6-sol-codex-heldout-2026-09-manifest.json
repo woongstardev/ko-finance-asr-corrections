@@ -1,0 +1,46 @@
+{
+ "model": "gpt-5.6-sol",
+ "model_reported": null,
+ "transport": "cli",
+ "cli": "codex",
+ "harness": "codex-cli 0.151.0",
+ "cli_argv": [
+  "codex",
+  "exec",
+  "--skip-git-repo-check",
+  "--ephemeral",
+  "--ignore-rules",
+  "--sandbox",
+  "read-only",
+  "--color",
+  "never",
+  "--output-last-message",
+  "<TMP>",
+  "--model",
+  "gpt-5.6-sol",
+  "-c",
+  "model_reasoning_effort=medium",
+  "You correct Korean speech-recognition errors in sentences from finance and stock videos.\n\nA sentence may contain a misrecognized stock name, finance term, or number. If it does,\noutput the sentence with that misrecognition corrected and nothing else changed.\n\nIf the sentence is already correct, output it exactly as given. Ordinary Korean words,\nplace names, product names, and acronyms from other fields are not errors - leave them\nalone even when they resemble a finance term.\n\nOutput only the sentence. No explanation, no quotes, no formatting.\n\n<ITEM>"
+ ],
+ "system_delivery": "preamble",
+ "measured_cost_usd": null,
+ "cost_note": "the codex CLI does not report per-call cost; this row was produced on an existing subscription",
+ "prompt_id": "fix-only-v1",
+ "system_prompt": "You correct Korean speech-recognition errors in sentences from finance and stock videos.\n\nA sentence may contain a misrecognized stock name, finance term, or number. If it does,\noutput the sentence with that misrecognition corrected and nothing else changed.\n\nIf the sentence is already correct, output it exactly as given. Ordinary Korean words,\nplace names, product names, and acronyms from other fields are not errors - leave them\nalone even when they resemble a finance term.\n\nOutput only the sentence. No explanation, no quotes, no formatting.",
+ "request_params": {
+  "max_tokens": 2000,
+  "output_config": {
+   "effort": "medium"
+  },
+  "anthropic_version": "2023-06-01"
+ },
+ "note": "Current Claude models removed temperature/top_p/top_k, so there is no sampling knob to pin - run-to-run spread is inherent and is why --runs defaults to 3.",
+ "benchmark": "ko-finance-asr-corrections/mini-v0.5",
+ "eval_items": 225,
+ "runs": 3,
+ "prediction_files": [
+  "llm-gpt-5.6-sol-codex-heldout-2026-09-run1.json",
+  "llm-gpt-5.6-sol-codex-heldout-2026-09-run2.json",
+  "llm-gpt-5.6-sol-codex-heldout-2026-09-run3.json"
+ ]
+}
