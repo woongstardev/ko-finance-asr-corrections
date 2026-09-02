@@ -4,6 +4,10 @@
     OSS_CORPUS_DIR=/path/to/processed python3 scripts/counterexample_scan.py \
         --out ~/.local/state/oss-refresh/reviews/2026-09.md
 
+    # sweep a candidate export before it is published, not after
+    OSS_CORPUS_DIR=... python3 scripts/counterexample_scan.py --pairs candidate.json \\
+        --out ~/.local/state/oss-refresh/reviews/2026-09-candidate.md
+
     # once a shape is suspected, count it across the whole corpus
     python3 scripts/counterexample_scan.py --count '아이비=아이비\\s*(들|트)'
 
@@ -61,8 +65,8 @@ def transcripts(root: Path):
                 yield text
 
 
-def load_keys(max_len: int) -> list[tuple[str, str]]:
-    pairs = json.loads((REPO / "data" / "pairs.json").read_text(encoding="utf-8"))["pairs"]
+def load_keys(max_len: int, path: Path) -> list[tuple[str, str]]:
+    pairs = json.loads(path.read_text(encoding="utf-8"))["pairs"]
     return [(p["wrong"], p["right"]) for p in pairs
             if len(p["wrong"].replace(" ", "")) <= max_len]
 
@@ -71,6 +75,9 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--corpus", default=os.environ.get("OSS_CORPUS_DIR"))
     ap.add_argument("--out", type=Path, help="write the review sheet here (outside the repo)")
+    ap.add_argument("--pairs", type=Path, default=REPO / "data" / "pairs.json",
+                    help="pair file to scan; point it at a candidate export to sweep "
+                         "before publishing rather than after")
     ap.add_argument("--max-key-length", type=int, default=4,
                     help="only scan keys this short; longer keys rarely land on ordinary text")
     ap.add_argument("--count", action="append", default=[], metavar="KEY=REGEX",
@@ -105,7 +112,7 @@ def main() -> None:
             print(f"{key}: {bad} harmful of {total} matches ({share})")
         return
 
-    keys = load_keys(args.max_key_length)
+    keys = load_keys(args.max_key_length, args.pairs.expanduser())
     samples: dict[str, list[str]] = {w: [] for w, _ in keys}
     counts: dict[str, int] = {w: 0 for w, _ in keys}
     patterns = {w: ws_flexible(w) for w, _ in keys}
