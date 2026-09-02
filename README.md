@@ -28,7 +28,7 @@ archive. The pairs here are the byproduct of correcting real YouTube auto-captio
 
 | Path | Contents |
 |---|---|
-| `data/` | Confusion pairs (JSON/CSV): `wrong`, `right`, `observed_count`, `tier`, verification metadata. Stock names & finance terms only — no person names, no source sentences. |
+| `data/` | Confusion pairs (JSON/CSV): `wrong`, `right`, `observed_count`, `tier`, verification metadata. Stock names and finance terms, plus a small labelled tail of ordinary Korean the same pipeline verified (`category`) — no person names, no source sentences. |
 | `benchmark/` | <!-- stat:eval_items --> Mini benchmark v0.4: pure-stdlib scorer, a 721-item synthetic evaluation set (no caption text), a mechanical trap-risk miner, and three dictionary baselines. Fixes and over-corrections are scored together — see [`benchmark/README.md`](benchmark/README.md). |
 | `docs/SCHEMA.md` | Field-by-field schema. |
 | `docs/METHODOLOGY.md` | The no-gold-label verification loop: 2 independent LLM auditors → consensus-only adoption → external registry check → 3-tier promotion → instant rollback. |
@@ -128,6 +128,10 @@ Stated up front, because a niche dataset earns trust by being explicit about its
 - **One corpus, one ASR system, one domain.** Every pair comes from YouTube auto-captions of
   Korean stock/investing channels — 1,490 videos as of the current snapshot. <!-- stat:scanned_videos --> A different ASR
   engine mishears differently, so these pairs are not a general Korean ASR error list.
+- **The domain label is the corpus's, not a filter's.** Pairs are promoted because upstream
+  verification judged them correct, so a handful describe ordinary Korean rather than finance
+  (`지진난주 → 지지난주`). They ship labelled `general` instead of being dropped; filter on
+  `category` if you want a strictly domain lexicon.
 - **135 pairs is small.** <!-- stat:pair_count --> This is a frequency-annotated seed, not a comprehensive lexicon. It
   grows with monthly snapshots as the upstream pipeline verifies more pairs.
 - **Skewed by construction.** Frequency-ranked mining favours what the channels talk about

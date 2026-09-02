@@ -62,7 +62,7 @@ FIELDS: dict[str, object] = {
 ENUMS = {
     "tier": {"A", "B"},
     "evidence": {"human", "auditor-consensus", "goldset-alignment"},
-    "category": {"stock", "term", "number", "other"},
+    "category": {"stock", "term", "number", "other", "general"},
 }
 META_KEYS = ("dataset", "exported_at", "pair_count", "corpus", "pairs")
 
@@ -300,6 +300,52 @@ def check_withdrawn(payload: dict, path: Path, fail, warn) -> None:
     print(f"  withdrawn: {len(rows)} entr(y|ies), none shipped")
 
 
+def check_category_review(payload: dict, path: Path, fail, warn) -> None:
+    """SCHEMA.md → category: the verdict file for pairs the registry cannot classify.
+
+    The registry resolves `stock` and `term`; the rest is a human verdict
+    recorded in scripts/category-review.tsv. Two ways that goes wrong silently,
+    so both are checked here: a verdict can name a pair that has left the
+    snapshot (the row is then dead weight, and the next reader believes it), and
+    a new pair can ship unclassified because nobody reviewed it - which is the
+    condition the exporter's "review before release" list exists to prevent.
+    """
+    if not path.exists():
+        warn(f"{path.name} is missing — every registry miss will ship as 'other'")
+        return
+    verdicts: dict[tuple[str, str], str] = {}
+    for lineno, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+        if not line.strip() or line.startswith("#"):
+            continue
+        parts = line.split("\t")
+        if len(parts) < 3:
+            fail(f"{path.name}:{lineno}: expected wrong<TAB>right<TAB>category<TAB>why")
+            continue
+        key = (parts[0], parts[1])
+        if parts[2] not in ENUMS["category"]:
+            fail(f"{path.name}:{lineno}: category={parts[2]!r} not in "
+                 f"{sorted(ENUMS['category'])}")
+        if key in verdicts:
+            fail(f"{path.name}:{lineno}: duplicate verdict for {parts[0]}→{parts[1]}")
+        verdicts[key] = parts[2]
+
+    shipped = {(p.get("wrong"), p.get("right")) for p in payload.get("pairs") or []}
+    for key in sorted(verdicts.keys() - shipped):
+        warn(f"{path.name}: verdict for {key[0]}→{key[1]} names a pair that is not "
+             "in this snapshot — withdrawn upstream, or the surface changed")
+    unreviewed = sorted(
+        (p.get("wrong"), p.get("right"))
+        for p in payload.get("pairs") or []
+        if p.get("category") in ("other", "general")
+        and (p.get("wrong"), p.get("right")) not in verdicts
+    )
+    for key in unreviewed:
+        warn(f"{key[0]}→{key[1]} ships as {'other'!r} without a verdict in "
+             f"{path.name} — classify it before release")
+    print(f"  category verdicts: {len(verdicts)}, "
+          f"{len(unreviewed)} unclassified pair(s) shipping")
+
+
 def check_person_names(payload: dict, ggulmuse: Path, require: bool, fail, warn) -> None:
     """Last line of defence, after the exporter's filter (AGENTS.md hard line)."""
     names, sources = exclusion_names(ggulmuse)
@@ -412,6 +458,9 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--dir", type=Path, default=REPO / "data",
                     help="directory holding pairs.json/pairs.csv")
+    ap.add_argument("--category-review", type=Path,
+                    default=REPO / "scripts" / "category-review.tsv",
+                    help="verdict file for pairs the registry cannot classify")
     ap.add_argument("--ggulmuse", type=Path, default=GGULMUSE_DEFAULT)
     ap.add_argument("--require-person-list", action="store_true",
                     help="fail (not warn) when no exclusion list is available")
@@ -432,6 +481,9 @@ def main() -> None:
     check_person_names(payload, args.ggulmuse, args.require_person_list, fail, warn)
     check_withdrawn(payload, args.dir / "withdrawn.json", fail, warn)
     check_biasing_list(payload, args.dir / "biasing-list.txt", fail, warn)
+    # Not under --dir: the verdicts live with the exporter that applies them,
+    # not with the snapshot they classify.
+    check_category_review(payload, args.category_review, fail, warn)
     if not args.skip_prose:
         check_prose_stats(payload, fail, warn)
 

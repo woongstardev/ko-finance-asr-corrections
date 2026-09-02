@@ -77,9 +77,43 @@ def _registry_identity(registry, right: str) -> dict:
     return {"ticker": entry.ticker or None, "market": entry.market or None}
 
 
-def categorize(right: str, kind: str | None) -> str:
+CATEGORY_REVIEW = REPO / "scripts" / "category-review.tsv"
+
+
+def load_category_review() -> dict[tuple[str, str], str]:
+    """Human verdicts for pairs the registry cannot classify (SCHEMA.md → category).
+
+    The registry resolves `stock` and `term`; everything else used to fall
+    through to `other`, which made the field a record of registry coverage
+    rather than of vocabulary kind - 42 of 135 pairs on the last snapshot. The
+    exporter printed those 42 as "review before release" on every run and the
+    review had nowhere to land, so it never happened. This is where it lands.
+    """
+    verdicts: dict[tuple[str, str], str] = {}
+    if not CATEGORY_REVIEW.exists():
+        print(f"WARNING: no category review at {CATEGORY_REVIEW} — every "
+              "registry miss will ship as 'other'", file=sys.stderr)
+        return verdicts
+    for line in CATEGORY_REVIEW.read_text(encoding="utf-8").splitlines():
+        if not line.strip() or line.startswith("#"):
+            continue
+        parts = line.split("\t")
+        if len(parts) < 3:
+            print(f"WARNING: malformed category review line: {line!r}", file=sys.stderr)
+            continue
+        verdicts[(parts[0], parts[1])] = parts[2]
+    return verdicts
+
+
+def categorize(wrong: str, right: str, kind: str | None,
+               review: dict[tuple[str, str], str]) -> str:
+    # Registry evidence outranks the file: a pair that starts resolving is
+    # better classified by the registry than by a verdict written when it did not.
     if kind in ("stock", "term"):
         return kind
+    reviewed = review.get((wrong, right))
+    if reviewed:
+        return reviewed
     if any(ch.isdigit() for ch in right):
         return "number"
     return "other"
@@ -168,6 +202,7 @@ def main() -> None:
     registry = get_registry()
     rows = load_dictionary_rows()
     exclusions = load_exclusions()
+    category_review = load_category_review()
     corpus_counts, corpus_meta = load_corpus_counts()
     corpus_meta = {**corpus_meta, **load_corpus_profile()} if corpus_meta else corpus_meta
 
@@ -189,8 +224,8 @@ def main() -> None:
         ):
             dropped_person.append(f"{e.wrong}→{e.right} ({e.tier})")
             continue
-        category = categorize(e.right, kind)
-        if category == "other":
+        category = categorize(e.wrong, e.right, kind, category_review)
+        if category == "other" and (e.wrong, e.right) not in category_review:
             review_other.append(f"{e.wrong}→{e.right} ({e.tier})")
         evidence = EVIDENCE_BY_SOURCE.get(e.source or "")
         if evidence is None:
@@ -255,7 +290,9 @@ def main() -> None:
     print(f"dropped (person): {len(dropped_person)}")
     for line in dropped_person:
         print(f"  - {line}")
-    print(f"category=other (review before release): {len(review_other)}")
+    print(f"category verdicts applied: {len(category_review)} "
+          f"(scripts/category-review.tsv)")
+    print(f"category=other, unreviewed (review before release): {len(review_other)}")
     for line in review_other:
         print(f"  - {line}")
     if unknown_source:

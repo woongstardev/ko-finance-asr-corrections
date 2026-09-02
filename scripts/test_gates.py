@@ -53,7 +53,7 @@ def snapshot(pairs: list[dict]) -> dict:
 
 
 def write(directory: Path, payload: dict, *, withdrawn: dict | None = None,
-          biasing: list[str] | None = None) -> None:
+          biasing: list[str] | None = None, review: str = "") -> None:
     (directory / "pairs.json").write_text(json.dumps(payload, ensure_ascii=False),
                                           encoding="utf-8")
     rows = [{**p, "auditor_models": ";".join(p["auditor_models"])} for p in payload["pairs"]]
@@ -67,11 +67,17 @@ def write(directory: Path, payload: dict, *, withdrawn: dict | None = None,
     if biasing is not None:
         (directory / "biasing-list.txt").write_text(
             "# header\n" + "\n".join(f"{t}\t1" for t in biasing) + "\n", encoding="utf-8")
+    (directory / "category-review.tsv").write_text(
+        "# fixture verdicts\n" + review, encoding="utf-8")
 
 
 def validate(directory: Path) -> subprocess.CompletedProcess:
+    # The verdict file is pointed at the temp directory too: left at its default
+    # it would be the repository's own 42 verdicts, every one of them naming a
+    # pair this two-pair fixture does not contain.
     return subprocess.run(
-        [sys.executable, str(VALIDATE), "--dir", str(directory), "--skip-prose"],
+        [sys.executable, str(VALIDATE), "--dir", str(directory), "--skip-prose",
+         "--category-review", str(directory / "category-review.tsv")],
         capture_output=True, text=True, cwd=REPO,
     )
 
@@ -89,6 +95,17 @@ class GateTests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr)
             return
         self.assertNotEqual(result.returncode, 0, "gate accepted a broken snapshot")
+        self.assertIn(expect, result.stderr)
+
+    def check_warns(self, mutate, expect: str, **files) -> None:
+        """A rule that reports rather than blocks: the snapshot still validates."""
+        payload = snapshot([copy.deepcopy(PAIR), copy.deepcopy(SECOND)])
+        mutate(payload)
+        with tempfile.TemporaryDirectory() as tmp:
+            directory = Path(tmp)
+            write(directory, payload, **files)
+            result = validate(directory)
+        self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn(expect, result.stderr)
 
     def test_valid_snapshot_passes(self):
@@ -150,6 +167,29 @@ class GateTests(unittest.TestCase):
 
     def test_biasing_list_in_sync(self):
         self.check(lambda p: None, None, biasing=[PAIR["right"], SECOND["right"]])
+
+    # SCHEMA.md → category. The registry classifies what it can; the rest is a
+    # recorded human verdict, and a verdict file has two silent failure modes -
+    # it rots when a pair leaves, and it is absent when a pair arrives.
+    def test_category_verdict_line_malformed(self):
+        self.check(lambda p: None, "expected wrong<TAB>right",
+                   review="변합기\t변압기\n")
+
+    def test_category_verdict_unknown_category(self):
+        self.check(lambda p: None, "not in ['general'",
+                   review="변합기\t변압기\tvocabulary\twhy\n")
+
+    def test_category_verdict_duplicated(self):
+        self.check(lambda p: None, "duplicate verdict",
+                   review="변합기\t변압기\tterm\twhy\n변합기\t변압기\tterm\twhy\n")
+
+    def test_category_verdict_names_absent_pair(self):
+        self.check_warns(lambda p: None, "not in this snapshot",
+                         review="없는말\t없는말들\tterm\twithdrawn upstream\n")
+
+    def test_unclassified_pair_ships(self):
+        self.check_warns(lambda p: p["pairs"][0].update(category="other"),
+                         "without a verdict")
 
 
 class CorpusCoverageTests(unittest.TestCase):

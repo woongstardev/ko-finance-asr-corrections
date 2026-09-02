@@ -1,0 +1,63 @@
+# Category verdicts for pairs the registry cannot classify.
+#
+# categorize() in scripts/export_pairs.py resolves `stock` and `term` from the
+# upstream registry and `number` from digits; everything else falls through to
+# `other`. That fall-through is a registry miss, not a vocabulary kind, and it
+# was 42 of 135 pairs - so the field said nothing useful about a third of the
+# snapshot, and the exporter reprinted the same 42 lines as "review before
+# release" on every run with nowhere to record a verdict.
+#
+# This file is that record, and it works like state.json's seen_person: a pair
+# listed here is reviewed, so the release list shrinks to what is actually new.
+#
+# Columns: wrong <TAB> right <TAB> category <TAB> why
+# Categories: stock (a listed company or market index), term (finance or
+# industry vocabulary), number, other (a domain entity with no registry
+# identity - private companies, brands, products), general (ordinary Korean
+# with no domain content; it ships because the pipeline verifies whatever it
+# finds, and this label is what lets a consumer filter it out).
+#
+# Reviewed 2026-09-02 against the 135-pair snapshot.
+
+블랙락	블랙록	stock	BlackRock; listed, registry holds no Korean transliteration
+마이콘 테크놀로지	마이크론 테크놀로지	stock	Micron; listed, multi-word Korean form misses the registry
+마이크 테크놀로지	마이크론 테크놀로지	stock	same entity, second misrecognition
+코싹이	코스닥이	stock	KOSDAQ index; the particle keeps the surface out of the registry
+코스하고	코스닥으로	stock	same index, inflected surface
+코사 넣어	코스닥 넣어	stock	same index, followed by a verb rather than a particle
+나상은	나스닥은	stock	NASDAQ index, particle-attached surface
+수납매	순환매	term	sector rotation
+장기체	장기채	term	long-dated bonds
+미국체	미국채	term	US Treasuries
+해치 펀드	헤지 펀드	term	hedge fund
+해제 펀드	헤지 펀드	term	hedge fund, second misrecognition
+실험률	실업률	term	unemployment rate
+하이퍼스러들	하이퍼스케일러들	term	hyperscalers; industry vocabulary, plural surface
+지정확정 리스크	지정학적 리스크	term	geopolitical risk
+지정확전 리스크	지정학적 리스크	term	geopolitical risk, second misrecognition
+제약 바위	제약 바이오	term	pharma/bio sector name
+기적 분석	기술적 분석	term	technical analysis
+역초세	역추세	term	counter-trend
+종목면	종목명	term	ticker name field
+ACDS	HTS	term	home trading system
+소부 장단에	소부장에	term	materials/parts/equipment sector abbreviation
+소부 장단이	소부장이	term	same abbreviation, particle series
+소부 장단들	소부장들	term	same abbreviation, particle series
+소부 장단도	소부장도	term	same abbreviation, particle series
+소부 장단안에서	소부장 안에서	term	same abbreviation, following phrase
+소부 장단을	소부장을	term	same abbreviation, particle series
+줄린이의 법칙	주린이의 법칙	term	retail-investor slang
+K뷰T	K뷰티	term	sector theme
+4쪽 보행	사족 보행	term	quadruped locomotion; robotics vocabulary, the subject of the stocks discussed
+엔트로픽	앤트로픽	other	Anthropic; private company, no ticker
+엔트로피	앤트로픽	other	same company, second misrecognition
+보스턴 다이네믹스	보스턴 다이내믹스	other	Boston Dynamics; subsidiary, not separately listed
+올리브형	올리브영	other	Olive Young; brand of an unlisted operator
+갤러시	갤럭시	other	Galaxy; product line, not an issuer
+지진난주	지지난주	general	'the week before last'
+등뜸이는	등 떠미는	general	'pushing from behind'
+감만해도	감안해도	general	'even taking into account'
+경원자	경영자	general	'manager'; ordinary business word, not finance vocabulary
+노크먼트	노코멘트	general	'no comment'
+머비의 법칙	머피의 법칙	general	Murphy's law
+머표 법칙	머피의 법칙	general	Murphy's law, second misrecognition

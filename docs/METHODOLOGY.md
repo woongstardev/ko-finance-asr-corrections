@@ -98,6 +98,13 @@ The snapshot holds 135 pairs <!-- stat:pair_count -->:
 | `term` | 27 <!-- stat:category:term --> |
 | `number` | 6 <!-- stat:category:number --> |
 
+`other` is 42 here for a reason that is about tooling rather than vocabulary: until 2026-09-02
+the category came only from the registry, so every pair the registry could not resolve landed
+there — sector abbreviations, indices carrying a particle, unlisted companies and a handful of
+ordinary Korean words, all in one bucket. Those 42 are now classified by recorded verdict
+(`scripts/category-review.tsv`), and the next snapshot reports them as 23 `term`, 7 `stock`,
+5 `other` and 7 `general`. The numbers in this table are the shipped ones and move with it.
+
 By verification path: 49 `human`, 48 `goldset-alignment`, 38 `auditor-consensus` — the
 alignment path did not exist at the first snapshot and is now the second largest, which is why
 `evidence` had to stop being implied by `tier`.

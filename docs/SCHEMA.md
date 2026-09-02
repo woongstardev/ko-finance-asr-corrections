@@ -19,13 +19,22 @@ tuple plus the snapshot version.
 | `observed_count` | int | Times `wrong` was observed during candidate mining rounds (small numbers by design — not the headline frequency, see `corpus_count`) |
 | `tier` | `"A"` \| `"B"` | **Authority level.** A = a person approved this pair. B = promoted automatically, without a person in the loop, on the strength of `evidence` plus a verbatim registry match. Tier says who stands behind the pair, not how it was verified — that is `evidence` |
 | `evidence` | `"human"` \| `"auditor-consensus"` \| `"goldset-alignment"` | **How the pair was verified.** `human` = a person judged it directly. `auditor-consensus` = two LLM auditors judged it independently and agreed, and `right` matched an external registry verbatim. `goldset-alignment` = the same misrecognition was observed in an aligned (auto-caption, official-caption) pair for the same utterance. A value of `unknown` means the exporter met an upstream verification path this schema has not described yet, and is a bug to be fixed, not a category |
-| `category` | `"stock"` \| `"term"` \| `"number"` \| `"other"` | Vocabulary kind. `stock`/`term` = verbatim registry/glossary match; `number` = amount/figure damage; `other` = domain colloquialisms, foreign companies outside the KRX registry, multi-word phrases |
+| `category` | `"stock"` \| `"term"` \| `"number"` \| `"other"` \| `"general"` | Vocabulary kind. `stock` = a listed company or market index; `term` = finance or industry vocabulary; `number` = amount/figure damage; `other` = a domain entity the registry holds no identity for (private companies, brands, product lines); `general` = ordinary Korean with no domain content. The registry decides `stock` and `term` where it resolves the corrected form; where it does not, the value is a recorded verdict in `scripts/category-review.tsv` — a registry miss is not a vocabulary kind, and until that file existed 42 of 135 pairs sat in `other` for no other reason |
 | `ticker` | string \| null | Registry identity of the **corrected** term — a KRX code (`005930`), a US ticker (`NVDA`) or an index symbol (`^GSPC`). Null wherever the registry does not resolve the term, which is most `term`/`number`/`other` rows and a few foreign names; 57 of 135 pairs carry one. The misrecognized form is never looked up — by definition it is in no registry |
 | `market` | string \| null | Listing venue for that identity (`KOSPI`, `KOSDAQ`, `NASDAQ`, `NYSE`, …). Same nullability as `ticker`; the two always travel together |
 | `auditor_models` | string[] | Model identifiers of the independent auditors that agreed. **Orthogonal to `tier`**: it is non-empty whenever two auditors agreed, which can also happen on a tier A pair that a person then approved on top of that consensus (one shipped pair, `업항 → 업황`, is exactly this). Do not infer tier from this field |
 | `approved_at` | date | Promotion date |
 | `word_boundary` | bool | Whether replacement requires word-boundary match |
 | `apply_scope` | string | Application scope constraint used in production (`unique`, …) |
+
+### Why `general` exists
+
+Some pairs are ordinary Korean with nothing financial about them — `지진난주 → 지지난주`,
+`노크먼트 → 노코멘트`. They are here because upstream verification judges what the corpus
+produces, not what the domain label predicts, and dropping a verified correction to keep a
+category tidy would be the wrong trade. Labelling them is the honest alternative: filter on
+`category != "general"` for a strictly domain lexicon, and read the count as a property of the
+corpus rather than of the method. Seven of 135 pairs on the current snapshot.
 
 ## What is deliberately NOT included
 
