@@ -29,7 +29,7 @@ archive. The pairs here are the byproduct of correcting real YouTube auto-captio
 | Path | Contents |
 |---|---|
 | `data/` | Confusion pairs (JSON/CSV): `wrong`, `right`, `observed_count`, `tier`, verification metadata. Stock names and finance terms, plus a small labelled tail of ordinary Korean the same pipeline verified (`category`) — no person names, no source sentences. |
-| `benchmark/` | <!-- stat:eval_items --> Mini benchmark v0.5: pure-stdlib scorer, a 941-item synthetic evaluation set (no caption text), a mechanical trap-risk miner, and three dictionary baselines. Fixes and over-corrections are scored together — see [`benchmark/README.md`](benchmark/README.md). |
+| `benchmark/` | <!-- stat:eval_items --> Mini benchmark v0.6: pure-stdlib scorer, a 945-item synthetic evaluation set (no caption text), a mechanical trap-risk miner, and three dictionary baselines. Fixes and over-corrections are scored together — see [`benchmark/README.md`](benchmark/README.md). |
 | `docs/SCHEMA.md` | Field-by-field schema. |
 | `docs/METHODOLOGY.md` | The no-gold-label verification loop: 2 independent LLM auditors → consensus-only adoption → external registry check → 3-tier promotion → instant rollback. |
 
@@ -46,9 +46,9 @@ outside the pipeline can produce: it takes the corpus, not the dictionary.
 | `FMC → FOMC` | 751 | 240 | **75.8%** <!-- stat:rate:FMC --> |
 | `휴먼노이드 → 휴머노이드` | 364 | 100 | **78.4%** <!-- stat:rate:휴먼노이드 --> |
 
-Ten pairs have `right_count: 0`, which is a stronger statement than a high rate: across 1,490
-videos the auto-captions never once produced the correct spelling. `보스턴 다이내믹스` and
-`서브프라임 모기지` are in that group.
+18 pairs have `right_count: 0` <!-- stat:right_count_zero -->, which is a stronger statement than a high rate:
+across 1,904 videos <!-- stat:scanned_videos --> the auto-captions never once produced the correct spelling.
+`보스턴 다이내믹스` and `서브프라임 모기지` are in that group.
 
 The corpus behind those rates:
 
@@ -88,14 +88,14 @@ is the list of keys to stop applying, and what to apply instead.
 ## The benchmark in one table
 
 Task: fix the misrecognition, change nothing else. Three ways of using the dataset itself as
-a correction system, scored on 941 synthetic items <!-- stat:eval_items --> (no caption text),
-of which 47 are traps <!-- stat:trap_count --> — ordinary sentences a blind replacement damages. Net score is fixes minus over-corrections,
+a correction system, scored on 945 synthetic items <!-- stat:eval_items --> (no caption text),
+of which 51 are traps <!-- stat:trap_count --> — ordinary sentences a blind replacement damages. Net score is fixes minus over-corrections,
 over error items.
 
 | System | Recall | Over-corrections | **Net score** |
 |---|---|---|---|
-| Plain substring replacement | 75.2% | 24 | **71.9%** |
-| Whitespace-flexible matching | 100.0% | 40 | **94.4%** |
+| Plain substring replacement | 75.2% | 26 | **71.6%** |
+| Whitespace-flexible matching | 100.0% | 44 | **93.8%** |
 | Whitespace-flexible, keys ≥ 4 chars | 68.3% | 15 | **66.2%** |
 | Claude Opus 5, no dictionary (3 runs) | 63.8% | 9.3 | **61.2%** † |
 
@@ -108,9 +108,9 @@ company is an observation, not an inference, and that observation is what this d
 † The LLM row was measured on `mini-v0.2`'s 482 items and is **not** rescored against the
 newer set: an LLM row belongs to the eval set it was produced against, and producing a new one
 costs an API run. Its outputs are committed (`benchmark/results/predictions/`), so the number
-can be checked without an API key. The dictionary rows above are `mini-v0.5`.
+can be checked without an API key. The dictionary rows above are `mini-v0.6`.
 
-Benchmark `mini-v0.5` (179 pairs, 941 items). Earlier numbers are kept in
+Benchmark `mini-v0.6` (179 pairs, 945 items). Earlier numbers are kept in
 [`benchmark/README.md`](benchmark/README.md) and are not comparable across versions — the
 pair list, the trap set and the item count all moved.
 

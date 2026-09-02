@@ -30,7 +30,7 @@ export ANTHROPIC_API_KEY=...                                       # or an API k
 python3 benchmark/llm_reference.py --runs 3
 ```
 
-## The evaluation set (941 items) <!-- stat:eval_items -->
+## The evaluation set (945 items) <!-- stat:eval_items -->
 
 No caption text appears anywhere in this benchmark. Source transcripts are not
 redistributable and the dataset's hard line excludes them, so every sentence is either a
@@ -41,7 +41,7 @@ template fill or hand-authored for this repo.
 | `error` / plain | 267 | Six carrier templates filled with a pair's `wrong` form, 3 per pair | Replace the slot with `right` |
 | `error` / spacing | 86 | The same, with the spacing of `wrong` damaged — a space inserted mid-word, or a phrase's space removed | Replace the slot with `right` |
 | `clean` | 89 | A template filled with `right` — already correct | Change nothing |
-| `trap` | 47 | <!-- stat:trap_count --> Hand-authored sentences where a pair's `wrong` string is legitimate Korean (`엔트로피` the physics term, `MCD` the McDonald's ticker, `FFC` the flat cable, `블랙락 시티`, `사업 항목`, `지진 난 주`, `아이비리그`, `삼성 자산운용`, `매도 체결`, `단도체` the transmission conductor, `SMP` the electricity price, `MDI` the chemical) | Change nothing |
+| `trap` | 51 | <!-- stat:trap_count --> Hand-authored sentences where a pair's `wrong` string is legitimate Korean (`엔트로피` the physics term, `MCD` the McDonald's ticker, `FFC` the flat cable, `블랙락 시티`, `사업 항목`, `지진 난 주`, `아이비리그`, `삼성 자산운용`, `매도 체결`, `단도체` the transmission conductor, `SMP` the electricity price, `MDI` the chemical, `한반도 지도`, `변동 상황`, `크래프트 하인스`, `영업익` the standard abbreviation) | Change nothing |
 
 The spacing variants are not synthetic difficulty for its own sake: YouTube auto-captions
 drop the space at event boundaries essentially always, which is why the upstream matcher is
@@ -98,8 +98,8 @@ penalty measures.
 
 | System | Recall | plain | spacing | Mangled | Over-corr. | Over-corr. rate | Precision (proxy) | **Net score** |
 |---|---|---|---|---|---|---|---|---|
-| naive | 75.2% | 537/537 | 1/178 | 2 | 24 | 2.6% | 95.4% | **71.9%** |
-| boundary | 100.0% | 537/537 | 178/178 | 0 | 40 | 4.3% | 94.7% | **94.4%** |
+| naive | 75.2% | 537/537 | 1/178 | 2 | 26 | 2.8% | 95.1% | **71.6%** |
+| boundary | 100.0% | 537/537 | 178/178 | 0 | 44 | 4.7% | 94.2% | **93.8%** |
 | guarded (min key 4) | 68.3% | 366/537 | 122/178 | 0 | 15 | 1.6% | 97.0% | **66.2%** |
 | Claude Opus 5 (no dictionary) † | 63.8% ±0.3 | — | — | 113.7 | 9.3 | 1.9% | 64.7% | **61.2% ±0.2** |
 
@@ -188,11 +188,11 @@ The discriminating signal is the over-correction axis. See limitations.
 The trap set grew from 14 to 40 and the eval set from 456 to 482 items, so **v0.2 numbers are
 not comparable to v0 numbers.** Both are recorded here rather than quietly overwritten:
 
-| System | v0 (89 pairs, 14 traps) | v0.2 (89, 40) | v0.3 (130, 40) | v0.4 (135, 47) | v0.5 (179, 47) |
-|---|---|---|---|---|---|
-| naive | 72.8% | 68.8% | 71.5% | 70.9% | 71.9% |
-| boundary | 96.0% | 88.7% | 93.3% | 92.4% | **94.4%** |
-| guarded | 67.4% | 63.7% | 57.2% | 58.8% | 66.2% |
+| System | v0 (89 pairs, 14 traps) | v0.2 (89, 40) | v0.3 (130, 40) | v0.4 (135, 47) | v0.5 (179, 47) | v0.6 (179, 51) |
+|---|---|---|---|---|---|---|
+| naive | 72.8% | 68.8% | 71.5% | 70.9% | 71.9% | 71.6% |
+| boundary | 96.0% | 88.7% | 93.3% | 92.4% | 94.4% | **93.8%** |
+| guarded | 67.4% | 63.7% | 57.2% | 58.8% | 66.2% | 66.2% |
 
 v0.2 → v0.3 moves for three reasons at once, and they pull in different directions. 41 net new
 pairs enlarge the error set; three unsafe keys were withdrawn or narrowed, which is why
@@ -218,7 +218,13 @@ ranked `SK 하인` (6 characters) above `SK하인수` (5). The gate caught it as
 items before publication, and the fix - measure length without spaces, as the production
 replacer does - leaves every previously published number unchanged.
 
-Quote the benchmark identifier (`ko-finance-asr-corrections/mini-v0.5`, in `eval-set.json`)
+v0.5 → v0.6 is four traps, no new pairs: `한반도 지도`, `변동 상황`, `크래프트 하인스`, and
+`영업익`, the standard newspaper abbreviation of 영업이익. They cost `boundary` four
+over-corrections (40 → 44) and leave `guarded` untouched, because all four keys are three
+characters and its length floor had already discarded them - the same trade that costs it
+31.7 points of recall.
+
+Quote the benchmark identifier (`ko-finance-asr-corrections/mini-v0.6`, in `eval-set.json`)
 with any number taken from here. A benchmark whose numbers move without a version is worse
 than no benchmark.
 
@@ -439,7 +445,7 @@ a hosted Qwen.
   sentences are synthetic, so there is no transcript contamination — but pair-knowledge
   contamination is real and belongs in the result's interpretation.
 
-## Limitations (mini-v0.5)
+## Limitations (mini-v0.6)
 
 - **In-domain by construction.** Error items are generated from the same pairs a dictionary
   system would use, so a lookup baseline reaches 100% recall on the main table. That measures

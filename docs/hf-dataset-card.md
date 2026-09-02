@@ -68,8 +68,15 @@ No public "confusion pair dictionary with observed frequencies" exists in any la
 a 2026-08 survey), and Korean ASR error-correction data is nearly nonexistent — the only prior
 public pair set is KEBAP (2,478 pairs, error-type labels, frozen since 2023) and no
 finance-domain resource exists. Frequency is what makes a pair list actionable: it says which
-errors dominate real traffic (`펀더멘탈→펀더멘털` ×449, `하이니스→하이닉스` ×342,
-`변합기→변압기` ×333, `FMC→FOMC` ×270).
+errors dominate real traffic:
+
+- `펀더멘탈 → 펀더멘털` ×981 <!-- stat:count:펀더멘탈 -->
+- `하이니스 → 하이닉스` ×833 <!-- stat:count:하이니스 -->
+- `변합기 → 변압기` ×611 <!-- stat:count:변합기 -->
+- `FMC → FOMC` ×751 <!-- stat:count:FMC -->
+
+Those four were 449, 342, 333 and 270 one snapshot ago; the counts grow with the corpus, which
+is why every number in this card carries a marker the release checker verifies.
 
 ## Fields
 
@@ -87,8 +94,9 @@ Details and per-round numbers: [`docs/METHODOLOGY.md`](https://github.com/woongs
 ## Error rates, not just frequencies
 
 Each pair carries `corpus_count` (the misrecognized form) and `right_count` (the verified one)
-from the same scan, so a row states how often the term came out wrong: `FMC → FOMC` 79.7%,
-`엔트로픽 → 앤트로픽` 88.1% <!-- stat:rate:엔트로픽 -->. Ten pairs have `right_count: 0` — across 1,904 videos the captions
+from the same scan, so a row states how often the term came out wrong:
+`FMC → FOMC` 75.8% <!-- stat:rate:FMC -->, `엔트로픽 → 앤트로픽` 88.1% <!-- stat:rate:엔트로픽 -->.
+18 pairs have `right_count: 0` <!-- stat:right_count_zero --> — across all 1,904 videos <!-- stat:scanned_videos --> the captions
 never once produced the correct spelling. Stock rows also carry `ticker` and `market`, so they
 join to price data without matching on a name.
 
@@ -98,7 +106,7 @@ unsafe as written, not that every correction it made was wrong.
 
 ## Limitations (read these)
 
-One corpus, one ASR system, one domain; 135 pairs is a seed, not a lexicon; frequency-ranked
+One corpus, one ASR system, one domain; 179 pairs <!-- stat:pair_count --> is a seed, not a lexicon; frequency-ranked
 mining skews toward what these channels talk about; `corpus_count` counts surface forms, not
 confirmed errors; some pairs encode a spelling standard rather than a mishearing; tier B pairs
 were verified by auditor consensus, not by a human; **no person-name pairs and no source
@@ -107,7 +115,7 @@ the data as a general Korean ASR error list, because it is not one.
 
 ## Benchmark
 
-A standard-library scorer, a 941-item <!-- stat:eval_items --> synthetic evaluation set, and three dictionary baselines
+A standard-library scorer, a 945-item <!-- stat:eval_items --> synthetic evaluation set, and three dictionary baselines
 live in the GitHub repository. Fixes and over-corrections are scored together, because a
 correction dictionary that fixes 100 errors while damaging 20 correct sentences is not a good
 dictionary.

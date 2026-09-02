@@ -1,22 +1,22 @@
 {
  "items": {
-  "total": 941,
+  "total": 945,
   "error": 715,
-  "guard": 226
+  "guard": 230
  },
  "fixed": 715,
  "missed": 0,
  "mangled": 0,
  "over_corrections": {
-  "total": 40,
+  "total": 44,
   "error_context": 0,
   "clean": 0,
-  "trap": 40
+  "trap": 44
  },
  "recall": 1.0,
- "over_correction_rate": 0.04250797024442083,
- "precision_proxy": 0.9470198675496688,
- "net_score": 0.9440559440559441,
+ "over_correction_rate": 0.04656084656084656,
+ "precision_proxy": 0.9420289855072463,
+ "net_score": 0.9384615384615385,
  "missing_predictions": 0,
  "by_category": {
   "stock": {
@@ -55,11 +55,11 @@
    "over": 0
   },
   "trap": {
-   "items": 47,
+   "items": 51,
    "fixed": 0,
    "missed": 0,
    "mangled": 0,
-   "over": 40
+   "over": 44
   }
  },
  "by_variant": {

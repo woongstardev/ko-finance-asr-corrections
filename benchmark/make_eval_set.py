@@ -221,7 +221,7 @@ def main() -> None:
         counts[key] = counts.get(key, 0) + 1
 
     payload = {
-        "benchmark": "ko-finance-asr-corrections/mini-v0.5",
+        "benchmark": "ko-finance-asr-corrections/mini-v0.6",
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "pairs_exported_at": dataset.get("exported_at"),
         "pair_count": dataset.get("pair_count"),

@@ -1,13 +1,13 @@
 {
- "benchmark": "ko-finance-asr-corrections/mini-v0.5",
- "generated_at": "2026-09-02T07:36:34Z",
+ "benchmark": "ko-finance-asr-corrections/mini-v0.6",
+ "generated_at": "2026-09-02T09:59:24Z",
  "pairs_exported_at": "2026-09-02T07:29:15Z",
  "pair_count": 179,
  "item_counts": {
   "error:plain": 537,
   "error:spacing": 178,
   "clean": 179,
-  "trap": 47
+  "trap": 51
  },
  "frames": [
   "{w} 관련해서 궁금한 부분이 있습니다.",
@@ -13766,6 +13766,50 @@
    ],
    "category": "trap",
    "why": "'소부장 단위' is ordinary usage, and the retired 소부 장단→소부장 key spanned into it. The pair was replaced upstream by inflected keys; this trap keeps the regression visible if a base key ever returns."
+  },
+  {
+   "id": "trp-korean-peninsula-map",
+   "kind": "trap",
+   "input": "한반도 지도를 펼쳐 놓고 남북 전력망 이야기를 이어가겠습니다.",
+   "expected": "한반도 지도를 펼쳐 놓고 남북 전력망 이야기를 이어가겠습니다.",
+   "triggers": [
+    "반도지"
+   ],
+   "category": "trap",
+   "why": "Whitespace-flexible matching spans the boundary in '한반도 지도', so 반도지→반도체 rewrites a map into a semiconductor."
+  },
+  {
+   "id": "trp-change-situation",
+   "kind": "trap",
+   "input": "환율 변동 상황을 하루 단위로 점검하고 있습니다.",
+   "expected": "환율 변동 상황을 하루 단위로 점검하고 있습니다.",
+   "triggers": [
+    "변동상"
+   ],
+   "category": "trap",
+   "why": "'변동 상황' is ordinary Korean and the key spans its boundary; 변동상→변동성 produces '변동성황'. The pair is already under an upstream over-correction verdict for exactly this shape."
+  },
+  {
+   "id": "trp-kraft-heinz",
+   "kind": "trap",
+   "input": "크래프트 하인스 실적은 필수소비재 섹터를 볼 때 같이 확인합니다.",
+   "expected": "크래프트 하인스 실적은 필수소비재 섹터를 볼 때 같이 확인합니다.",
+   "triggers": [
+    "하인스"
+   ],
+   "category": "trap",
+   "why": "하인스 is how Kraft Heinz is written in Korean, and 하인스→하이닉스 would rename an American food company into a Korean memory maker. Not observed in this corpus, which is why the pair ships - the trap records the exposure rather than a withdrawal."
+  },
+  {
+   "id": "trp-operating-profit-abbrev",
+   "kind": "trap",
+   "input": "이번 분기 영업익 기준으로는 시장 예상치를 웃돌았습니다.",
+   "expected": "이번 분기 영업익 기준으로는 시장 예상치를 웃돌았습니다.",
+   "triggers": [
+    "영업익"
+   ],
+   "category": "trap",
+   "why": "영업익 is the standard newspaper abbreviation of 영업이익, not a misrecognition - every one of its 124 corpus occurrences is ordinary usage. 영업익→영업이익 is spelling normalisation, and this trap is what makes that visible: the pair costs a real over-correction on correct text, which the in-domain table cannot show."
   }
  ]
 }

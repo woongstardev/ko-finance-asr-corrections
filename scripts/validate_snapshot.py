@@ -392,6 +392,11 @@ def check_prose_stats(payload: dict, fail, warn) -> None:
         # time the snapshot gains short keys.
         "guarded_keys": sum(1 for p in pairs
                             if len((p.get("wrong") or "").replace(" ", "")) >= 4),
+        # SCHEMA.md → right_count. "Never once transcribed correctly" is a
+        # stronger claim than a high rate and both README and the HF card make
+        # it, so the count behind it is checked rather than remembered: it was
+        # written as ten and is eighteen a snapshot later.
+        "right_count_zero": sum(1 for p in pairs if p.get("right_count") == 0),
     }
     categories = {}
     for pair in pairs:

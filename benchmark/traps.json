@@ -393,6 +393,50 @@
     "소부장 단"
    ],
    "why": "'소부장 단위' is ordinary usage, and the retired 소부 장단→소부장 key spanned into it. The pair was replaced upstream by inflected keys; this trap keeps the regression visible if a base key ever returns."
+  },
+  {
+   "id": "trp-korean-peninsula-map",
+   "text": "한반도 지도를 펼쳐 놓고 남북 전력망 이야기를 이어가겠습니다.",
+   "triggers": [
+    "반도지"
+   ],
+   "why": "Whitespace-flexible matching spans the boundary in '한반도 지도', so 반도지→반도체 rewrites a map into a semiconductor.",
+   "attested": true,
+   "corpus_matches": 1,
+   "of": 9
+  },
+  {
+   "id": "trp-change-situation",
+   "text": "환율 변동 상황을 하루 단위로 점검하고 있습니다.",
+   "triggers": [
+    "변동상"
+   ],
+   "why": "'변동 상황' is ordinary Korean and the key spans its boundary; 변동상→변동성 produces '변동성황'. The pair is already under an upstream over-correction verdict for exactly this shape.",
+   "attested": true,
+   "corpus_matches": 2,
+   "of": 14
+  },
+  {
+   "id": "trp-kraft-heinz",
+   "text": "크래프트 하인스 실적은 필수소비재 섹터를 볼 때 같이 확인합니다.",
+   "triggers": [
+    "하인스"
+   ],
+   "why": "하인스 is how Kraft Heinz is written in Korean, and 하인스→하이닉스 would rename an American food company into a Korean memory maker. Not observed in this corpus, which is why the pair ships - the trap records the exposure rather than a withdrawal.",
+   "attested": false,
+   "corpus_matches": 0,
+   "of": 142
+  },
+  {
+   "id": "trp-operating-profit-abbrev",
+   "text": "이번 분기 영업익 기준으로는 시장 예상치를 웃돌았습니다.",
+   "triggers": [
+    "영업익"
+   ],
+   "why": "영업익 is the standard newspaper abbreviation of 영업이익, not a misrecognition - every one of its 124 corpus occurrences is ordinary usage. 영업익→영업이익 is spelling normalisation, and this trap is what makes that visible: the pair costs a real over-correction on correct text, which the in-domain table cannot show.",
+   "attested": true,
+   "corpus_matches": 124,
+   "of": 124
   }
  ]
 }
