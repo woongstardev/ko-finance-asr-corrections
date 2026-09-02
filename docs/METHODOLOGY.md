@@ -87,15 +87,16 @@ expensive, uncertain layer has to get right.
 
 ## Composition of the current snapshot
 
-The snapshot holds 135 pairs <!-- stat:pair_count -->:
+The snapshot holds 179 pairs <!-- stat:pair_count -->:
 
 | Split | Count |
 |---|---|
-| Tier A — a person approved it | 49 <!-- stat:tier_a --> |
-| Tier B — promoted automatically | 86 <!-- stat:tier_b --> |
-| `stock` | 60 <!-- stat:category:stock --> |
-| `other` | 42 <!-- stat:category:other --> |
-| `term` | 27 <!-- stat:category:term --> |
+| Tier A — a person approved it | 54 <!-- stat:tier_a --> |
+| Tier B — promoted automatically | 125 <!-- stat:tier_b --> |
+| `stock` | 110 <!-- stat:category:stock --> |
+| `term` | 51 <!-- stat:category:term --> |
+| `general` | 7 <!-- stat:category:general --> |
+| `other` | 5 <!-- stat:category:other --> |
 | `number` | 6 <!-- stat:category:number --> |
 
 `other` is 42 here for a reason that is about tooling rather than vocabulary: until 2026-09-02

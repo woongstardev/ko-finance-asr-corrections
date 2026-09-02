@@ -1,11 +1,11 @@
 {
  "items": {
-  "total": 721,
-  "error": 539,
-  "guard": 182
+  "total": 941,
+  "error": 715,
+  "guard": 226
  },
- "fixed": 332,
- "missed": 207,
+ "fixed": 488,
+ "missed": 227,
  "mangled": 0,
  "over_corrections": {
   "total": 15,
@@ -13,12 +13,19 @@
   "clean": 0,
   "trap": 15
  },
- "recall": 0.6159554730983302,
- "over_correction_rate": 0.020804438280166437,
- "precision_proxy": 0.9567723342939481,
- "net_score": 0.588126159554731,
+ "recall": 0.6825174825174826,
+ "over_correction_rate": 0.015940488841657812,
+ "precision_proxy": 0.9701789264413518,
+ "net_score": 0.6615384615384615,
  "missing_predictions": 0,
  "by_category": {
+  "stock": {
+   "items": 550,
+   "fixed": 324,
+   "missed": 116,
+   "mangled": 0,
+   "over": 0
+  },
   "number": {
    "items": 30,
    "fixed": 20,
@@ -26,24 +33,24 @@
    "mangled": 0,
    "over": 0
   },
-  "other": {
-   "items": 210,
-   "fixed": 120,
-   "missed": 48,
-   "mangled": 0,
-   "over": 0
-  },
-  "stock": {
-   "items": 300,
-   "fixed": 156,
-   "missed": 84,
-   "mangled": 0,
-   "over": 0
-  },
   "term": {
-   "items": 134,
-   "fixed": 36,
-   "missed": 71,
+   "items": 254,
+   "fixed": 104,
+   "missed": 99,
+   "mangled": 0,
+   "over": 0
+  },
+  "general": {
+   "items": 35,
+   "fixed": 24,
+   "missed": 4,
+   "mangled": 0,
+   "over": 0
+  },
+  "other": {
+   "items": 25,
+   "fixed": 16,
+   "missed": 4,
    "mangled": 0,
    "over": 0
   },
@@ -57,12 +64,12 @@
  },
  "by_variant": {
   "plain": {
-   "items": 405,
-   "fixed": 249
+   "items": 537,
+   "fixed": 366
   },
   "spacing": {
-   "items": 134,
-   "fixed": 83
+   "items": 178,
+   "fixed": 122
   }
  },
  "system": "guarded"

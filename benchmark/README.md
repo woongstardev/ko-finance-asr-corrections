@@ -30,7 +30,7 @@ export ANTHROPIC_API_KEY=...                                       # or an API k
 python3 benchmark/llm_reference.py --runs 3
 ```
 
-## The evaluation set (721 items) <!-- stat:eval_items -->
+## The evaluation set (941 items) <!-- stat:eval_items -->
 
 No caption text appears anywhere in this benchmark. Source transcripts are not
 redistributable and the dataset's hard line excludes them, so every sentence is either a
@@ -91,16 +91,16 @@ penalty measures.
 - **naive** — plain substring replacement, all 135 pairs.
 - **boundary** — whitespace-flexible matching with a non-alphanumeric guard on ASCII keys.
   This mirrors how the upstream pipeline matches.
-- **guarded** — boundary, minus any key shorter than 4 characters (83 <!-- stat:guarded_keys -->
-  of 135 <!-- stat:pair_count --> pairs survive).
+- **guarded** — boundary, minus any key shorter than 4 characters (122 <!-- stat:guarded_keys -->
+  of 179 <!-- stat:pair_count --> pairs survive).
   Short Korean keys are where blind replacement does its damage, and Korean is agglutinative,
   so there is no word boundary to fall back on.
 
 | System | Recall | plain | spacing | Mangled | Over-corr. | Over-corr. rate | Precision (proxy) | **Net score** |
 |---|---|---|---|---|---|---|---|---|
-| naive | 75.3% | 405/405 | 1/134 | 0 | 24 | 4.5% | 94.4% | **70.9%** |
-| boundary | 100.0% | 405/405 | 134/134 | 0 | 41 | 7.6% | 92.9% | **92.4%** |
-| guarded (min key 4) | 61.6% | 249/405 | 83/134 | 0 | 15 | 2.8% | 95.7% | **58.8%** |
+| naive | 75.2% | 537/537 | 1/178 | 2 | 24 | 2.6% | 95.4% | **71.9%** |
+| boundary | 100.0% | 537/537 | 178/178 | 0 | 40 | 4.3% | 94.7% | **94.4%** |
+| guarded (min key 4) | 68.3% | 366/537 | 122/178 | 0 | 15 | 1.6% | 97.0% | **66.2%** |
 | Claude Opus 5 (no dictionary) † | 63.8% ±0.3 | — | — | 113.7 | 9.3 | 1.9% | 64.7% | **61.2% ±0.2** |
 
 † Measured on `mini-v0.2` (482 items, 89 pairs) and carried forward unchanged: an LLM row is
@@ -188,11 +188,11 @@ The discriminating signal is the over-correction axis. See limitations.
 The trap set grew from 14 to 40 and the eval set from 456 to 482 items, so **v0.2 numbers are
 not comparable to v0 numbers.** Both are recorded here rather than quietly overwritten:
 
-| System | v0 (89 pairs, 14 traps) | v0.2 (89, 40 traps) | v0.3 (130, 40 traps) | v0.4 (135, 47 traps) |
-|---|---|---|---|---|
-| naive | 72.8% | 68.8% | 71.5% | 70.9% |
-| boundary | 96.0% | 88.7% | 93.3% | **92.4%** |
-| guarded | 67.4% | 63.7% | 57.2% | 58.8% |
+| System | v0 (89 pairs, 14 traps) | v0.2 (89, 40) | v0.3 (130, 40) | v0.4 (135, 47) | v0.5 (179, 47) |
+|---|---|---|---|---|---|
+| naive | 72.8% | 68.8% | 71.5% | 70.9% | 71.9% |
+| boundary | 96.0% | 88.7% | 93.3% | 92.4% | **94.4%** |
+| guarded | 67.4% | 63.7% | 57.2% | 58.8% | 66.2% |
 
 v0.2 → v0.3 moves for three reasons at once, and they pull in different directions. 41 net new
 pairs enlarge the error set; three unsafe keys were withdrawn or narrowed, which is why
@@ -202,7 +202,23 @@ pairs are mostly short stock-name fragments. That is the length guard failing on
 sample, not a new problem: v0.2 already found that residual false positives come from
 whitespace flexibility, which a length floor cannot reach.
 
-Quote the benchmark identifier (`ko-finance-asr-corrections/mini-v0.4`, in `eval-set.json`)
+v0.4 → v0.5 adds 45 pairs and removes one, and the moves are not the ones v0.3 made.
+`guarded` gains the most (58.8% → 66.2%) because this month's pairs are *long*: five
+particle-suffixed 삼성자 keys and a run of multi-syllable stock names clear the four-character
+floor that discarded most of v0.3's additions. `boundary` rises to 94.4% because the error set
+grew while the trap set did not, so the same 40 trap over-corrections weigh less. And `naive`
+picks up its first mangled items - two - which is worth reading rather than rounding away: the
+new `SK하인수`/`SK하인스` keys are written without the space the captions actually contain, so
+exact matching falls through to the shorter `SK 하인` and leaves the tail behind
+("SK하이닉스수"). Whitespace flexibility is what the boundary row buys, measured.
+
+The same collision produced the one real bug this release found, in the benchmark rather than
+in the data: the baselines sorted keys by raw length while matching whitespace-flexibly, which
+ranked `SK 하인` (6 characters) above `SK하인수` (5). The gate caught it as eight new mangled
+items before publication, and the fix - measure length without spaces, as the production
+replacer does - leaves every previously published number unchanged.
+
+Quote the benchmark identifier (`ko-finance-asr-corrections/mini-v0.5`, in `eval-set.json`)
 with any number taken from here. A benchmark whose numbers move without a version is worse
 than no benchmark.
 
@@ -352,7 +368,7 @@ can interrogate is decoration:
   sentences are synthetic, so there is no transcript contamination — but pair-knowledge
   contamination is real and belongs in the result's interpretation.
 
-## Limitations (mini-v0.4)
+## Limitations (mini-v0.5)
 
 - **In-domain by construction.** Error items are generated from the same pairs a dictionary
   system would use, so a lookup baseline reaches 100% recall on the main table. That measures

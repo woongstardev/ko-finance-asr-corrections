@@ -51,10 +51,10 @@ configs:
 
 Frequency-annotated Korean ASR confusion pairs from finance/stock YouTube.
 
-- **135 pairs** <!-- stat:pair_count -->
-- mined from **1,490 videos** <!-- stat:scanned_videos --> of auto-captions
-- across **43 channels** <!-- stat:corpus_channels -->
-- totalling **672.3 hours** <!-- stat:corpus_hours -->
+- **179 pairs** <!-- stat:pair_count -->
+- mined from **1,904 videos** <!-- stat:scanned_videos --> of auto-captions
+- across **46 channels** <!-- stat:corpus_channels -->
+- totalling **866.1 hours** <!-- stat:corpus_hours -->
 
 Each pair carries how often the term was mangled *and* how often it was said correctly, plus
 verification provenance.
@@ -88,7 +88,7 @@ Details and per-round numbers: [`docs/METHODOLOGY.md`](https://github.com/woongs
 
 Each pair carries `corpus_count` (the misrecognized form) and `right_count` (the verified one)
 from the same scan, so a row states how often the term came out wrong: `FMC → FOMC` 79.7%,
-`엔트로픽 → 앤트로픽` 87.9% <!-- stat:rate:엔트로픽 -->. Ten pairs have `right_count: 0` — across 1,490 videos the captions
+`엔트로픽 → 앤트로픽` 88.1% <!-- stat:rate:엔트로픽 -->. Ten pairs have `right_count: 0` — across 1,904 videos the captions
 never once produced the correct spelling. Stock rows also carry `ticker` and `market`, so they
 join to price data without matching on a name.
 
@@ -107,7 +107,7 @@ the data as a general Korean ASR error list, because it is not one.
 
 ## Benchmark
 
-A standard-library scorer, a 721-item <!-- stat:eval_items --> synthetic evaluation set, and three dictionary baselines
+A standard-library scorer, a 941-item <!-- stat:eval_items --> synthetic evaluation set, and three dictionary baselines
 live in the GitHub repository. Fixes and over-corrections are scored together, because a
 correction dictionary that fixes 100 errors while damaging 20 correct sentences is not a good
 dictionary.
