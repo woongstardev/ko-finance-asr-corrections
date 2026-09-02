@@ -236,8 +236,9 @@ set so the fix stays visible if a base key ever returns.
 Every number above is in-domain by construction — the error sentences are generated from the
 same pairs the dictionary looks up, so a lookup scores 100% recall and the benchmark cannot
 say whether the method generalises. The v0.3 snapshot made the first honest test possible
-without withholding anything: 41 pairs arrived after the committed LLM run, so their 220 items
-are a slice **no system in the earlier table had seen**.
+without withholding anything: 44 pairs arrived after the committed LLM run, so their 220 items
+are a slice **no system in the earlier table had seen** (41 is the net pair growth, three having
+been withdrawn in the same snapshot; the slice is built from what arrived, not from the net).
 
 Scored 2026-08-27 on those 220 items (176 error, 44 clean, no traps):
 
@@ -266,7 +267,22 @@ Two cautions on reading the LLM row:
   That failure mode does not shrink with the easier slice.
 
 Reproducing the slice needs no new data: it is the items in `eval-set.json` at `mini-v0.3`
-that are absent from the same file at `mini-v0.2` (`git show 87aed71:benchmark/eval-set.json`).
+that are absent from the same file at `mini-v0.2`, which `benchmark/heldout_set.py` extracts
+from the file's own git history — `--baseline-rev` names an older revision, and with no flags
+it takes the newest committed set whose items differ from the current one, which is the
+previous snapshot's:
+
+```bash
+python3 benchmark/heldout_set.py --out /tmp/heldout.json          # this month's slice
+python3 benchmark/baselines.py --mode boundary --eval /tmp/heldout.json \
+    --pairs <previous snapshot's data/pairs.json>                 # the dictionary row
+python3 benchmark/llm_reference.py --transport cli --eval /tmp/heldout.json \
+    --label heldout-YYYY-MM                                       # the model row
+```
+
+Score the *previous* snapshot's dictionary against it, never the current one: the current
+dictionary contains these pairs and returns 100% by construction, which is the in-domain
+number wearing a held-out label.
 Results are committed as `benchmark/results/llm-claude-opus-5-cli-heldout-*.json`; the run cost
 $3.56 for 3 × 220 items and its manifest records the model id, prompt and flags like any other
 LLM row. The model outputs are committed too, in `benchmark/results/predictions/`, so anyone

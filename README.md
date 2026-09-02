@@ -111,7 +111,7 @@ Benchmark `mini-v0.4` (135 pairs, 721 items). Earlier numbers are kept in
 [`benchmark/README.md`](benchmark/README.md) and are not comparable across versions — the
 pair list, the trap set and the item count all moved.
 
-**And a held-out row, which reverses it.** 41 of the 130 pairs arrived after that LLM run, so
+**And a held-out row, which reverses it.** 44 of the 130 pairs arrived after that LLM run, so
 their 220 items are a slice neither system had seen. On those, the *previous* snapshot's
 dictionary scores **2.3%** and the same model scores **72.9%**. Both results are real: a
 dictionary is worth 100% on the errors it has seen and almost nothing on the ones it has not,
