@@ -136,7 +136,14 @@ def build(pairs: list[dict], traps: list[dict],
             """
             old = previous.get(item_id)
             if old and old.get("wrong") == wrong and old.get("right") == right:
-                return old
+                # `category` is a label about the pair, not part of the question
+                # the item asks, and it moves when classification improves - the
+                # 2026-09 review reclassified 42 pairs that had fallen through to
+                # `other`. Refreshing it keeps the scorer's per-category breakdown
+                # true without touching input/expected, so committed predictions
+                # stay valid. scripts/benchmark_gate.py excludes it from its
+                # "did an item change" comparison for the same reason.
+                return {**old, "category": category} if "category" in old else old
             return None
 
         for k in range(ERRORS_PER_PAIR):
@@ -214,7 +221,7 @@ def main() -> None:
         counts[key] = counts.get(key, 0) + 1
 
     payload = {
-        "benchmark": "ko-finance-asr-corrections/mini-v0.4",
+        "benchmark": "ko-finance-asr-corrections/mini-v0.5",
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "pairs_exported_at": dataset.get("exported_at"),
         "pair_count": dataset.get("pair_count"),

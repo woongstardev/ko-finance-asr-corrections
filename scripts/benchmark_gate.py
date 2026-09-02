@@ -65,9 +65,15 @@ def check_eval_growth(candidate_pairs: Path, tmp: Path, fail, warn) -> Path:
         for p in json.loads(candidate_pairs.read_text(encoding="utf-8"))["pairs"]
     }
 
+    # `category` is refreshed from the snapshot on every build (see
+    # make_eval_set.py): it labels the pair, not the question, so a pair moving
+    # from `other` to `term` must not read as an item whose content changed.
+    def content(item: dict) -> dict:
+        return {k: v for k, v in item.items() if k != "category"}
+
     for item_id, item in old.items():
         if item_id in new:
-            if new[item_id] != item:
+            if content(new[item_id]) != content(item):
                 report = warn if item["kind"] == "trap" else fail
                 report(f"item {item_id} changed content "
                        f"({item['kind']}; input was {item['input']!r})")
