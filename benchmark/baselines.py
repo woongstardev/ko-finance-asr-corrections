@@ -52,7 +52,12 @@ def load_rules(pairs_path: Path, mode: str, min_key: int) -> list[tuple[str, str
     if mode == "guarded":
         rules = [(w, r) for w, r in rules if len(w.replace(" ", "")) >= min_key]
     # Longest key first: otherwise a short key eats the head of a longer one.
-    rules.sort(key=lambda wr: -len(wr[0]))
+    # Length is measured without spaces, because the matcher above ignores them:
+    # ordering by raw length ranks `SK 하인` (6) above `SK하인수` (5) and the short
+    # key then leaves its tail behind - "SK하이닉스수". The production replacer
+    # sorts the same way (upstream correction_dict sorts on the despaced key),
+    # so a baseline that ranked differently was measuring a system nobody runs.
+    rules.sort(key=lambda wr: (-len(wr[0].replace(" ", "")), wr[0]))
     return rules
 
 
