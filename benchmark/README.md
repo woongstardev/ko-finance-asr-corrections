@@ -352,15 +352,21 @@ can interrogate is decoration:
   sentences are synthetic, so there is no transcript contamination — but pair-knowledge
   contamination is real and belongs in the result's interpretation.
 
-## Limitations (v0.2)
+## Limitations (mini-v0.4)
 
-- **In-domain by construction.** Error items are generated from the same 89 pairs a
-  dictionary system would use, so a lookup baseline reaches 100% recall. This measures
-  robustness and restraint, not the ability to catch unseen misrecognitions. A held-out
-  split needs pairs that are verified but withheld from the published snapshot. **v0.2 does
-  not solve this and does not pretend to**: the snapshot ships everything that passes
-  verification, so there is nothing held out to test against. Held-out candidates only become
-  possible when the upstream goldset starts producing pairs.
+- **In-domain by construction.** Error items are generated from the same pairs a dictionary
+  system would use, so a lookup baseline reaches 100% recall on the main table. That measures
+  robustness and restraint, not the ability to catch unseen misrecognitions. The held-out row
+  above is the answer to it and is not a substitute for it: it covers only the pairs that
+  arrived since the last measurement, so it is small, it moves with upstream's promotion rate,
+  and it says nothing about the items in the main table.
+- **A pair that is wrong in itself is invisible here.** Every error item's expected output is
+  built from the pair's own `right`, so a defective correction is graded against its own
+  defect and scores full marks. Three pairs that swallow a following particle
+  (`시가총이 → 시가총액`, turning "시가총액이 크다" into "시가총액 크다") were found by
+  sweeping the corpus, not by this benchmark, and no amount of items would have surfaced them.
+  Read the scores as "does the system apply the dictionary well", never as "is the dictionary
+  right"; `scripts/counterexample_scan.py` is the tool for the second question.
 - **No context diversity.** Six templates, one slot each. The slot is always followed by a
   space to avoid Korean particle agreement leaking the answer, which also means no
   particle-attached context is tested. Pairs that are mid-utterance fragments
