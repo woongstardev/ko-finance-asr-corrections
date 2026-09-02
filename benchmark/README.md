@@ -358,11 +358,35 @@ can interrogate is decoration:
 - **The benchmark stays standard-library only.** The caller script may need network access
   and an API key; `score.py` never does. An LLM row exists here as a committed result file
   plus the script that produced it, and re-running it is optional.
-- **Name the harness, not just the model.** The `cli` transport reaches the same model
-  through the Claude Code CLI — a coding agent, invoked with `--tools ""`, `--safe-mode` and
-  its default system prompt replaced. That is close to a bare API call but not identical, so
-  the manifest records the transport, the CLI version, and every flag, and the results table
-  labels the row. Do not merge a `cli` row and an `api` row into one number.
+- **Name the harness, not just the model.** The `cli` transport reaches a model through a
+  coding agent, invoked with tools off and its system prompt replaced. That is close to a bare
+  API call but not identical, so the manifest records the transport, the CLI, its version, the
+  exact argv and how the system prompt was delivered; the results table labels the row. Do not
+  merge a `cli` row and an `api` row, or two different CLIs, into one number.
+
+### Which CLIs it can drive
+
+`--cli` selects the harness. They exist because an API key is not the only way to reach a
+model, and a machine that already has these logged in can add reference rows for the price of
+its existing subscriptions — but they are separate rows, never substitutes for each other.
+
+| `--cli` | System prompt | Cost reported | Notes |
+|---|---|---|---|
+| `claude` (default) | native flag | yes | `--tools ""`, `--safe-mode`; the row published above |
+| `grok` | native flag | yes | needs `--json-schema`: without it the agent narrates before answering and glues the narration to the sentence, which scores as mangled |
+| `codex` | preamble | no | no system-prompt flag; the answer is read from `--output-last-message`, not from stdout, which carries the transcript |
+| `qwen` | preamble | no | prints the session as a JSON event array; the answer is the terminal `result` event |
+
+Two things follow from that table and both belong in any row's interpretation. A CLI without a
+system-prompt flag receives the same text as a preamble on the user turn — same words,
+different position, and `system_delivery` in the manifest says which. And these harnesses carry
+their own instructions: a single item costs ~14k input tokens before ours are added, so a `cli`
+row measures a model *inside a coding agent*, which is exactly why it is never merged with an
+`api` row.
+
+`model_reported` in the manifest records what the CLI says it actually used, which matters most
+when `--model` is left empty: `--cli qwen` on this machine reports a locally served model, not
+a hosted Qwen.
 - **Say what the model may already know.** These pairs are public once this repo is, so a
   model may have memorised the dictionary rather than reasoned about the sentence. The carrier
   sentences are synthetic, so there is no transcript contamination — but pair-knowledge

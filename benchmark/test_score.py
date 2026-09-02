@@ -8,9 +8,12 @@ left alone, and a spacing-only difference inside the slot is not a failure.
 
 from __future__ import annotations
 
+import json
 import unittest
+from pathlib import Path
 
 import score
+import llm_reference
 
 
 def error_item(item_id="e1", surface="변합기", right="변압기", frame="{w} 관련 이야기입니다."):
@@ -100,6 +103,67 @@ class Aggregate(unittest.TestCase):
         result = score.score([error_item(), guard_item()], {})
         total = sum(b["items"] for b in result["by_category"].values())
         self.assertEqual(total, 2)
+
+
+class CliParsers(unittest.TestCase):
+    """Each CLI reports its answer in a different shape, and a parser that stops
+    understanding one returns an empty string - which the scorer reads as "left
+    unchanged", i.e. a silently favourable run on trap items. These fixtures are
+    real output shapes, trimmed."""
+
+    class Proc:
+        def __init__(self, stdout: str):
+            self.stdout = stdout
+
+    def parse(self, cli: str, stdout: str, last_message: str = ""):
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp) / "last.txt"
+            if last_message:
+                out.write_text(last_message, encoding="utf-8")
+            return llm_reference.CLIS[cli]["parse"](self.Proc(stdout), out)
+
+    def test_claude(self):
+        text, cost, model = self.parse("claude", json.dumps(
+            {"result": "투자자들이 엔비디아 이슈에 주목하고 있습니다.",
+             "total_cost_usd": 0.0041, "model": "claude-opus-5", "is_error": False}))
+        self.assertEqual(text, "투자자들이 엔비디아 이슈에 주목하고 있습니다.")
+        self.assertAlmostEqual(cost, 0.0041)
+        self.assertEqual(model, "claude-opus-5")
+
+    def test_grok_unwraps_the_schema(self):
+        text, cost, model = self.parse("grok", json.dumps(
+            {"text": json.dumps({"sentence": "코스피가 올랐습니다."}),
+             "total_cost_usd": 0.0076, "modelUsage": {"grok-4.6-build": {}}}))
+        self.assertEqual(text, "코스피가 올랐습니다.")
+        self.assertAlmostEqual(cost, 0.0076)
+        self.assertEqual(model, "grok-4.6-build")
+
+    def test_grok_without_the_schema_still_answers(self):
+        text, _, _ = self.parse("grok", json.dumps({"text": "코스피가 올랐습니다."}))
+        self.assertEqual(text, "코스피가 올랐습니다.")
+
+    def test_codex_reads_the_last_message_not_the_transcript(self):
+        text, _, _ = self.parse("codex", "thinking...\ntool call...\n",
+                                last_message="반도체가 올랐습니다.\n")
+        self.assertEqual(text, "반도체가 올랐습니다.")
+
+    def test_qwen_takes_the_result_event(self):
+        events = [
+            {"type": "system", "subtype": "init"},
+            {"type": "assistant", "message": {"model": "tower-uncensored",
+                                              "content": [{"type": "thinking", "thinking": "..."}]}},
+            {"type": "result", "subtype": "success", "is_error": False,
+             "result": "엔비디아 실적이 나왔습니다."},
+        ]
+        text, _, model = self.parse("qwen", json.dumps(events))
+        self.assertEqual(text, "엔비디아 실적이 나왔습니다.")
+        self.assertEqual(model, "tower-uncensored")
+
+    def test_qwen_error_result_is_empty_not_a_pass(self):
+        text, _, _ = self.parse("qwen", json.dumps(
+            [{"type": "result", "is_error": True, "result": "rate limited"}]))
+        self.assertEqual(text, "")
 
 
 if __name__ == "__main__":
