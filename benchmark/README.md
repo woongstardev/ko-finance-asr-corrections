@@ -101,13 +101,19 @@ penalty measures.
 | naive | 75.2% | 537/537 | 1/178 | 2 | 26 | 2.8% | 95.1% | **71.6%** |
 | boundary | 100.0% | 537/537 | 178/178 | 0 | 44 | 4.7% | 94.2% | **93.8%** |
 | guarded (min key 4) | 68.3% | 366/537 | 122/178 | 0 | 15 | 1.6% | 97.0% | **66.2%** |
-| Claude Opus 5 (no dictionary) † | 63.8% ±0.3 | — | — | 113.7 | 9.3 | 1.9% | 64.7% | **61.2% ±0.2** |
+| gpt-5.6-sol, no dictionary (3 runs) | 69.1% ±0.6 | — | — | 163.7 | 24.3 | 2.6% | 72.4% | **65.7% ±0.5** |
+| Claude Opus 5, no dictionary (3 runs) † | 63.8% ±0.3 | — | — | 113.7 | 9.3 | 1.9% | 64.7% | **61.2% ±0.2** |
 
-† Measured on `mini-v0.2` (482 items, 89 pairs) and carried forward unchanged: an LLM row is
-tied to the eval set it was produced against, so it moves only when someone pays for another
-run. The outputs themselves **are** committed
-(`benchmark/results/predictions/`), so the row can be rescored offline even though it cannot
-be re-measured for free.
+The `gpt-5.6-sol` row is measured on **this** eval set, which is what makes the comparison
+above a comparison: same 945 items, same scorer, 93.8% for the dictionary against 65.7% for
+the model. It reached the table because it costs a subscription rather than an invoice —
+see the CLI table below — and a row nobody can afford to refresh becomes the row below.
+
+† Measured on `mini-v0.2` (482 items, 89 pairs) and carried forward unchanged, kept as the
+record of what a different model did on a smaller set. An LLM row is tied to the eval set it
+was produced against, so it moves only when someone runs it again; these two rows are three
+benchmark versions apart and are **not** comparable to each other. The outputs themselves
+**are** committed (`benchmark/results/predictions/`), so either row can be rescored offline.
 The 207 items added in v0.3 are exactly the pairs the dictionary learned after that run,
 which makes them a held-out set for the next LLM row rather than a gap to backfill.
 
@@ -148,17 +154,24 @@ What the table says:
 ### Dictionary versus LLM
 
 This is the comparison the benchmark exists to make, and the answer is **the dictionary wins,
-and not narrowly** — 88.7% against 61.2% net. Both figures are `mini-v0.2`, scored on the same
-482 items: the dictionary's v0.3 score is higher still (93.3%), but quoting it against an LLM
-run from a smaller eval set would be comparing two different exams.
+and not narrowly** — on `mini-v0.6`, the same 945 items for both, 93.8% against 65.7% net.
+Until this month the comparison had to be quoted from `mini-v0.2` (88.7% against 61.2%),
+because the LLM row was three benchmark versions behind and refreshing it meant paying for
+another API run. It is current now because the row can be produced through a coding CLI on an
+existing subscription; the shape of the answer did not change, which is worth stating plainly
+since a same-version rerun was always the honest test of the older claim.
 
 The interesting part is that the LLM wins the axis the dictionary was supposed to lose:
 
-- **It over-corrects roughly four times less** — 9.3 against 40. Given a sentence that is
-  already correct, or one where a shipped key appears as ordinary Korean, it usually leaves
-  the text alone. That is the restraint the penalty was designed to reward, and the LLM has it.
-- **It cannot recover the specific term.** 114 of 353 error items came back `mangled` — a
-  confident wrong answer rather than a miss. Breaking those down across the three runs:
+- **It over-corrects less** — on `mini-v0.6`, 24.3 against the dictionary's 44, and the older
+  Claude row was further ahead still at 9.3 against 40. Given a sentence that is already
+  correct, or one where a shipped key appears as ordinary Korean, a model usually leaves the
+  text alone. That is the restraint the penalty was designed to reward, and both models have
+  it in a way the dictionary does not.
+- **It cannot recover the specific term.** On `mini-v0.6`, 163.7 of 715 error items come back
+  `mangled` — a confident wrong answer rather than a miss — where the dictionary mangles none.
+  The Claude row on `mini-v0.2` broke down as follows across its three runs; the failure shape
+  is the same one:
 
   | What the model returned instead | Mean items |
   |---|---|

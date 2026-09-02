@@ -97,13 +97,15 @@ over error items.
 | Plain substring replacement | 75.2% | 26 | **71.6%** |
 | Whitespace-flexible matching | 100.0% | 44 | **93.8%** |
 | Whitespace-flexible, keys ≥ 4 chars | 68.3% | 15 | **66.2%** |
+| gpt-5.6-sol, no dictionary (3 runs) | 69.1% | 24.3 | **65.7%** |
 | Claude Opus 5, no dictionary (3 runs) | 63.8% | 9.3 | **61.2%** † |
 
-The LLM row is the comparison this benchmark exists to make. A frontier model given only the
-sentence **over-corrects about four times less** than the dictionary — it has the restraint —
-but it cannot recover the specific term: 114 of 353 error items come back as a confident
-wrong answer, usually a different plausible finance term. Which misrecognition maps to which
-company is an observation, not an inference, and that observation is what this dataset is.
+The LLM rows are the comparison this benchmark exists to make, and the first one is measured
+on exactly these 945 items. A frontier model given only the sentence **over-corrects about
+half as often** as the dictionary — it has the restraint — but it cannot recover the specific
+term: 164 of 715 error items come back as a confident wrong answer, usually a different
+plausible finance term. Which misrecognition maps to which company is an observation, not an
+inference, and that observation is what this dataset is.
 
 † The LLM row was measured on `mini-v0.2`'s 482 items and is **not** rescored against the
 newer set: an LLM row belongs to the eval set it was produced against, and producing a new one

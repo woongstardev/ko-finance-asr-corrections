@@ -1,0 +1,76 @@
+{
+ "system": "llm-gpt-5.6-sol-codex",
+ "runs": 3,
+ "run_files": [
+  "benchmark/results/llm-gpt-5.6-sol-codex-run1.json",
+  "benchmark/results/llm-gpt-5.6-sol-codex-run2.json",
+  "benchmark/results/llm-gpt-5.6-sol-codex-run3.json"
+ ],
+ "metrics": {
+  "recall": {
+   "mean": 0.6909,
+   "spread": 0.0064,
+   "min": 0.6839,
+   "max": 0.6993,
+   "runs": 3
+  },
+  "over_correction_rate": {
+   "mean": 0.0257,
+   "spread": 0.0026,
+   "min": 0.0222,
+   "max": 0.0286,
+   "runs": 3
+  },
+  "precision_proxy": {
+   "mean": 0.7243,
+   "spread": 0.0042,
+   "min": 0.7197,
+   "max": 0.7299,
+   "runs": 3
+  },
+  "net_score": {
+   "mean": 0.6569,
+   "spread": 0.0054,
+   "min": 0.6517,
+   "max": 0.6643,
+   "runs": 3
+  }
+ },
+ "counts": {
+  "fixed": {
+   "mean": 494.0,
+   "spread": 4.5461,
+   "min": 489.0,
+   "max": 500.0,
+   "runs": 3
+  },
+  "missed": {
+   "mean": 57.3333,
+   "spread": 2.0548,
+   "min": 55.0,
+   "max": 60.0,
+   "runs": 3
+  },
+  "mangled": {
+   "mean": 163.6667,
+   "spread": 2.6247,
+   "min": 160.0,
+   "max": 166.0,
+   "runs": 3
+  },
+  "missing_predictions": {
+   "mean": 0.0,
+   "spread": 0.0,
+   "min": 0.0,
+   "max": 0.0,
+   "runs": 3
+  }
+ },
+ "over_corrections": {
+  "mean": 24.3333,
+  "spread": 2.4944,
+  "min": 21.0,
+  "max": 27.0,
+  "runs": 3
+ }
+}
