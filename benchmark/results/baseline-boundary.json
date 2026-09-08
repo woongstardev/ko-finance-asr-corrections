@@ -1,10 +1,10 @@
 {
  "items": {
-  "total": 945,
-  "error": 715,
-  "guard": 230
+  "total": 1100,
+  "error": 839,
+  "guard": 261
  },
- "fixed": 715,
+ "fixed": 839,
  "missed": 0,
  "mangled": 0,
  "over_corrections": {
@@ -14,14 +14,14 @@
   "trap": 44
  },
  "recall": 1.0,
- "over_correction_rate": 0.04656084656084656,
- "precision_proxy": 0.9420289855072463,
- "net_score": 0.9384615384615385,
+ "over_correction_rate": 0.04,
+ "precision_proxy": 0.9501698754246886,
+ "net_score": 0.9475566150178785,
  "missing_predictions": 0,
  "by_category": {
   "stock": {
-   "items": 550,
-   "fixed": 440,
+   "items": 555,
+   "fixed": 444,
    "missed": 0,
    "mangled": 0,
    "over": 0
@@ -34,22 +34,22 @@
    "over": 0
   },
   "term": {
-   "items": 254,
-   "fixed": 203,
+   "items": 364,
+   "fixed": 291,
    "missed": 0,
    "mangled": 0,
    "over": 0
   },
   "general": {
-   "items": 35,
-   "fixed": 28,
+   "items": 70,
+   "fixed": 56,
    "missed": 0,
    "mangled": 0,
    "over": 0
   },
   "other": {
-   "items": 25,
-   "fixed": 20,
+   "items": 30,
+   "fixed": 24,
    "missed": 0,
    "mangled": 0,
    "over": 0
@@ -64,12 +64,12 @@
  },
  "by_variant": {
   "plain": {
-   "items": 537,
-   "fixed": 537
+   "items": 630,
+   "fixed": 630
   },
   "spacing": {
-   "items": 178,
-   "fixed": 178
+   "items": 209,
+   "fixed": 209
   }
  },
  "system": "boundary"

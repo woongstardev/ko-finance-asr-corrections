@@ -87,24 +87,25 @@ expensive, uncertain layer has to get right.
 
 ## Composition of the current snapshot
 
-The snapshot holds 179 pairs <!-- stat:pair_count -->:
+The snapshot holds 210 pairs <!-- stat:pair_count -->:
 
 | Split | Count |
 |---|---|
-| Tier A — a person approved it | 54 <!-- stat:tier_a --> |
+| Tier A — a person approved it | 85 <!-- stat:tier_a --> |
 | Tier B — promoted automatically | 125 <!-- stat:tier_b --> |
-| `stock` | 110 <!-- stat:category:stock --> |
-| `term` | 51 <!-- stat:category:term --> |
-| `general` | 7 <!-- stat:category:general --> |
-| `other` | 5 <!-- stat:category:other --> |
+| `stock` | 111 <!-- stat:category:stock --> |
+| `term` | 73 <!-- stat:category:term --> |
+| `general` | 14 <!-- stat:category:general --> |
+| `other` | 6 <!-- stat:category:other --> |
 | `number` | 6 <!-- stat:category:number --> |
 
 `other` is 42 here for a reason that is about tooling rather than vocabulary: until 2026-09-02
 the category came only from the registry, so every pair the registry could not resolve landed
 there — sector abbreviations, indices carrying a particle, unlisted companies and a handful of
-ordinary Korean words, all in one bucket. Those 42 are now classified by recorded verdict
-(`scripts/category-review.tsv`), and the next snapshot reports them as 23 `term`, 7 `stock`,
-5 `other` and 7 `general`. The numbers in this table are the shipped ones and move with it.
+ordinary Korean words, all in one bucket. Those 42 were classified by recorded verdict (`scripts/category-review.tsv`), and the table
+above is the result: `other` is now what its name says rather than a record of registry
+coverage. Every snapshot since has classified its own new pairs the same way — 31 of them on
+2026-09-08 — so the queue the exporter prints is what is genuinely new, not a backlog.
 
 By verification path: 49 `human`, 48 `goldset-alignment`, 38 `auditor-consensus` — the
 alignment path did not exist at the first snapshot and is now the second largest, which is why

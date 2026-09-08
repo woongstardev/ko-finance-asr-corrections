@@ -17,10 +17,10 @@ archive. The pairs here are the byproduct of correcting real YouTube auto-captio
   KEBAP (2.5K pairs, error-type labels, frozen since 2023). No finance-domain resource exists.
 - **No public "confusion pair dictionary with observed frequencies" exists in any language**
   (as of our 2026-08 survey). Frequency is what makes a pair list actionable: it tells you
-  which errors dominate real traffic (e.g. `펀더멘탈→펀더멘털` ×981, <!-- stat:count:펀더멘탈 -->
-  `변합기→변압기` ×611, <!-- stat:count:변합기 -->
-  `FMC→FOMC` ×751 <!-- stat:count:FMC --> — full scan of a
-  1,904-video caption corpus). <!-- stat:scanned_videos -->
+  which errors dominate real traffic (e.g. `펀더멘탈→펀더멘털` ×1,151, <!-- stat:count:펀더멘탈 -->
+  `변합기→변압기` ×682, <!-- stat:count:변합기 -->
+  `FMC→FOMC` ×1,106 <!-- stat:count:FMC --> — full scan of a
+  2,391-video caption corpus). <!-- stat:scanned_videos -->
 - Every pair carries provenance: how it was mined, which auditor models independently agreed,
   and its promotion tier (human-approved / registry-verified).
 
@@ -29,7 +29,7 @@ archive. The pairs here are the byproduct of correcting real YouTube auto-captio
 | Path | Contents |
 |---|---|
 | `data/` | Confusion pairs (JSON/CSV): `wrong`, `right`, `observed_count`, `tier`, verification metadata. Stock names and finance terms, plus a small labelled tail of ordinary Korean the same pipeline verified (`category`) — no person names, no source sentences. |
-| `benchmark/` | <!-- stat:eval_items --> Mini benchmark v0.6: pure-stdlib scorer, a 945-item synthetic evaluation set (no caption text), a mechanical trap-risk miner, and three dictionary baselines. Fixes and over-corrections are scored together — see [`benchmark/README.md`](benchmark/README.md). |
+| `benchmark/` | <!-- stat:eval_items --> Mini benchmark v0.7: pure-stdlib scorer, a 1,100-item synthetic evaluation set (no caption text), a mechanical trap-risk miner, and three dictionary baselines. Fixes and over-corrections are scored together — see [`benchmark/README.md`](benchmark/README.md). |
 | `docs/SCHEMA.md` | Field-by-field schema. |
 | `docs/METHODOLOGY.md` | The no-gold-label verification loop: 2 independent LLM auditors → consensus-only adoption → external registry check → 3-tier promotion → instant rollback. |
 
@@ -41,21 +41,21 @@ outside the pipeline can produce: it takes the corpus, not the dictionary.
 
 | Pair | Wrong | Right | **Error rate** |
 |---|---|---|---|
-| `엔트로픽 → 앤트로픽` | 550 | 74 | **88.1%** <!-- stat:rate:엔트로픽 --> |
-| `장기체 → 장기채` | 520 | 80 | **86.7%** <!-- stat:rate:장기체 --> |
-| `FMC → FOMC` | 751 | 240 | **75.8%** <!-- stat:rate:FMC --> |
-| `휴먼노이드 → 휴머노이드` | 364 | 100 | **78.4%** <!-- stat:rate:휴먼노이드 --> |
+| `엔트로픽 → 앤트로픽` | 669 | 97 | **87.3%** <!-- stat:rate:엔트로픽 --> |
+| `장기체 → 장기채` | 605 | 116 | **83.9%** <!-- stat:rate:장기체 --> |
+| `FMC → FOMC` | 1,106 | 372 | **74.8%** <!-- stat:rate:FMC --> |
+| `휴먼노이드 → 휴머노이드` | 448 | 116 | **79.4%** <!-- stat:rate:휴먼노이드 --> |
 
-18 pairs have `right_count: 0` <!-- stat:right_count_zero -->, which is a stronger statement than a high rate:
-across 1,904 videos <!-- stat:scanned_videos --> the auto-captions never once produced the correct spelling.
+23 pairs have `right_count: 0` <!-- stat:right_count_zero -->, which is a stronger statement than a high rate:
+across 2,391 videos <!-- stat:scanned_videos --> the auto-captions never once produced the correct spelling.
 `보스턴 다이내믹스` and `서브프라임 모기지` are in that group.
 
 The corpus behind those rates:
 
-- **1,904 videos** <!-- stat:scanned_videos -->
-- **46 channels** <!-- stat:corpus_channels --> — a count, not a list; the profile describes the
+- **2,391 videos** <!-- stat:scanned_videos -->
+- **47 channels** <!-- stat:corpus_channels --> — a count, not a list; the profile describes the
   corpus without identifying its sources
-- **866.1 hours** <!-- stat:corpus_hours --> of speech, averaging 27.3 minutes a video
+- **1,080.1 hours** <!-- stat:corpus_hours --> of speech, averaging 27.1 minutes a video
 
 Read the rates as *this corpus, this ASR system*: the denominator is Korean finance YouTube
 auto-captions, not Korean speech in general. And `corpus_count` counts a surface form, not a
@@ -88,15 +88,15 @@ is the list of keys to stop applying, and what to apply instead.
 ## The benchmark in one table
 
 Task: fix the misrecognition, change nothing else. Three ways of using the dataset itself as
-a correction system, scored on 945 synthetic items <!-- stat:eval_items --> (no caption text),
+a correction system, scored on 1,100 synthetic items <!-- stat:eval_items --> (no caption text),
 of which 51 are traps <!-- stat:trap_count --> — ordinary sentences a blind replacement damages. Net score is fixes minus over-corrections,
 over error items.
 
 | System | Recall | Over-corrections | **Net score** |
 |---|---|---|---|
-| Plain substring replacement | 75.2% | 26 | **71.6%** |
-| Whitespace-flexible matching | 100.0% | 44 | **93.8%** |
-| Whitespace-flexible, keys ≥ 4 chars | 68.3% | 15 | **66.2%** |
+| Plain substring replacement | 75.2% | 26 | **72.1%** |
+| Whitespace-flexible matching | 100.0% | 44 | **94.8%** |
+| Whitespace-flexible, keys ≥ 4 chars | 69.6% | 15 | **67.8%** |
 | gpt-5.6-sol, no dictionary (3 runs) | 69.1% | 24.3 | **65.7%** |
 | Claude Opus 5, no dictionary (3 runs) | 63.8% | 9.3 | **61.2%** † |
 
@@ -110,9 +110,9 @@ inference, and that observation is what this dataset is.
 † The LLM row was measured on `mini-v0.2`'s 482 items and is **not** rescored against the
 newer set: an LLM row belongs to the eval set it was produced against, and producing a new one
 costs an API run. Its outputs are committed (`benchmark/results/predictions/`), so the number
-can be checked without an API key. The dictionary rows above are `mini-v0.6`.
+can be checked without an API key. The dictionary rows above are `mini-v0.7`.
 
-Benchmark `mini-v0.6` (179 pairs, 945 items). Earlier numbers are kept in
+Benchmark `mini-v0.7` (210 pairs, 1,100 items). Earlier numbers are kept in
 [`benchmark/README.md`](benchmark/README.md) and are not comparable across versions — the
 pair list, the trap set and the item count all moved.
 
@@ -136,13 +136,13 @@ Details, scoring rules, the held-out table and what the numbers mean:
 Stated up front, because a niche dataset earns trust by being explicit about its edges.
 
 - **One corpus, one ASR system, one domain.** Every pair comes from YouTube auto-captions of
-  Korean stock/investing channels — 1,904 videos as of the current snapshot. <!-- stat:scanned_videos --> A different ASR
+  Korean stock/investing channels — 2,391 videos as of the current snapshot. <!-- stat:scanned_videos --> A different ASR
   engine mishears differently, so these pairs are not a general Korean ASR error list.
 - **The domain label is the corpus's, not a filter's.** Pairs are promoted because upstream
   verification judged them correct, so a handful describe ordinary Korean rather than finance
   (`지진난주 → 지지난주`). They ship labelled `general` instead of being dropped; filter on
   `category` if you want a strictly domain lexicon.
-- **179 pairs is small.** <!-- stat:pair_count --> This is a frequency-annotated seed, not a comprehensive lexicon. It
+- **210 pairs is small.** <!-- stat:pair_count --> This is a frequency-annotated seed, not a comprehensive lexicon. It
   grows with monthly snapshots as the upstream pipeline verifies more pairs.
 - **Skewed by construction.** Frequency-ranked mining favours what the channels talk about
   most, so semiconductor and index vocabulary dominates, and a single company can account for

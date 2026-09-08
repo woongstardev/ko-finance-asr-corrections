@@ -30,7 +30,7 @@ export ANTHROPIC_API_KEY=...                                       # or an API k
 python3 benchmark/llm_reference.py --runs 3
 ```
 
-## The evaluation set (945 items) <!-- stat:eval_items -->
+## The evaluation set (1,100 items) <!-- stat:eval_items -->
 
 No caption text appears anywhere in this benchmark. Source transcripts are not
 redistributable and the dataset's hard line excludes them, so every sentence is either a
@@ -91,22 +91,23 @@ penalty measures.
 - **naive** — plain substring replacement, all 135 pairs.
 - **boundary** — whitespace-flexible matching with a non-alphanumeric guard on ASCII keys.
   This mirrors how the upstream pipeline matches.
-- **guarded** — boundary, minus any key shorter than 4 characters (122 <!-- stat:guarded_keys -->
-  of 179 <!-- stat:pair_count --> pairs survive).
+- **guarded** — boundary, minus any key shorter than 4 characters (146 <!-- stat:guarded_keys -->
+  of 210 <!-- stat:pair_count --> pairs survive).
   Short Korean keys are where blind replacement does its damage, and Korean is agglutinative,
   so there is no word boundary to fall back on.
 
 | System | Recall | plain | spacing | Mangled | Over-corr. | Over-corr. rate | Precision (proxy) | **Net score** |
 |---|---|---|---|---|---|---|---|---|
-| naive | 75.2% | 537/537 | 1/178 | 2 | 26 | 2.8% | 95.1% | **71.6%** |
-| boundary | 100.0% | 537/537 | 178/178 | 0 | 44 | 4.7% | 94.2% | **93.8%** |
-| guarded (min key 4) | 68.3% | 366/537 | 122/178 | 0 | 15 | 1.6% | 97.0% | **66.2%** |
-| gpt-5.6-sol, no dictionary (3 runs) | 69.1% ±0.6 | — | — | 163.7 | 24.3 | 2.6% | 72.4% | **65.7% ±0.5** |
+| naive | 75.2% | 630/630 | 1/209 | 2 | 26 | 2.4% | 95.8% | **72.1%** |
+| boundary | 100.0% | 630/630 | 209/209 | 0 | 44 | 4.0% | 95.0% | **94.8%** |
+| guarded (min key 4) | 69.6% | 439/630 | 145/209 | 0 | 15 | 1.4% | 97.5% | **67.8%** |
+| gpt-5.6-sol, no dictionary (3 runs) ‡ | 69.1% ±0.6 | — | — | 163.7 | 24.3 | 2.6% | 72.4% | **65.7% ±0.5** |
 | Claude Opus 5, no dictionary (3 runs) † | 63.8% ±0.3 | — | — | 113.7 | 9.3 | 1.9% | 64.7% | **61.2% ±0.2** |
 
-The `gpt-5.6-sol` row is measured on **this** eval set, which is what makes the comparison
-above a comparison: same 945 items, same scorer, 93.8% for the dictionary against 65.7% for
-the model. It reached the table because it costs a subscription rather than an invoice —
+‡ Measured on `mini-v0.6`'s 945 items — one snapshot behind, and being re-measured on the
+current set as this is written. It is kept in the table rather than dropped because a row one
+version behind with a marker is more useful than an empty cell; the comparison it supports is
+93.8% for the dictionary against 65.7% for the model, both on those 945 items. It reached the table because it costs a subscription rather than an invoice —
 see the CLI table below — and a row nobody can afford to refresh becomes the row below.
 
 † Measured on `mini-v0.2` (482 items, 89 pairs) and carried forward unchanged, kept as the
@@ -201,11 +202,11 @@ The discriminating signal is the over-correction axis. See limitations.
 The trap set grew from 14 to 40 and the eval set from 456 to 482 items, so **v0.2 numbers are
 not comparable to v0 numbers.** Both are recorded here rather than quietly overwritten:
 
-| System | v0 (89 pairs, 14 traps) | v0.2 (89, 40) | v0.3 (130, 40) | v0.4 (135, 47) | v0.5 (179, 47) | v0.6 (179, 51) |
-|---|---|---|---|---|---|---|
-| naive | 72.8% | 68.8% | 71.5% | 70.9% | 71.9% | 71.6% |
-| boundary | 96.0% | 88.7% | 93.3% | 92.4% | 94.4% | **93.8%** |
-| guarded | 67.4% | 63.7% | 57.2% | 58.8% | 66.2% | 66.2% |
+| System | v0 (89 pairs, 14 traps) | v0.2 (89, 40) | v0.3 (130, 40) | v0.4 (135, 47) | v0.5 (179, 47) | v0.6 (179, 51) | v0.7 (210, 51) |
+|---|---|---|---|---|---|---|---|
+| naive | 72.8% | 68.8% | 71.5% | 70.9% | 71.9% | 71.6% | 72.1% |
+| boundary | 96.0% | 88.7% | 93.3% | 92.4% | 94.4% | 93.8% | **94.8%** |
+| guarded | 67.4% | 63.7% | 57.2% | 58.8% | 66.2% | 66.2% | 67.8% |
 
 v0.2 → v0.3 moves for three reasons at once, and they pull in different directions. 41 net new
 pairs enlarge the error set; three unsafe keys were withdrawn or narrowed, which is why
@@ -231,13 +232,20 @@ ranked `SK 하인` (6 characters) above `SK하인수` (5). The gate caught it as
 items before publication, and the fix - measure length without spaces, as the production
 replacer does - leaves every previously published number unchanged.
 
-v0.5 → v0.6 is four traps, no new pairs: `한반도 지도`, `변동 상황`, `크래프트 하인스`, and
+v0.6 → v0.7 is 31 pairs, no new traps, and it is the first batch that is mostly *vocabulary*
+rather than company names — 대차잔고, 롱숏 전략, 사모 펀드, 전환사채, 외환 보유고. They are long
+keys, so `guarded` gains (66.2 → 67.8%) instead of losing as it did when short stock-name
+fragments arrived, and `boundary` rises to 94.8% because the error set grew against a fixed
+trap set. Eight of the 31 are ordinary Korean (먹거리, 면밀히, 숨고르기) and ship labelled
+`general`, which is what that category was added for.
+
+v0.5 → v0.6 was four traps, no new pairs: `한반도 지도`, `변동 상황`, `크래프트 하인스`, and
 `영업익`, the standard newspaper abbreviation of 영업이익. They cost `boundary` four
 over-corrections (40 → 44) and leave `guarded` untouched, because all four keys are three
 characters and its length floor had already discarded them - the same trade that costs it
 31.7 points of recall.
 
-Quote the benchmark identifier (`ko-finance-asr-corrections/mini-v0.6`, in `eval-set.json`)
+Quote the benchmark identifier (`ko-finance-asr-corrections/mini-v0.7`, in `eval-set.json`)
 with any number taken from here. A benchmark whose numbers move without a version is worse
 than no benchmark.
 
@@ -458,7 +466,7 @@ a hosted Qwen.
   sentences are synthetic, so there is no transcript contamination — but pair-knowledge
   contamination is real and belongs in the result's interpretation.
 
-## Limitations (mini-v0.6)
+## Limitations (mini-v0.7)
 
 - **In-domain by construction.** Error items are generated from the same pairs a dictionary
   system would use, so a lookup baseline reaches 100% recall on the main table. That measures
