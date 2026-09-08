@@ -1,55 +1,55 @@
 {
  "items": {
-  "total": 945,
-  "error": 715,
-  "guard": 230
+  "total": 1100,
+  "error": 839,
+  "guard": 261
  },
- "fixed": 489,
- "missed": 60,
- "mangled": 166,
+ "fixed": 598,
+ "missed": 65,
+ "mangled": 176,
  "over_corrections": {
-  "total": 21,
-  "error_context": 3,
-  "clean": 14,
+  "total": 28,
+  "error_context": 2,
+  "clean": 22,
   "trap": 4
  },
- "recall": 0.6839160839160839,
- "over_correction_rate": 0.022222222222222223,
- "precision_proxy": 0.7233727810650887,
- "net_score": 0.6545454545454545,
+ "recall": 0.7127532777115614,
+ "over_correction_rate": 0.025454545454545455,
+ "precision_proxy": 0.7456359102244389,
+ "net_score": 0.6793802145411204,
  "missing_predictions": 0,
  "by_category": {
   "stock": {
-   "items": 550,
-   "fixed": 316,
+   "items": 555,
+   "fixed": 328,
    "missed": 28,
-   "mangled": 96,
-   "over": 12
+   "mangled": 88,
+   "over": 15
   },
   "number": {
    "items": 30,
    "fixed": 8,
-   "missed": 1,
-   "mangled": 15,
+   "missed": 0,
+   "mangled": 16,
    "over": 1
   },
   "term": {
-   "items": 254,
-   "fixed": 139,
-   "missed": 24,
-   "mangled": 40,
-   "over": 4
+   "items": 364,
+   "fixed": 218,
+   "missed": 27,
+   "mangled": 46,
+   "over": 5
   },
   "general": {
-   "items": 35,
-   "fixed": 13,
-   "missed": 0,
-   "mangled": 15,
-   "over": 0
+   "items": 70,
+   "fixed": 27,
+   "missed": 3,
+   "mangled": 26,
+   "over": 3
   },
   "other": {
-   "items": 25,
-   "fixed": 13,
+   "items": 30,
+   "fixed": 17,
    "missed": 7,
    "mangled": 0,
    "over": 0
@@ -64,12 +64,12 @@
  },
  "by_variant": {
   "plain": {
-   "items": 537,
-   "fixed": 363
+   "items": 630,
+   "fixed": 447
   },
   "spacing": {
-   "items": 178,
-   "fixed": 126
+   "items": 209,
+   "fixed": 151
   }
  },
  "system": "gpt-5.6-sol-codex-run2"

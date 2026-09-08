@@ -97,13 +97,13 @@ over error items.
 | Plain substring replacement | 75.2% | 26 | **72.1%** |
 | Whitespace-flexible matching | 100.0% | 44 | **94.8%** |
 | Whitespace-flexible, keys ≥ 4 chars | 69.6% | 15 | **67.8%** |
-| gpt-5.6-sol, no dictionary (3 runs) | 69.1% | 24.3 | **65.7%** |
+| gpt-5.6-sol, no dictionary (3 runs) | 70.8% | 28.7 | **67.4%** |
 | Claude Opus 5, no dictionary (3 runs) | 63.8% | 9.3 | **61.2%** † |
 
 The LLM rows are the comparison this benchmark exists to make, and the first one is measured
-on exactly these 945 items. A frontier model given only the sentence **over-corrects about
+on exactly these 1,100 items. A frontier model given only the sentence **over-corrects about
 half as often** as the dictionary — it has the restraint — but it cannot recover the specific
-term: 164 of 715 error items come back as a confident wrong answer, usually a different
+term: 176 of 839 error items come back as a confident wrong answer, usually a different
 plausible finance term. Which misrecognition maps to which company is an observation, not an
 inference, and that observation is what this dataset is.
 

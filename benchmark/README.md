@@ -101,13 +101,13 @@ penalty measures.
 | naive | 75.2% | 630/630 | 1/209 | 2 | 26 | 2.4% | 95.8% | **72.1%** |
 | boundary | 100.0% | 630/630 | 209/209 | 0 | 44 | 4.0% | 95.0% | **94.8%** |
 | guarded (min key 4) | 69.6% | 439/630 | 145/209 | 0 | 15 | 1.4% | 97.5% | **67.8%** |
-| gpt-5.6-sol, no dictionary (3 runs) ‡ | 69.1% ±0.6 | — | — | 163.7 | 24.3 | 2.6% | 72.4% | **65.7% ±0.5** |
+| gpt-5.6-sol, no dictionary (3 runs) | 70.8% ±0.3 | — | — | 176.3 | 28.7 | 2.6% | 74.4% | **67.4% ±0.4** |
 | Claude Opus 5, no dictionary (3 runs) † | 63.8% ±0.3 | — | — | 113.7 | 9.3 | 1.9% | 64.7% | **61.2% ±0.2** |
 
-‡ Measured on `mini-v0.6`'s 945 items — one snapshot behind, and being re-measured on the
-current set as this is written. It is kept in the table rather than dropped because a row one
-version behind with a marker is more useful than an empty cell; the comparison it supports is
-93.8% for the dictionary against 65.7% for the model, both on those 945 items. It reached the table because it costs a subscription rather than an invoice —
+The `gpt-5.6-sol` row is measured on **this** eval set, which is what makes the comparison
+above a comparison: same 1,100 items, same scorer, 94.8% for the dictionary against 67.4% for
+the model. It was refreshed the same day the snapshot moved, which is only affordable because
+the row costs a subscription rather than an invoice — see the CLI table below. It reached the table because it costs a subscription rather than an invoice —
 see the CLI table below — and a row nobody can afford to refresh becomes the row below.
 
 † Measured on `mini-v0.2` (482 items, 89 pairs) and carried forward unchanged, kept as the
@@ -155,7 +155,7 @@ What the table says:
 ### Dictionary versus LLM
 
 This is the comparison the benchmark exists to make, and the answer is **the dictionary wins,
-and not narrowly** — on `mini-v0.6`, the same 945 items for both, 93.8% against 65.7% net.
+and not narrowly** — on `mini-v0.7`, the same 1,100 items for both, 94.8% against 67.4% net.
 Until this month the comparison had to be quoted from `mini-v0.2` (88.7% against 61.2%),
 because the LLM row was three benchmark versions behind and refreshing it meant paying for
 another API run. It is current now because the row can be produced through a coding CLI on an
@@ -164,12 +164,12 @@ since a same-version rerun was always the honest test of the older claim.
 
 The interesting part is that the LLM wins the axis the dictionary was supposed to lose:
 
-- **It over-corrects less** — on `mini-v0.6`, 24.3 against the dictionary's 44, and the older
+- **It over-corrects less** — on `mini-v0.7`, 28.7 against the dictionary's 44, and the older
   Claude row was further ahead still at 9.3 against 40. Given a sentence that is already
   correct, or one where a shipped key appears as ordinary Korean, a model usually leaves the
   text alone. That is the restraint the penalty was designed to reward, and both models have
   it in a way the dictionary does not.
-- **It cannot recover the specific term.** On `mini-v0.6`, 163.7 of 715 error items come back
+- **It cannot recover the specific term.** On `mini-v0.7`, 176.3 of 839 error items come back
   `mangled` — a confident wrong answer rather than a miss — where the dictionary mangles none.
   The Claude row on `mini-v0.2` broke down as follows across its three runs; the failure shape
   is the same one:

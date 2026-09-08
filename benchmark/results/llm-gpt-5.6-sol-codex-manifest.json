@@ -3,7 +3,7 @@
  "model_reported": null,
  "transport": "cli",
  "cli": "codex",
- "harness": "codex-cli 0.151.0",
+ "harness": "codex-cli 0.153.4",
  "cli_argv": [
   "codex",
   "exec",
@@ -35,8 +35,8 @@
   "anthropic_version": "2023-06-01"
  },
  "note": "Current Claude models removed temperature/top_p/top_k, so there is no sampling knob to pin - run-to-run spread is inherent and is why --runs defaults to 3.",
- "benchmark": "ko-finance-asr-corrections/mini-v0.6",
- "eval_items": 945,
+ "benchmark": "ko-finance-asr-corrections/mini-v0.7",
+ "eval_items": 1100,
  "runs": 3,
  "prediction_files": [
   "llm-gpt-5.6-sol-codex-run1.json",

@@ -8,54 +8,54 @@
  ],
  "metrics": {
   "recall": {
-   "mean": 0.6909,
-   "spread": 0.0064,
-   "min": 0.6839,
-   "max": 0.6993,
+   "mean": 0.7084,
+   "spread": 0.0031,
+   "min": 0.7056,
+   "max": 0.7128,
    "runs": 3
   },
   "over_correction_rate": {
-   "mean": 0.0257,
-   "spread": 0.0026,
-   "min": 0.0222,
-   "max": 0.0286,
+   "mean": 0.0261,
+   "spread": 0.0004,
+   "min": 0.0255,
+   "max": 0.0264,
    "runs": 3
   },
   "precision_proxy": {
-   "mean": 0.7243,
-   "spread": 0.0042,
-   "min": 0.7197,
-   "max": 0.7299,
+   "mean": 0.7435,
+   "spread": 0.0038,
+   "min": 0.7382,
+   "max": 0.7469,
    "runs": 3
   },
   "net_score": {
-   "mean": 0.6569,
-   "spread": 0.0054,
-   "min": 0.6517,
-   "max": 0.6643,
+   "mean": 0.6742,
+   "spread": 0.0037,
+   "min": 0.671,
+   "max": 0.6794,
    "runs": 3
   }
  },
  "counts": {
   "fixed": {
-   "mean": 494.0,
-   "spread": 4.5461,
-   "min": 489.0,
-   "max": 500.0,
+   "mean": 594.3333,
+   "spread": 2.6247,
+   "min": 592.0,
+   "max": 598.0,
    "runs": 3
   },
   "missed": {
-   "mean": 57.3333,
-   "spread": 2.0548,
-   "min": 55.0,
-   "max": 60.0,
+   "mean": 68.3333,
+   "spread": 4.0277,
+   "min": 65.0,
+   "max": 74.0,
    "runs": 3
   },
   "mangled": {
-   "mean": 163.6667,
-   "spread": 2.6247,
-   "min": 160.0,
-   "max": 166.0,
+   "mean": 176.3333,
+   "spread": 3.6818,
+   "min": 172.0,
+   "max": 181.0,
    "runs": 3
   },
   "missing_predictions": {
@@ -67,10 +67,10 @@
   }
  },
  "over_corrections": {
-  "mean": 24.3333,
-  "spread": 2.4944,
-  "min": 21.0,
-  "max": 27.0,
+  "mean": 28.6667,
+  "spread": 0.4714,
+  "min": 28.0,
+  "max": 29.0,
   "runs": 3
  }
 }
