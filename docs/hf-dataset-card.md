@@ -39,7 +39,8 @@ configs:
   - config_name: default
     data_files:
       - split: train
-        path: data/pairs.csv
+        path: data/pairs.json
+    field: pairs
   - config_name: withdrawn
     data_files:
       - split: train
