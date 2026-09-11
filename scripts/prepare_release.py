@@ -154,10 +154,16 @@ def main() -> None:
     print("\nNext, and none of it automated on purpose:")
     print("  1. python3 scripts/validate_snapshot.py && python3 scripts/release_check.py --publication")
     print("  2. review the diff, commit")
-    print(f"  3. enable the Zenodo GitHub integration BEFORE tagging - a tag pushed first")
-    print("     is never archived and cannot be attached to a concept DOI afterwards")
-    print(f"  4. git tag {args.version} && git push origin {args.version}")
-    print("  5. add the concept DOI to CITATION.cff identifiers once Zenodo issues it")
+    print("  3. the repo must already be public, then enable it on Zenodo - Zenodo lists")
+    print("     only public repositories, and it archives only releases made after the")
+    print("     toggle. A release published first is never archived and cannot be")
+    print("     attached to a concept DOI afterwards")
+    print(f"  4. gh release create {args.version} --title {args.version} --notes-file <notes>")
+    print("     Zenodo's webhook fires on GitHub's *release* event, not on a tag push:")
+    print(f"     `git push origin {args.version}` alone archives nothing")
+    print("  5. add the concept DOI to CITATION.cff identifiers and the README badge once")
+    print("     Zenodo issues it - it cannot be known before the first release, so it")
+    print("     lands in the next snapshot's archive rather than this one")
 
 
 if __name__ == "__main__":
