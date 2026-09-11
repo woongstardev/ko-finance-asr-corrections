@@ -24,7 +24,7 @@ language:
 pretty_name: Korean Finance ASR Correction Pairs
 license: cc-by-4.0
 task_categories:
-  - text2text-generation
+  - text-generation
 size_categories:
   - n<1K
 tags:
