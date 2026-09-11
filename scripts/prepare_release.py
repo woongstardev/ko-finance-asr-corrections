@@ -23,14 +23,9 @@ What it changes
                    without its leading v, so `v0.1` publishes as `0.1`; pass
                    --cff-version when the citation needs a different string
                    (`v0.1` -> `0.1.0` for the first release, by convention).
-    .zenodo.json   `version:`, which is the string that lands in the Zenodo
-                   record - and therefore in the DOI's metadata, where it is
-                   read by people who never see this repository.
     docs/SCHEMA.md the "draft - will be frozen" title and the freeze TODO, but
                    only for v0.1: after that the schema is frozen and a change
                    is a version bump, which is a different job.
-    README.md      the "pre-release (private)" banner, for v0.1 only: after the
-                   flip it is a false statement on the first page a reader sees.
 
 Refuses to run on a dirty tree. A release commit that also carries unrelated
 edits cannot be reviewed as a release.
@@ -47,9 +42,6 @@ from datetime import date
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
-
-README_BANNER = ("> \u26a0\ufe0f **Status: pre-release (private).** Preparing v0.1. "
-                 "Schema may change until first public release.\n\n")
 
 SCHEMA_TITLE_OLD = "# Data schema (draft — will be frozen at v0.1)"
 SCHEMA_TITLE_NEW = "# Data schema (frozen at v0.1)"
@@ -88,19 +80,6 @@ def edit_citation(text: str, cff_version: str, when: str) -> str:
     return text
 
 
-def edit_zenodo(text: str, version: str) -> str:
-    text, n = re.subn(r'^(  "version": ).*$', rf'\g<1>"{version}",', text, count=1, flags=re.M)
-    if not n:
-        sys.exit('.zenodo.json has no \'"version":\' line')
-    return text
-
-
-def edit_readme(text: str) -> str:
-    if README_BANNER not in text:
-        return text
-    return text.replace(README_BANNER, "", 1)
-
-
 def edit_schema(text: str) -> str:
     if SCHEMA_TITLE_OLD in text:
         text = text.replace(SCHEMA_TITLE_OLD, SCHEMA_TITLE_NEW, 1)
@@ -126,11 +105,9 @@ def main() -> None:
     plans = [
         (REPO / "CHANGELOG.md", lambda t: edit_changelog(t, args.version, args.date)),
         (REPO / "CITATION.cff", lambda t: edit_citation(t, cff_version, args.date)),
-        (REPO / ".zenodo.json", lambda t: edit_zenodo(t, cff_version)),
     ]
     if args.version == "v0.1":
         plans.append((REPO / "docs" / "SCHEMA.md", edit_schema))
-        plans.append((REPO / "README.md", edit_readme))
 
     touched = 0
     for path, edit in plans:
@@ -154,16 +131,10 @@ def main() -> None:
     print("\nNext, and none of it automated on purpose:")
     print("  1. python3 scripts/validate_snapshot.py && python3 scripts/release_check.py --publication")
     print("  2. review the diff, commit")
-    print("  3. the repo must already be public, then enable it on Zenodo - Zenodo lists")
-    print("     only public repositories, and it archives only releases made after the")
-    print("     toggle. A release published first is never archived and cannot be")
-    print("     attached to a concept DOI afterwards")
-    print(f"  4. gh release create {args.version} --title {args.version} --notes-file <notes>")
-    print("     Zenodo's webhook fires on GitHub's *release* event, not on a tag push:")
-    print(f"     `git push origin {args.version}` alone archives nothing")
-    print("  5. add the concept DOI to CITATION.cff identifiers and the README badge once")
-    print("     Zenodo issues it - it cannot be known before the first release, so it")
-    print("     lands in the next snapshot's archive rather than this one")
+    print(f"  3. enable the Zenodo GitHub integration BEFORE tagging - a tag pushed first")
+    print("     is never archived and cannot be attached to a concept DOI afterwards")
+    print(f"  4. git tag {args.version} && git push origin {args.version}")
+    print("  5. add the concept DOI to CITATION.cff identifiers once Zenodo issues it")
 
 
 if __name__ == "__main__":
