@@ -44,6 +44,7 @@ configs:
     data_files:
       - split: train
         path: data/withdrawn.json
+    field: withdrawn
 ---
 ```
 
