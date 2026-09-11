@@ -5,8 +5,6 @@
 > 한국어 금융·주식 유튜브 자동자막에서 실측한 ASR 오인식→교정 쌍 데이터셋과 벤치마크.
 > 모든 쌍에 **관측 빈도**와 **검증 메타데이터**(2-LLM 합의 감사, 3단 승격 티어)가 붙어 있습니다.
 
-> ⚠️ **Status: pre-release (private).** Preparing v0.1. Schema may change until first public release.
-
 This data is produced and verified by the live pipeline of
 [껄무새 (Ggulmuse)](https://ggulmuse.woongstar.com) — a Korean stock-YouTube claim-tracking
 archive. The pairs here are the byproduct of correcting real YouTube auto-captions at scale.

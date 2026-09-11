@@ -14,6 +14,8 @@ section becomes the next release's notes.
 
 ## [Unreleased]
 
+## [v0.1] - 2026-09-11
+
 ### Added
 - `고형 지표 → 고용 지표` (2026-09-08)
 - `골고로 → 골고루` (2026-09-08)

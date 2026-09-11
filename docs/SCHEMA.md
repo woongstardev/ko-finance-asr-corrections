@@ -1,4 +1,4 @@
-# Data schema (draft — will be frozen at v0.1)
+# Data schema (frozen at v0.1)
 
 One record per verified confusion pair. Source of truth is the upstream production
 dictionary; this repo publishes a filtered snapshot (stock names and finance terms only —
@@ -111,4 +111,9 @@ every consumer filtering on `tier in ("A", "B")` — verification moved into its
 additive field. Tier stays an authority ordering; `evidence` carries the provenance and
 can grow new values without invalidating existing ones.
 
-<!-- TODO(v0.1): freeze field list, then version the schema. -->
+**Frozen as of v0.1.** The field list, types and enum values above are the published
+contract: a change to any of them is a minor version of this dataset, announced in
+`CHANGELOG.md`, and `scripts/validate_snapshot.py` fails the release that tries to ship one
+silently. Adding a field is still a minor version - a consumer that selects columns by name
+is entitled to know. What is *not* frozen: the pairs themselves, their frequencies, and the
+category verdicts behind `scripts/category-review.tsv`, all of which move every snapshot.
