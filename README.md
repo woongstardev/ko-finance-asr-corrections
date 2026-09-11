@@ -1,5 +1,7 @@
 # ko-finance-asr-corrections
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22700919.svg)](https://doi.org/10.5281/zenodo.22700919)
+
 > **Frequency-annotated Korean ASR confusion pairs from finance/stock YouTube — dataset + benchmark.**
 >
 > 한국어 금융·주식 유튜브 자동자막에서 실측한 ASR 오인식→교정 쌍 데이터셋과 벤치마크.
@@ -192,7 +194,14 @@ See [CONTRIBUTING.md](CONTRIBUTING.md), [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
 
 ## Citation
 
-See [CITATION.cff](CITATION.cff). A short technical report is planned.
+Every snapshot is archived on Zenodo with its own DOI. Cite the **concept DOI** unless you
+need to pin a specific snapshot — it always resolves to the latest one:
+
+- Concept DOI (all versions): [`10.5281/zenodo.22700919`](https://doi.org/10.5281/zenodo.22700919)
+- v0.1 (2026-09-11, 210 pairs): [`10.5281/zenodo.22700920`](https://doi.org/10.5281/zenodo.22700920)
+
+Machine-readable metadata is in [CITATION.cff](CITATION.cff). A short technical report is
+planned.
 
 ---
 

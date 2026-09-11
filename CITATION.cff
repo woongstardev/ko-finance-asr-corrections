@@ -20,11 +20,13 @@ url: "https://ggulmuse.woongstar.com"
 license: CC-BY-4.0
 version: 0.1.0
 date-released: "2026-09-11"
-# On the first public release, add the Zenodo concept DOI here so the citation is resolvable:
-#   identifiers:
-#     - type: doi
-#       value: "10.5281/zenodo.XXXXXXX"
-#       description: "Concept DOI — always resolves to the latest snapshot"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.22700919"
+    description: "Concept DOI — always resolves to the latest snapshot"
+  - type: doi
+    value: "10.5281/zenodo.22700920"
+    description: "DOI of v0.1, the first public snapshot"
 keywords:
   - Korean
   - ASR

@@ -123,6 +123,7 @@ dictionary.
 ## License and citation
 
 Data: CC BY 4.0. Code (benchmark, scripts): MIT.
-Cite via `CITATION.cff` in the GitHub repository.
+Cite the concept DOI [`10.5281/zenodo.22700919`](https://doi.org/10.5281/zenodo.22700919), which always resolves to
+the latest snapshot; machine-readable metadata is in `CITATION.cff` in the GitHub repository.
 
 Produced by the [껄무새](https://ggulmuse.woongstar.com) pipeline.
