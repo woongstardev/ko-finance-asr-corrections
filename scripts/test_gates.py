@@ -234,5 +234,35 @@ class CorpusCoverageTests(unittest.TestCase):
         self.assertIn("FAILED", summary)
 
 
+class WeeklyDiffTests(unittest.TestCase):
+    """What makes the weekly run say "changed" — and so send a Telegram alert."""
+
+    def setUp(self):
+        import importlib.util
+        spec = importlib.util.spec_from_file_location(
+            "refresh_snapshot", REPO / "scripts" / "refresh_snapshot.py")
+        self.module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(self.module)
+        published = json.loads((REPO / "data" / "pairs.json").read_text(encoding="utf-8"))
+        self.pair = published["pairs"][0]
+        self.key = (self.pair["wrong"], self.pair["right"])
+
+    def test_every_count_field_is_frequency(self):
+        """A count added to the schema but not here alerts every week (2026-09)."""
+        counts = {f for f in self.pair if f.endswith("_count")}
+        self.assertLessEqual(counts, self.module.FREQUENCY_FIELDS)
+
+    def test_count_growth_is_drift_not_change(self):
+        grown = {f: (v or 0) + 1 for f, v in self.pair.items() if f.endswith("_count")}
+        diff = self.module.diff_pairs({self.key: self.pair}, {self.key: {**self.pair, **grown}})
+        self.assertEqual(diff["meta_changed"], [])
+        self.assertEqual(diff["freq_changed"], [self.key])
+
+    def test_category_change_is_change(self):
+        moved = {**self.pair, "category": self.pair["category"] + "-moved"}
+        diff = self.module.diff_pairs({self.key: self.pair}, {self.key: moved})
+        self.assertEqual(diff["meta_changed"], [(self.key, ["category"])])
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

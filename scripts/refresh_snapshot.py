@@ -69,7 +69,7 @@ CRED_PATH = Path(
 # They are reported, but they alone do not make a snapshot "changed" —
 # otherwise every weekly run would cry wolf and the alert would train people
 # to ignore it.
-FREQUENCY_FIELDS = {"corpus_count", "observed_count"}
+FREQUENCY_FIELDS = {"corpus_count", "right_count", "observed_count"}
 
 HEARTBEAT_SECONDS = 30 * 24 * 3600  # "no change" still gets said out loud monthly
 
