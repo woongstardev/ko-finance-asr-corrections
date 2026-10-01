@@ -13,8 +13,10 @@ archive. The pairs here are the byproduct of correcting real YouTube auto-captio
 
 ## Why this exists
 
-- Korean ASR error-correction data is nearly nonexistent: the only public pair dataset is
-  KEBAP (2.5K pairs, error-type labels, frozen since 2023). No finance-domain resource exists.
+- Korean ASR error-correction data is scarce: the public sets are KEBAP (2.5K pairs,
+  error-type labels, frozen since 2023) and DasanCallDial (2026, call-centre STT output paired
+  with corrected sentences, non-commercial licence). Neither is finance-domain and neither
+  carries observed frequencies.
 - **No public "confusion pair dictionary with observed frequencies" exists in any language**
   (as of our 2026-08 survey). Frequency is what makes a pair list actionable: it tells you
   which errors dominate real traffic (e.g. `펀더멘탈→펀더멘털` ×1,151, <!-- stat:count:펀더멘탈 -->
@@ -170,6 +172,7 @@ Stated up front, because a niche dataset earns trust by being explicit about its
 | Resource | What it is | How this differs |
 |---|---|---|
 | [KEBAP](https://github.com/seonminkoo/KEBAP) (EMNLP 2023) | 2,478 Korean ASR error pairs, error-type taxonomy | We provide **observed frequencies** and domain focus; KEBAP classifies error types |
+| [DasanCallDial](https://huggingface.co/datasets/zgold5670/DasanCallDial) (2026) | 115K Korean call-centre utterances, STT output paired with corrected sentences, CC BY-NC 4.0 | Sentence-level and conversational; we are word-level pairs with frequencies, finance-domain, CC BY |
 | [HyPoradise](https://arxiv.org/abs/2309.15701) / GenSEC | English N-best→transcript GER benchmark | Same task family; we are Korean, domain-specific, and dictionary-shaped |
 | [korean-weather-asr](https://huggingface.co/datasets/ddehun/korean-weather-asr) | Korean weather-domain ASR benchmark | Closest Korean domain-benchmark precedent; different domain, no correction pairs |
 

@@ -3,15 +3,15 @@
 What this dataset is heading toward, and what it is not. Dates are targets, not commitments —
 the pairs arrive when upstream verification produces them, not when a calendar says so.
 
-## Now — pre-release
+## Now — after v0.1
 
-Preparing `v0.1`. The schema may still change; after v0.1 a `data/` schema change means a
-minor version.
+`v0.1` shipped on 2026-09-11 and the schema is frozen: a `data/` schema change means a minor
+version.
 
 - **Snapshot growth.** The upstream pipeline keeps verifying pairs, and each monthly snapshot
-  adds the newly promoted ones. The published snapshot is 135 pairs counted over a cumulative
-  corpus of 1,490 videos; the next one is larger.
-- **Benchmark `mini-v0.4`.** 721 items, 47 traps, three dictionary baselines, one LLM
+  adds the newly promoted ones. The published snapshot is 210 pairs counted over a cumulative
+  corpus of 2,391 videos; the weekly dry-run already sees the next one.
+- **Benchmark `mini-v0.7`.** 1,100 items, 51 traps, three dictionary baselines, one LLM
   reference row and a held-out row. See [`benchmark/README.md`](benchmark/README.md).
 - **Release automation.** A weekly dry-run detects upstream change; a monthly human step
   publishes it. Four gates run against a candidate export before anything is written:

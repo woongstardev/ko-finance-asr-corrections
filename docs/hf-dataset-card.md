@@ -67,10 +67,11 @@ verification provenance.
 ## What makes it different
 
 No public "confusion pair dictionary with observed frequencies" exists in any language (as of
-a 2026-08 survey), and Korean ASR error-correction data is nearly nonexistent — the only prior
-public pair set is KEBAP (2,478 pairs, error-type labels, frozen since 2023) and no
-finance-domain resource exists. Frequency is what makes a pair list actionable: it says which
-errors dominate real traffic:
+a 2026-08 survey, rechecked 2026-10), and Korean ASR error-correction data is scarce — the
+prior public sets are KEBAP (2,478 pairs, error-type labels, frozen since 2023) and
+DasanCallDial (2026, call-centre STT output paired with corrected sentences, non-commercial),
+and no finance-domain resource exists. Frequency is what makes a pair list actionable: it says
+which errors dominate real traffic:
 
 - `펀더멘탈 → 펀더멘털` ×1,151 <!-- stat:count:펀더멘탈 -->
 - `하이니스 → 하이닉스` ×904 <!-- stat:count:하이니스 -->
