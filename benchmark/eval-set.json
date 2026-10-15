@@ -1,13 +1,13 @@
 {
- "benchmark": "ko-finance-asr-corrections/mini-v0.7",
- "generated_at": "2026-09-08T09:05:19Z",
- "pairs_exported_at": "2026-09-08T09:04:58Z",
- "pair_count": 210,
+ "benchmark": "ko-finance-asr-corrections/mini-v0.8",
+ "generated_at": "2026-10-15T23:22:05Z",
+ "pairs_exported_at": "2026-10-15T23:21:33Z",
+ "pair_count": 228,
  "item_counts": {
-  "error:plain": 630,
-  "error:spacing": 209,
-  "clean": 210,
-  "trap": 51
+  "error:plain": 684,
+  "error:spacing": 227,
+  "clean": 228,
+  "trap": 54
  },
  "frames": [
   "{w} 관련해서 궁금한 부분이 있습니다.",
@@ -3868,6 +3868,80 @@
    "tier": "B"
   },
   {
+   "id": "err-fcc3a1-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "투자자들이 근원 PC 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 근원 PCE 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    11
+   ],
+   "surface": "근원 PC",
+   "wrong": "근원 PC",
+   "right": "근원 PCE",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-fcc3a1-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "근원 PC 관련해서 궁금한 부분이 있습니다.",
+   "expected": "근원 PCE 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    5
+   ],
+   "surface": "근원 PC",
+   "wrong": "근원 PC",
+   "right": "근원 PCE",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-fcc3a1-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "요즘 근원 PC 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 근원 PCE 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    8
+   ],
+   "surface": "근원 PC",
+   "wrong": "근원 PC",
+   "right": "근원 PCE",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-fcc3a1-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "어제 시장에서 근원PC 언급이 많았습니다.",
+   "expected": "어제 시장에서 근원 PCE 언급이 많았습니다.",
+   "span": [
+    8,
+    12
+   ],
+   "surface": "근원PC",
+   "wrong": "근원 PC",
+   "right": "근원 PCE",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "cln-fcc3a1",
+   "kind": "clean",
+   "input": "오늘 방송에서는 근원 PCE 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 근원 PCE 이야기를 해보겠습니다.",
+   "wrong": "근원 PC",
+   "right": "근원 PCE",
+   "category": "term",
+   "tier": "A"
+  },
+  {
    "id": "err-c88612-0",
    "kind": "error",
    "variant": "plain",
@@ -4756,6 +4830,80 @@
    "tier": "A"
   },
   {
+   "id": "err-2d12c6-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "다오가 관련해서 궁금한 부분이 있습니다.",
+   "expected": "다우가 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "다오가",
+   "wrong": "다오가",
+   "right": "다우가",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-2d12c6-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "요즘 다오가 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 다우가 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    6
+   ],
+   "surface": "다오가",
+   "wrong": "다오가",
+   "right": "다우가",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-2d12c6-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "오늘 방송에서는 다오가 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 다우가 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    12
+   ],
+   "surface": "다오가",
+   "wrong": "다오가",
+   "right": "다우가",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-2d12c6-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "다 오가 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "다우가 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    4
+   ],
+   "surface": "다 오가",
+   "wrong": "다오가",
+   "right": "다우가",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "cln-2d12c6",
+   "kind": "clean",
+   "input": "어제 시장에서 다우가 언급이 많았습니다.",
+   "expected": "어제 시장에서 다우가 언급이 많았습니다.",
+   "wrong": "다오가",
+   "right": "다우가",
+   "category": "term",
+   "tier": "A"
+  },
+  {
    "id": "err-285667-0",
    "kind": "error",
    "variant": "plain",
@@ -4902,6 +5050,80 @@
    "right": "반도체",
    "category": "term",
    "tier": "B"
+  },
+  {
+   "id": "err-7db1da-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "대공항 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "대공황 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "대공항",
+   "wrong": "대공항",
+   "right": "대공황",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-7db1da-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "투자자들이 대공항 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 대공황 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    9
+   ],
+   "surface": "대공항",
+   "wrong": "대공항",
+   "right": "대공황",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-7db1da-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "대공항 관련해서 궁금한 부분이 있습니다.",
+   "expected": "대공황 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "대공항",
+   "wrong": "대공항",
+   "right": "대공황",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-7db1da-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "오늘 방송에서는 대 공항 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 대공황 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    13
+   ],
+   "surface": "대 공항",
+   "wrong": "대공항",
+   "right": "대공황",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "cln-7db1da",
+   "kind": "clean",
+   "input": "요즘 대공황 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 대공황 쪽 흐름이 어떻습니까?",
+   "wrong": "대공항",
+   "right": "대공황",
+   "category": "term",
+   "tier": "A"
   },
   {
    "id": "err-2875d3-0",
@@ -5866,6 +6088,80 @@
    "tier": "A"
   },
   {
+   "id": "err-63d139-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "투자자들이 마이크로 테크놀로지 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 마이크론 테크놀로지 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    16
+   ],
+   "surface": "마이크로 테크놀로지",
+   "wrong": "마이크로 테크놀로지",
+   "right": "마이크론 테크놀로지",
+   "category": "stock",
+   "tier": "A"
+  },
+  {
+   "id": "err-63d139-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "마이크로 테크놀로지 관련해서 궁금한 부분이 있습니다.",
+   "expected": "마이크론 테크놀로지 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    10
+   ],
+   "surface": "마이크로 테크놀로지",
+   "wrong": "마이크로 테크놀로지",
+   "right": "마이크론 테크놀로지",
+   "category": "stock",
+   "tier": "A"
+  },
+  {
+   "id": "err-63d139-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "요즘 마이크로 테크놀로지 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 마이크론 테크놀로지 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    13
+   ],
+   "surface": "마이크로 테크놀로지",
+   "wrong": "마이크로 테크놀로지",
+   "right": "마이크론 테크놀로지",
+   "category": "stock",
+   "tier": "A"
+  },
+  {
+   "id": "err-63d139-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "어제 시장에서 마이크로테크놀로지 언급이 많았습니다.",
+   "expected": "어제 시장에서 마이크론 테크놀로지 언급이 많았습니다.",
+   "span": [
+    8,
+    17
+   ],
+   "surface": "마이크로테크놀로지",
+   "wrong": "마이크로 테크놀로지",
+   "right": "마이크론 테크놀로지",
+   "category": "stock",
+   "tier": "A"
+  },
+  {
+   "id": "cln-63d139",
+   "kind": "clean",
+   "input": "오늘 방송에서는 마이크론 테크놀로지 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 마이크론 테크놀로지 이야기를 해보겠습니다.",
+   "wrong": "마이크로 테크놀로지",
+   "right": "마이크론 테크놀로지",
+   "category": "stock",
+   "tier": "A"
+  },
+  {
    "id": "err-5760f0-0",
    "kind": "error",
    "variant": "plain",
@@ -6381,6 +6677,80 @@
    "wrong": "미국체",
    "right": "미국채",
    "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-d68dc8-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "미스비C 관련해서 궁금한 부분이 있습니다.",
+   "expected": "미쓰비시 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    4
+   ],
+   "surface": "미스비C",
+   "wrong": "미스비C",
+   "right": "미쓰비시",
+   "category": "stock",
+   "tier": "A"
+  },
+  {
+   "id": "err-d68dc8-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "요즘 미스비C 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 미쓰비시 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    7
+   ],
+   "surface": "미스비C",
+   "wrong": "미스비C",
+   "right": "미쓰비시",
+   "category": "stock",
+   "tier": "A"
+  },
+  {
+   "id": "err-d68dc8-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "오늘 방송에서는 미스비C 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 미쓰비시 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    13
+   ],
+   "surface": "미스비C",
+   "wrong": "미스비C",
+   "right": "미쓰비시",
+   "category": "stock",
+   "tier": "A"
+  },
+  {
+   "id": "err-d68dc8-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "미스 비C 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "미쓰비시 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    5
+   ],
+   "surface": "미스 비C",
+   "wrong": "미스비C",
+   "right": "미쓰비시",
+   "category": "stock",
+   "tier": "A"
+  },
+  {
+   "id": "cln-d68dc8",
+   "kind": "clean",
+   "input": "어제 시장에서 미쓰비시 언급이 많았습니다.",
+   "expected": "어제 시장에서 미쓰비시 언급이 많았습니다.",
+   "wrong": "미스비C",
+   "right": "미쓰비시",
+   "category": "stock",
    "tier": "A"
   },
   {
@@ -7198,6 +7568,80 @@
    "tier": "B"
   },
   {
+   "id": "err-0d61ab-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "투자자들이 브랜트 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 브렌트 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    9
+   ],
+   "surface": "브랜트",
+   "wrong": "브랜트",
+   "right": "브렌트",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-0d61ab-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "브랜트 관련해서 궁금한 부분이 있습니다.",
+   "expected": "브렌트 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "브랜트",
+   "wrong": "브랜트",
+   "right": "브렌트",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-0d61ab-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "요즘 브랜트 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 브렌트 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    6
+   ],
+   "surface": "브랜트",
+   "wrong": "브랜트",
+   "right": "브렌트",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-0d61ab-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "어제 시장에서 브 랜트 언급이 많았습니다.",
+   "expected": "어제 시장에서 브렌트 언급이 많았습니다.",
+   "span": [
+    8,
+    12
+   ],
+   "surface": "브 랜트",
+   "wrong": "브랜트",
+   "right": "브렌트",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "cln-0d61ab",
+   "kind": "clean",
+   "input": "오늘 방송에서는 브렌트 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 브렌트 이야기를 해보겠습니다.",
+   "wrong": "브랜트",
+   "right": "브렌트",
+   "category": "term",
+   "tier": "A"
+  },
+  {
    "id": "err-1beb8f-0",
    "kind": "error",
    "variant": "plain",
@@ -8010,6 +8454,80 @@
    "right": "삼성전자",
    "category": "stock",
    "tier": "B"
+  },
+  {
+   "id": "err-ff3125-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "투자자들이 삼성자 SK 하이닉스 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 삼성전자 SK하이닉스 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    17
+   ],
+   "surface": "삼성자 SK 하이닉스",
+   "wrong": "삼성자 SK 하이닉스",
+   "right": "삼성전자 SK하이닉스",
+   "category": "stock",
+   "tier": "A"
+  },
+  {
+   "id": "err-ff3125-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "삼성자 SK 하이닉스 관련해서 궁금한 부분이 있습니다.",
+   "expected": "삼성전자 SK하이닉스 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    11
+   ],
+   "surface": "삼성자 SK 하이닉스",
+   "wrong": "삼성자 SK 하이닉스",
+   "right": "삼성전자 SK하이닉스",
+   "category": "stock",
+   "tier": "A"
+  },
+  {
+   "id": "err-ff3125-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "요즘 삼성자 SK 하이닉스 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 삼성전자 SK하이닉스 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    14
+   ],
+   "surface": "삼성자 SK 하이닉스",
+   "wrong": "삼성자 SK 하이닉스",
+   "right": "삼성전자 SK하이닉스",
+   "category": "stock",
+   "tier": "A"
+  },
+  {
+   "id": "err-ff3125-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "어제 시장에서 삼성자SK하이닉스 언급이 많았습니다.",
+   "expected": "어제 시장에서 삼성전자 SK하이닉스 언급이 많았습니다.",
+   "span": [
+    8,
+    17
+   ],
+   "surface": "삼성자SK하이닉스",
+   "wrong": "삼성자 SK 하이닉스",
+   "right": "삼성전자 SK하이닉스",
+   "category": "stock",
+   "tier": "A"
+  },
+  {
+   "id": "cln-ff3125",
+   "kind": "clean",
+   "input": "오늘 방송에서는 삼성전자 SK하이닉스 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 삼성전자 SK하이닉스 이야기를 해보겠습니다.",
+   "wrong": "삼성자 SK 하이닉스",
+   "right": "삼성전자 SK하이닉스",
+   "category": "stock",
+   "tier": "A"
   },
   {
    "id": "err-fe5c4a-0",
@@ -10454,6 +10972,80 @@
    "tier": "A"
   },
   {
+   "id": "err-785fd0-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "심년물 관련해서 궁금한 부분이 있습니다.",
+   "expected": "10년물 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "심년물",
+   "wrong": "심년물",
+   "right": "10년물",
+   "category": "number",
+   "tier": "A"
+  },
+  {
+   "id": "err-785fd0-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "요즘 심년물 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 10년물 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    6
+   ],
+   "surface": "심년물",
+   "wrong": "심년물",
+   "right": "10년물",
+   "category": "number",
+   "tier": "A"
+  },
+  {
+   "id": "err-785fd0-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "오늘 방송에서는 심년물 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 10년물 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    12
+   ],
+   "surface": "심년물",
+   "wrong": "심년물",
+   "right": "10년물",
+   "category": "number",
+   "tier": "A"
+  },
+  {
+   "id": "err-785fd0-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "심 년물 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "10년물 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    4
+   ],
+   "surface": "심 년물",
+   "wrong": "심년물",
+   "right": "10년물",
+   "category": "number",
+   "tier": "A"
+  },
+  {
+   "id": "cln-785fd0",
+   "kind": "clean",
+   "input": "어제 시장에서 10년물 언급이 많았습니다.",
+   "expected": "어제 시장에서 10년물 언급이 많았습니다.",
+   "wrong": "심년물",
+   "right": "10년물",
+   "category": "number",
+   "tier": "A"
+  },
+  {
    "id": "err-d26600-0",
    "kind": "error",
    "variant": "plain",
@@ -10674,6 +11266,746 @@
    "right": "IBM",
    "category": "stock",
    "tier": "B"
+  },
+  {
+   "id": "err-9a2d46-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "오늘 방송에서는 업정과 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 업종과 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    12
+   ],
+   "surface": "업정과",
+   "wrong": "업정과",
+   "right": "업종과",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-9a2d46-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "어제 시장에서 업정과 언급이 많았습니다.",
+   "expected": "어제 시장에서 업종과 언급이 많았습니다.",
+   "span": [
+    8,
+    11
+   ],
+   "surface": "업정과",
+   "wrong": "업정과",
+   "right": "업종과",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-9a2d46-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "업정과 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "업종과 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "업정과",
+   "wrong": "업정과",
+   "right": "업종과",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-9a2d46-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "업 정과 관련해서 궁금한 부분이 있습니다.",
+   "expected": "업종과 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    4
+   ],
+   "surface": "업 정과",
+   "wrong": "업정과",
+   "right": "업종과",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "cln-9a2d46",
+   "kind": "clean",
+   "input": "투자자들이 업종과 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 업종과 이슈에 주목하고 있습니다.",
+   "wrong": "업정과",
+   "right": "업종과",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-904b62-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "오늘 방송에서는 업정들 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 업종들 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    12
+   ],
+   "surface": "업정들",
+   "wrong": "업정들",
+   "right": "업종들",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-904b62-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "어제 시장에서 업정들 언급이 많았습니다.",
+   "expected": "어제 시장에서 업종들 언급이 많았습니다.",
+   "span": [
+    8,
+    11
+   ],
+   "surface": "업정들",
+   "wrong": "업정들",
+   "right": "업종들",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-904b62-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "업정들 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "업종들 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "업정들",
+   "wrong": "업정들",
+   "right": "업종들",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-904b62-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "업 정들 관련해서 궁금한 부분이 있습니다.",
+   "expected": "업종들 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    4
+   ],
+   "surface": "업 정들",
+   "wrong": "업정들",
+   "right": "업종들",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "cln-904b62",
+   "kind": "clean",
+   "input": "투자자들이 업종들 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 업종들 이슈에 주목하고 있습니다.",
+   "wrong": "업정들",
+   "right": "업종들",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-375a94-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "오늘 방송에서는 업정별 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 업종별 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    12
+   ],
+   "surface": "업정별",
+   "wrong": "업정별",
+   "right": "업종별",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-375a94-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "어제 시장에서 업정별 언급이 많았습니다.",
+   "expected": "어제 시장에서 업종별 언급이 많았습니다.",
+   "span": [
+    8,
+    11
+   ],
+   "surface": "업정별",
+   "wrong": "업정별",
+   "right": "업종별",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-375a94-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "업정별 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "업종별 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "업정별",
+   "wrong": "업정별",
+   "right": "업종별",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-375a94-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "업 정별 관련해서 궁금한 부분이 있습니다.",
+   "expected": "업종별 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    4
+   ],
+   "surface": "업 정별",
+   "wrong": "업정별",
+   "right": "업종별",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "cln-375a94",
+   "kind": "clean",
+   "input": "투자자들이 업종별 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 업종별 이슈에 주목하고 있습니다.",
+   "wrong": "업정별",
+   "right": "업종별",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-3d57c1-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "투자자들이 업정에 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 업종에 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    9
+   ],
+   "surface": "업정에",
+   "wrong": "업정에",
+   "right": "업종에",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-3d57c1-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "업정에 관련해서 궁금한 부분이 있습니다.",
+   "expected": "업종에 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "업정에",
+   "wrong": "업정에",
+   "right": "업종에",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-3d57c1-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "요즘 업정에 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 업종에 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    6
+   ],
+   "surface": "업정에",
+   "wrong": "업정에",
+   "right": "업종에",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-3d57c1-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "어제 시장에서 업 정에 언급이 많았습니다.",
+   "expected": "어제 시장에서 업종에 언급이 많았습니다.",
+   "span": [
+    8,
+    12
+   ],
+   "surface": "업 정에",
+   "wrong": "업정에",
+   "right": "업종에",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "cln-3d57c1",
+   "kind": "clean",
+   "input": "오늘 방송에서는 업종에 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 업종에 이야기를 해보겠습니다.",
+   "wrong": "업정에",
+   "right": "업종에",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-9deba9-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "어제 시장에서 업정으로 언급이 많았습니다.",
+   "expected": "어제 시장에서 업종으로 언급이 많았습니다.",
+   "span": [
+    8,
+    12
+   ],
+   "surface": "업정으로",
+   "wrong": "업정으로",
+   "right": "업종으로",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-9deba9-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "업정으로 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "업종으로 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    4
+   ],
+   "surface": "업정으로",
+   "wrong": "업정으로",
+   "right": "업종으로",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-9deba9-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "투자자들이 업정으로 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 업종으로 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    10
+   ],
+   "surface": "업정으로",
+   "wrong": "업정으로",
+   "right": "업종으로",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-9deba9-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "요즘 업정 으로 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 업종으로 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    8
+   ],
+   "surface": "업정 으로",
+   "wrong": "업정으로",
+   "right": "업종으로",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "cln-9deba9",
+   "kind": "clean",
+   "input": "업종으로 관련해서 궁금한 부분이 있습니다.",
+   "expected": "업종으로 관련해서 궁금한 부분이 있습니다.",
+   "wrong": "업정으로",
+   "right": "업종으로",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-bd2924-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "오늘 방송에서는 업정은 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 업종은 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    12
+   ],
+   "surface": "업정은",
+   "wrong": "업정은",
+   "right": "업종은",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-bd2924-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "어제 시장에서 업정은 언급이 많았습니다.",
+   "expected": "어제 시장에서 업종은 언급이 많았습니다.",
+   "span": [
+    8,
+    11
+   ],
+   "surface": "업정은",
+   "wrong": "업정은",
+   "right": "업종은",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-bd2924-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "업정은 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "업종은 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "업정은",
+   "wrong": "업정은",
+   "right": "업종은",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-bd2924-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "업 정은 관련해서 궁금한 부분이 있습니다.",
+   "expected": "업종은 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    4
+   ],
+   "surface": "업 정은",
+   "wrong": "업정은",
+   "right": "업종은",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "cln-bd2924",
+   "kind": "clean",
+   "input": "투자자들이 업종은 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 업종은 이슈에 주목하고 있습니다.",
+   "wrong": "업정은",
+   "right": "업종은",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-a25e88-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "오늘 방송에서는 업정을 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 업종을 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    12
+   ],
+   "surface": "업정을",
+   "wrong": "업정을",
+   "right": "업종을",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-a25e88-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "어제 시장에서 업정을 언급이 많았습니다.",
+   "expected": "어제 시장에서 업종을 언급이 많았습니다.",
+   "span": [
+    8,
+    11
+   ],
+   "surface": "업정을",
+   "wrong": "업정을",
+   "right": "업종을",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-a25e88-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "업정을 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "업종을 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "업정을",
+   "wrong": "업정을",
+   "right": "업종을",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-a25e88-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "업 정을 관련해서 궁금한 부분이 있습니다.",
+   "expected": "업종을 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    4
+   ],
+   "surface": "업 정을",
+   "wrong": "업정을",
+   "right": "업종을",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "cln-a25e88",
+   "kind": "clean",
+   "input": "투자자들이 업종을 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 업종을 이슈에 주목하고 있습니다.",
+   "wrong": "업정을",
+   "right": "업종을",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-b55b0b-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "요즘 업정이 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 업종이 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    6
+   ],
+   "surface": "업정이",
+   "wrong": "업정이",
+   "right": "업종이",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-b55b0b-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "오늘 방송에서는 업정이 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 업종이 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    12
+   ],
+   "surface": "업정이",
+   "wrong": "업정이",
+   "right": "업종이",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-b55b0b-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "어제 시장에서 업정이 언급이 많았습니다.",
+   "expected": "어제 시장에서 업종이 언급이 많았습니다.",
+   "span": [
+    8,
+    11
+   ],
+   "surface": "업정이",
+   "wrong": "업정이",
+   "right": "업종이",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-b55b0b-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "투자자들이 업 정이 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 업종이 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    10
+   ],
+   "surface": "업 정이",
+   "wrong": "업정이",
+   "right": "업종이",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "cln-b55b0b",
+   "kind": "clean",
+   "input": "업종이 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "업종이 부분은 조금 더 지켜봐야 합니다.",
+   "wrong": "업정이",
+   "right": "업종이",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-686aef-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "투자자들이 업정인 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 업종인 이슈에 주목하고 있습니다.",
+   "span": [
+    6,
+    9
+   ],
+   "surface": "업정인",
+   "wrong": "업정인",
+   "right": "업종인",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-686aef-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "업정인 관련해서 궁금한 부분이 있습니다.",
+   "expected": "업종인 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    3
+   ],
+   "surface": "업정인",
+   "wrong": "업정인",
+   "right": "업종인",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-686aef-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "요즘 업정인 쪽 흐름이 어떻습니까?",
+   "expected": "요즘 업종인 쪽 흐름이 어떻습니까?",
+   "span": [
+    3,
+    6
+   ],
+   "surface": "업정인",
+   "wrong": "업정인",
+   "right": "업종인",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-686aef-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "어제 시장에서 업 정인 언급이 많았습니다.",
+   "expected": "어제 시장에서 업종인 언급이 많았습니다.",
+   "span": [
+    8,
+    12
+   ],
+   "surface": "업 정인",
+   "wrong": "업정인",
+   "right": "업종인",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "cln-686aef",
+   "kind": "clean",
+   "input": "오늘 방송에서는 업종인 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 업종인 이야기를 해보겠습니다.",
+   "wrong": "업정인",
+   "right": "업종인",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-ef92fa-0",
+   "kind": "error",
+   "variant": "plain",
+   "input": "오늘 방송에서는 업정입니다 이야기를 해보겠습니다.",
+   "expected": "오늘 방송에서는 업종입니다 이야기를 해보겠습니다.",
+   "span": [
+    9,
+    14
+   ],
+   "surface": "업정입니다",
+   "wrong": "업정입니다",
+   "right": "업종입니다",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-ef92fa-1",
+   "kind": "error",
+   "variant": "plain",
+   "input": "어제 시장에서 업정입니다 언급이 많았습니다.",
+   "expected": "어제 시장에서 업종입니다 언급이 많았습니다.",
+   "span": [
+    8,
+    13
+   ],
+   "surface": "업정입니다",
+   "wrong": "업정입니다",
+   "right": "업종입니다",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-ef92fa-2",
+   "kind": "error",
+   "variant": "plain",
+   "input": "업정입니다 부분은 조금 더 지켜봐야 합니다.",
+   "expected": "업종입니다 부분은 조금 더 지켜봐야 합니다.",
+   "span": [
+    0,
+    5
+   ],
+   "surface": "업정입니다",
+   "wrong": "업정입니다",
+   "right": "업종입니다",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "err-ef92fa-s",
+   "kind": "error",
+   "variant": "spacing",
+   "input": "업정 입니다 관련해서 궁금한 부분이 있습니다.",
+   "expected": "업종입니다 관련해서 궁금한 부분이 있습니다.",
+   "span": [
+    0,
+    6
+   ],
+   "surface": "업정 입니다",
+   "wrong": "업정입니다",
+   "right": "업종입니다",
+   "category": "term",
+   "tier": "A"
+  },
+  {
+   "id": "cln-ef92fa",
+   "kind": "clean",
+   "input": "투자자들이 업종입니다 이슈에 주목하고 있습니다.",
+   "expected": "투자자들이 업종입니다 이슈에 주목하고 있습니다.",
+   "wrong": "업정입니다",
+   "right": "업종입니다",
+   "category": "term",
+   "tier": "A"
   },
   {
    "id": "err-15af89-0",
@@ -16104,6 +17436,39 @@
    ],
    "category": "trap",
    "why": "영업익 is the standard newspaper abbreviation of 영업이익, not a misrecognition - every one of its 124 corpus occurrences is ordinary usage. 영업익→영업이익 is spelling normalisation, and this trap is what makes that visible: the pair costs a real over-correction on correct text, which the in-domain table cannot show."
+  },
+  {
+   "id": "trp-industrial-policy",
+   "kind": "trap",
+   "input": "정부의 산업 정책 방향이 반도체 설비 투자 계획에 그대로 반영됐습니다.",
+   "expected": "정부의 산업 정책 방향이 반도체 설비 투자 계획에 그대로 반영됐습니다.",
+   "triggers": [
+    "업정"
+   ],
+   "category": "trap",
+   "why": "'산업 정책' is ordinary Korean and the whitespace-flexible key 업정 spans its boundary; 업정→업종 produces '산업종책'. Found by the 2026-10-15 candidate sweep before the pair shipped: at least 193 of 699 corpus matches were this spanning shape."
+  },
+  {
+   "id": "trp-business-suspension",
+   "kind": "trap",
+   "input": "영업 정지 처분이 알려지면서 주가가 장중에 크게 흔들렸습니다.",
+   "expected": "영업 정지 처분이 알려지면서 주가가 장중에 크게 흔들렸습니다.",
+   "triggers": [
+    "업정"
+   ],
+   "category": "trap",
+   "why": "'영업 정지' (business suspension) is market news vocabulary; 업정→업종 turns it into '영업종지'. Same spanning shape as trp-industrial-policy, kept separate because it also occurs written solid (영업정지)."
+  },
+  {
+   "id": "trp-core-pce-already-right",
+   "kind": "trap",
+   "input": "이번 달 근원 PCE 상승률은 시장 예상치와 같은 수준이었습니다.",
+   "expected": "이번 달 근원 PCE 상승률은 시장 예상치와 같은 수준이었습니다.",
+   "triggers": [
+    "근원 PC"
+   ],
+   "category": "trap",
+   "why": "The key 근원 PC sits inside its own correction, so text that already reads '근원 PCE' re-matches and becomes '근원 PCEE'. 8 of 95 corpus matches were already correct. mine_traps.py did not list it because it never compared a pair with itself."
   }
  ]
 }

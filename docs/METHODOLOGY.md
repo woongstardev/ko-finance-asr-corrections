@@ -87,17 +87,17 @@ expensive, uncertain layer has to get right.
 
 ## Composition of the current snapshot
 
-The snapshot holds 210 pairs <!-- stat:pair_count -->:
+The snapshot holds 228 pairs <!-- stat:pair_count -->:
 
 | Split | Count |
 |---|---|
-| Tier A — a person approved it | 85 <!-- stat:tier_a --> |
-| Tier B — promoted automatically | 125 <!-- stat:tier_b --> |
-| `stock` | 111 <!-- stat:category:stock --> |
-| `term` | 73 <!-- stat:category:term --> |
+| Tier A — a person approved it | 72 <!-- stat:tier_a --> |
+| Tier B — promoted automatically | 156 <!-- stat:tier_b --> |
+| `stock` | 114 <!-- stat:category:stock --> |
+| `term` | 87 <!-- stat:category:term --> |
 | `general` | 14 <!-- stat:category:general --> |
 | `other` | 6 <!-- stat:category:other --> |
-| `number` | 6 <!-- stat:category:number --> |
+| `number` | 7 <!-- stat:category:number --> |
 
 `other` is 42 here for a reason that is about tooling rather than vocabulary: until 2026-09-02
 the category came only from the registry, so every pair the registry could not resolve landed
@@ -107,11 +107,13 @@ above is the result: `other` is now what its name says rather than a record of r
 coverage. Every snapshot since has classified its own new pairs the same way — 31 of them on
 2026-09-08 — so the queue the exporter prints is what is genuinely new, not a backlog.
 
-By verification path: 49 `human`, 48 `goldset-alignment`, 38 `auditor-consensus` — the
-alignment path did not exist at the first snapshot and is now the second largest, which is why
+By verification path: 72 `human`, 42 `goldset-alignment`, 114 `auditor-consensus` — the
+alignment path did not exist at the first snapshot and now covers 42 pairs, which is why
 `evidence` had to stop being implied by `tier`.
 
-Every Tier B pair carries both auditor model ids. Tier A pairs usually carry none — but not
+Tier B pairs carry auditor model ids only when auditors promoted them: the 114
+`auditor-consensus` pairs carry two (83) or four (31), and the 42 `goldset-alignment` pairs
+carry none. Tier A pairs usually carry none — but not
 by construction, and one shipped pair (`업항 → 업황`) is Tier A *with* both ids, because a
 person approved a pair that had already reached auditor consensus. Provenance therefore
 lives in its own `evidence` field rather than being inferred from `tier` or from whether

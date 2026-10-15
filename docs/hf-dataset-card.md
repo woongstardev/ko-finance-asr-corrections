@@ -53,10 +53,10 @@ configs:
 
 Frequency-annotated Korean ASR confusion pairs from finance/stock YouTube.
 
-- **210 pairs** <!-- stat:pair_count -->
-- mined from **2,391 videos** <!-- stat:scanned_videos --> of auto-captions
-- across **47 channels** <!-- stat:corpus_channels -->
-- totalling **1,080.1 hours** <!-- stat:corpus_hours -->
+- **228 pairs** <!-- stat:pair_count -->
+- mined from **9,184 videos** <!-- stat:scanned_videos --> of auto-captions
+- across **69 channels** <!-- stat:corpus_channels -->
+- totalling **3,676.0 hours** <!-- stat:corpus_hours -->
 
 Each pair carries how often the term was mangled *and* how often it was said correctly, plus
 verification provenance.
@@ -73,12 +73,12 @@ DasanCallDial (2026, call-centre STT output paired with corrected sentences, non
 and no finance-domain resource exists. Frequency is what makes a pair list actionable: it says
 which errors dominate real traffic:
 
-- `펀더멘탈 → 펀더멘털` ×1,151 <!-- stat:count:펀더멘탈 -->
-- `하이니스 → 하이닉스` ×904 <!-- stat:count:하이니스 -->
-- `변합기 → 변압기` ×682 <!-- stat:count:변합기 -->
-- `FMC → FOMC` ×1,106 <!-- stat:count:FMC -->
+- `펀더멘탈 → 펀더멘털` ×3,272 <!-- stat:count:펀더멘탈 -->
+- `하이니스 → 하이닉스` ×1,850 <!-- stat:count:하이니스 -->
+- `변합기 → 변압기` ×1,691 <!-- stat:count:변합기 -->
+- `FMC → FOMC` ×3,913 <!-- stat:count:FMC -->
 
-Those four were 449, 342, 333 and 270 one snapshot ago; the counts grow with the corpus, which
+Those four were 1,151, 904, 682 and 1,106 one snapshot ago; the counts grow with the corpus, which
 is why every number in this card carries a marker the release checker verifies.
 
 ## Fields
@@ -98,8 +98,8 @@ Details and per-round numbers: [`docs/METHODOLOGY.md`](https://github.com/woongs
 
 Each pair carries `corpus_count` (the misrecognized form) and `right_count` (the verified one)
 from the same scan, so a row states how often the term came out wrong:
-`FMC → FOMC` 74.8% <!-- stat:rate:FMC -->, `엔트로픽 → 앤트로픽` 87.3% <!-- stat:rate:엔트로픽 -->.
-23 pairs have `right_count: 0` <!-- stat:right_count_zero --> — across all 2,391 videos <!-- stat:scanned_videos --> the captions
+`FMC → FOMC` 69.6% <!-- stat:rate:FMC -->, `엔트로픽 → 앤트로픽` 88.4% <!-- stat:rate:엔트로픽 -->.
+15 pairs have `right_count: 0` <!-- stat:right_count_zero --> — across all 9,184 videos <!-- stat:scanned_videos --> the captions
 never once produced the correct spelling. Stock rows also carry `ticker` and `market`, so they
 join to price data without matching on a name.
 
@@ -109,16 +109,16 @@ unsafe as written, not that every correction it made was wrong.
 
 ## Limitations (read these)
 
-One corpus, one ASR system, one domain; 210 pairs <!-- stat:pair_count --> is a seed, not a lexicon; frequency-ranked
+One corpus, one ASR system, one domain; 228 pairs <!-- stat:pair_count --> is a seed, not a lexicon; frequency-ranked
 mining skews toward what these channels talk about; `corpus_count` counts surface forms, not
 confirmed errors; some pairs encode a spelling standard rather than a mishearing; tier B pairs
-were verified by auditor consensus, not by a human; **no person-name pairs and no source
+were verified by auditor consensus or caption alignment, not by a human; **no person-name pairs and no source
 sentences ship, by policy**. The full list is in the repository README — read it before using
 the data as a general Korean ASR error list, because it is not one.
 
 ## Benchmark
 
-A standard-library scorer, a 1,100-item <!-- stat:eval_items --> synthetic evaluation set, and three dictionary baselines
+A standard-library scorer, a 1,193-item <!-- stat:eval_items --> synthetic evaluation set, and three dictionary baselines
 live in the GitHub repository. Fixes and over-corrections are scored together, because a
 correction dictionary that fixes 100 errors while damaging 20 correct sentences is not a good
 dictionary.

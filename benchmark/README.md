@@ -30,7 +30,7 @@ export ANTHROPIC_API_KEY=...                                       # or an API k
 python3 benchmark/llm_reference.py --runs 3
 ```
 
-## The evaluation set (1,100 items) <!-- stat:eval_items -->
+## The evaluation set (1,193 items) <!-- stat:eval_items -->
 
 No caption text appears anywhere in this benchmark. Source transcripts are not
 redistributable and the dataset's hard line excludes them, so every sentence is either a
@@ -38,10 +38,10 @@ template fill or hand-authored for this repo.
 
 | Kind | Items | What it is | Correct behaviour |
 |---|---|---|---|
-| `error` / plain | 267 | Six carrier templates filled with a pair's `wrong` form, 3 per pair | Replace the slot with `right` |
-| `error` / spacing | 86 | The same, with the spacing of `wrong` damaged — a space inserted mid-word, or a phrase's space removed | Replace the slot with `right` |
-| `clean` | 89 | A template filled with `right` — already correct | Change nothing |
-| `trap` | 51 | <!-- stat:trap_count --> Hand-authored sentences where a pair's `wrong` string is legitimate Korean (`엔트로피` the physics term, `MCD` the McDonald's ticker, `FFC` the flat cable, `블랙락 시티`, `사업 항목`, `지진 난 주`, `아이비리그`, `삼성 자산운용`, `매도 체결`, `단도체` the transmission conductor, `SMP` the electricity price, `MDI` the chemical, `한반도 지도`, `변동 상황`, `크래프트 하인스`, `영업익` the standard abbreviation) | Change nothing |
+| `error` / plain | 684 | Six carrier templates filled with a pair's `wrong` form, 3 per pair | Replace the slot with `right` |
+| `error` / spacing | 227 | The same, with the spacing of `wrong` damaged — a space inserted mid-word, or a phrase's space removed | Replace the slot with `right` |
+| `clean` | 228 | A template filled with `right` — already correct | Change nothing |
+| `trap` | 54 | <!-- stat:trap_count --> Hand-authored sentences where a pair's `wrong` string is legitimate Korean (`엔트로피` the physics term, `MCD` the McDonald's ticker, `FFC` the flat cable, `블랙락 시티`, `사업 항목`, `지진 난 주`, `아이비리그`, `삼성 자산운용`, `매도 체결`, `단도체` the transmission conductor, `SMP` the electricity price, `MDI` the chemical, `한반도 지도`, `변동 상황`, `크래프트 하인스`, `영업익` the standard abbreviation, `산업 정책`, `영업 정지`, `근원 PCE` already correct) | Change nothing |
 
 The spacing variants are not synthetic difficulty for its own sake: YouTube auto-captions
 drop the space at event boundaries essentially always, which is why the upstream matcher is
@@ -91,22 +91,22 @@ penalty measures.
 - **naive** — plain substring replacement, all 135 pairs.
 - **boundary** — whitespace-flexible matching with a non-alphanumeric guard on ASCII keys.
   This mirrors how the upstream pipeline matches.
-- **guarded** — boundary, minus any key shorter than 4 characters (146 <!-- stat:guarded_keys -->
-  of 210 <!-- stat:pair_count --> pairs survive).
+- **guarded** — boundary, minus any key shorter than 4 characters (152 <!-- stat:guarded_keys -->
+  of 228 <!-- stat:pair_count --> pairs survive).
   Short Korean keys are where blind replacement does its damage, and Korean is agglutinative,
   so there is no word boundary to fall back on.
 
 | System | Recall | plain | spacing | Mangled | Over-corr. | Over-corr. rate | Precision (proxy) | **Net score** |
 |---|---|---|---|---|---|---|---|---|
-| naive | 75.2% | 630/630 | 1/209 | 2 | 26 | 2.4% | 95.8% | **72.1%** |
-| boundary | 100.0% | 630/630 | 209/209 | 0 | 44 | 4.0% | 95.0% | **94.8%** |
-| guarded (min key 4) | 69.6% | 439/630 | 145/209 | 0 | 15 | 1.4% | 97.5% | **67.8%** |
-| gpt-5.6-sol, no dictionary (3 runs) | 70.8% ±0.3 | — | — | 176.3 | 28.7 | 2.6% | 74.4% | **67.4% ±0.4** |
+| naive | 75.2% | 684/684 | 1/227 | 2 | 28 | 2.3% | 95.8% | **72.1%** |
+| boundary | 100.0% | 684/684 | 227/227 | 0 | 46 | 3.9% | 95.2% | **95.0%** |
+| guarded (min key 4) | 66.7% | 456/684 | 152/227 | 0 | 17 | 1.4% | 97.3% | **64.9%** |
+| gpt-5.6-sol, no dictionary (3 runs) ‡ | 70.8% ±0.3 | — | — | 176.3 | 28.7 | 2.6% | 74.4% | **67.4% ±0.4** |
 | Claude Opus 5, no dictionary (3 runs) † | 63.8% ±0.3 | — | — | 113.7 | 9.3 | 1.9% | 64.7% | **61.2% ±0.2** |
 
-The `gpt-5.6-sol` row is measured on **this** eval set, which is what makes the comparison
-above a comparison: same 1,100 items, same scorer, 94.8% for the dictionary against 67.4% for
-the model. It was refreshed the same day the snapshot moved, which is only affordable because
+‡ Measured on `mini-v0.7`'s 1,100 items — one snapshot behind the dictionary rows above. The
+comparison it supports is 94.8% for the dictionary against 67.4% for the model, both on those
+1,100 items, same scorer. It was refreshed the same day `mini-v0.7` shipped, which is only affordable because
 the row costs a subscription rather than an invoice — see the CLI table below. It reached the table because it costs a subscription rather than an invoice —
 see the CLI table below — and a row nobody can afford to refresh becomes the row below.
 
@@ -132,14 +132,15 @@ What the table says:
 
 1. **Whitespace flexibility is worth ~24 points of recall** and costs 15 extra
    over-corrections. In v0, with 14 traps, that cost looked like 3 and the trade was
-   obviously right; at 40 traps it is a real trade with a visible price. The v0.2 trap set
+   obviously right; at v0.2's 40 traps it is a real trade with a visible price. The v0.2 trap set
    was written to probe exactly this, so the movement is a measurement, not a surprise.
-2. **Every over-correction came from the trap set** — never from a `clean` item. Direction
+2. **Every over-correction but one came from the trap set** — the exception is the `clean` item
+   for `근원 PC → 근원 PCE` (v0.8), whose key sits inside its own correction. Otherwise direction
    matters: a `wrong → right` rule cannot fire on a sentence that is already correct. The
    `clean` items therefore look like dead weight against dictionary baselines, and are kept
    because a generative system (an LLM asked to "fix the finance terms") absolutely can
    rewrite an already-correct sentence. They are the control that catches that.
-3. **A minimum key length buys precision at a steep price**: 32 points of recall to remove
+3. **A minimum key length buys precision at a steep price**: on v0.2, 32 points of recall to remove
    25 of 40 over-corrections. More useful is *which* 15 survive — every one is ≥4 characters,
    and a third of them (`지진난주`, `올리브형`, `대원전설`, `신형증권`, `마이크로님`) are keys
    that only match because the matcher joins across a space. **Length guards the wrong axis.**
@@ -158,8 +159,8 @@ This is the comparison the benchmark exists to make, and the answer is **the dic
 and not narrowly** — on `mini-v0.7`, the same 1,100 items for both, 94.8% against 67.4% net.
 Until this month the comparison had to be quoted from `mini-v0.2` (88.7% against 61.2%),
 because the LLM row was three benchmark versions behind and refreshing it meant paying for
-another API run. It is current now because the row can be produced through a coding CLI on an
-existing subscription; the shape of the answer did not change, which is worth stating plainly
+another API run. It was current at `mini-v0.7` because the row can be produced through a coding CLI on an
+existing subscription (at `mini-v0.8` it is one snapshot behind again, ‡ above); the shape of the answer did not change, which is worth stating plainly
 since a same-version rerun was always the honest test of the older claim.
 
 The interesting part is that the LLM wins the axis the dictionary was supposed to lose:
@@ -188,7 +189,7 @@ The interesting part is that the LLM wins the axis the dictionary was supposed t
 Two caveats, both against the dataset rather than the model. Roughly 20 items per run were
 scored wrong for a stem/particle mismatch on fragment pairs (`코스하고 → 코스닥으로`), which the
 limitations already flag as reading unnaturally in a carrier frame — the model's answer is
-arguably right there and the gold string is the artifact. And on `펀더멘탈 → 펀더멘털`, the
+arguably right there and the gold string is the artifact. And on `펀더멘탈 → 펀더멘털`, then the
 highest-frequency pair, the model declines to edit; since that pair encodes a spelling
 standard rather than a mishearing, declining is defensible. Neither changes the direction of
 the result, but a reader deserves to know the gap is somewhat smaller than the table says.
@@ -202,11 +203,11 @@ The discriminating signal is the over-correction axis. See limitations.
 The trap set grew from 14 to 40 and the eval set from 456 to 482 items, so **v0.2 numbers are
 not comparable to v0 numbers.** Both are recorded here rather than quietly overwritten:
 
-| System | v0 (89 pairs, 14 traps) | v0.2 (89, 40) | v0.3 (130, 40) | v0.4 (135, 47) | v0.5 (179, 47) | v0.6 (179, 51) | v0.7 (210, 51) |
-|---|---|---|---|---|---|---|---|
-| naive | 72.8% | 68.8% | 71.5% | 70.9% | 71.9% | 71.6% | 72.1% |
-| boundary | 96.0% | 88.7% | 93.3% | 92.4% | 94.4% | 93.8% | **94.8%** |
-| guarded | 67.4% | 63.7% | 57.2% | 58.8% | 66.2% | 66.2% | 67.8% |
+| System | v0 (89 pairs, 14 traps) | v0.2 (89, 40) | v0.3 (130, 40) | v0.4 (135, 47) | v0.5 (179, 47) | v0.6 (179, 51) | v0.7 (210, 51) | v0.8 (228, 54) |
+|---|---|---|---|---|---|---|---|---|
+| naive | 72.8% | 68.8% | 71.5% | 70.9% | 71.9% | 71.6% | 72.1% | 72.1% |
+| boundary | 96.0% | 88.7% | 93.3% | 92.4% | 94.4% | 93.8% | 94.8% | **95.0%** |
+| guarded | 67.4% | 63.7% | 57.2% | 58.8% | 66.2% | 66.2% | 67.8% | 64.9% |
 
 v0.2 → v0.3 moves for three reasons at once, and they pull in different directions. 41 net new
 pairs enlarge the error set; three unsafe keys were withdrawn or narrowed, which is why
@@ -232,7 +233,15 @@ ranked `SK 하인` (6 characters) above `SK하인수` (5). The gate caught it as
 items before publication, and the fix - measure length without spaces, as the production
 replacer does - leaves every previously published number unchanged.
 
-v0.6 → v0.7 is 31 pairs, no new traps, and it is the first batch that is mostly *vocabulary*
+v0.7 → v0.8 is 18 pairs and three traps. Twelve of the 18 keys are three characters - eight of
+them the `업정` ending keys that replaced the withdrawn stem - so the length floor discards them
+and `guarded` falls (67.8 → 64.9%), the reverse of v0.7. `boundary` rises to 95.0% and gains
+two over-corrections (44 → 46), both from `근원 PC`: its trap, and the first `clean` item any
+baseline has edited, because already-correct `근원 PCE` re-matches and becomes `근원 PCEE`. The
+`산업 정책` and `영업 정지` traps fire under no baseline, because the ending keys do not span
+that word boundary the way the withdrawn `업정` did.
+
+v0.6 → v0.7 was 31 pairs, no new traps, and it is the first batch that is mostly *vocabulary*
 rather than company names — 대차잔고, 롱숏 전략, 사모 펀드, 전환사채, 외환 보유고. They are long
 keys, so `guarded` gains (66.2 → 67.8%) instead of losing as it did when short stock-name
 fragments arrived, and `boundary` rises to 94.8% because the error set grew against a fixed
@@ -245,7 +254,7 @@ over-corrections (40 → 44) and leave `guarded` untouched, because all four key
 characters and its length floor had already discarded them - the same trade that costs it
 31.7 points of recall.
 
-Quote the benchmark identifier (`ko-finance-asr-corrections/mini-v0.7`, in `eval-set.json`)
+Quote the benchmark identifier (`ko-finance-asr-corrections/mini-v0.8`, in `eval-set.json`)
 with any number taken from here. A benchmark whose numbers move without a version is worse
 than no benchmark.
 
@@ -466,7 +475,7 @@ a hosted Qwen.
   sentences are synthetic, so there is no transcript contamination — but pair-knowledge
   contamination is real and belongs in the result's interpretation.
 
-## Limitations (mini-v0.7)
+## Limitations (mini-v0.8)
 
 - **In-domain by construction.** Error items are generated from the same pairs a dictionary
   system would use, so a lookup baseline reaches 100% recall on the main table. That measures
@@ -487,13 +496,14 @@ a hosted Qwen.
   (`코스하고 → 코스닥으로`) read unnaturally in a carrier frame. v0.2 did not change the
   frames: the trap set was the cheaper source of difficulty, and generated carrier sentences
   would need the same human review the traps got, at 353 items instead of 26.
-- **40 traps still under-counts the exposure.** Each trap covers one key in one context, and
+- **54 traps still under-counts the exposure.** Each trap covers one key in one context, and
   a short key collides in many contexts at once — five v0.2 traps are second contexts for a
   key that already had one, and they fire just as reliably. The trap set is a floor on the
   false-positive surface, never a measurement of it.
 - **The traps are adversarial to substring matching by construction.** Every one was checked
-  to fire under the `boundary` matcher before being kept, which is why that baseline
-  over-corrects on 40 of 40. That makes the trap axis a floor for dictionary systems rather
+  to fire under the `boundary` matcher before being kept; on `mini-v0.8` that baseline
+  over-corrects on 45 of 54, and the other 9 trigger keys that have since been withdrawn or
+  narrowed. That makes the trap axis a floor for dictionary systems rather
   than a ranking among them; it discriminates where it is meant to, between systems that use
   context and systems that do not.
 - **One LLM, one prompt, one effort level.** The LLM row is a reference point, not a survey:
