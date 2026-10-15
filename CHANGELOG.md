@@ -14,6 +14,8 @@ section becomes the next release's notes.
 
 ## [Unreleased]
 
+## [v2026.10] - 2026-10-16
+
 ### Added
 - `근원 PC → 근원 PCE` (2026-10-16)
 - `다오가 → 다우가` (2026-10-16)

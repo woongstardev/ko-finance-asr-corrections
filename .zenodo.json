@@ -1,7 +1,7 @@
 {
   "upload_type": "dataset",
   "title": "ko-finance-asr-corrections: Frequency-annotated Korean ASR confusion pairs from finance/stock YouTube",
-  "version": "0.1.0",
+  "version": "2026.10",
   "language": "kor",
   "access_right": "open",
   "license": "cc-by-4.0",
