@@ -133,6 +133,11 @@ class GateTests(unittest.TestCase):
         self.check(lambda p: p["pairs"][0].update(right=p["pairs"][0]["wrong"]),
                    "corrects nothing")
 
+    def test_wrong_inside_own_right(self):
+        def embed(payload):
+            payload["pairs"][0]["right"] = payload["pairs"][0]["wrong"] + "E"
+        self.check_warns(embed, "sits inside its own correction")
+
     def test_pair_count_mismatch(self):
         self.check(lambda p: p.update(pair_count=99), "pair_count 99")
 

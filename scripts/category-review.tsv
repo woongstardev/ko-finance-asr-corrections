@@ -105,3 +105,9 @@ K뷰T	K뷰티	term	sector theme
 대공항	대공황	term	the Great Depression; macroeconomic history
 브랜트	브렌트	term	Brent crude; oil price benchmark
 업정	업종	term	industry sector; market classification
+#
+# Added 2026-10-15 from the 2026-10-12 dry-run (219-pair candidate).
+다오가	다우가	term	the Dow (Jones index) + subject particle; an index, not a listed company
+마이크로 테크놀로지	마이크론 테크놀로지	stock	Micron Technology; matches the existing 마이콘/마이크 테크놀로지 pairs
+미스비C	미쓰비시	stock	Mitsubishi; listed Japanese conglomerate
+삼성자 SK 하이닉스	삼성전자 SK하이닉스	stock	Samsung Electronics + SK hynix; two listed tickers in one span

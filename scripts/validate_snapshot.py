@@ -174,6 +174,15 @@ def check_pairs(payload: dict, fail, warn) -> None:
             fail(f"{where}: auditor_models must be a list of strings")
         if pair.get("wrong") == pair.get("right"):
             fail(f"{where}: wrong == right, which corrects nothing")
+        elif (isinstance(pair.get("wrong"), str) and isinstance(pair.get("right"), str)
+              and pair["wrong"].replace(" ", "") in pair["right"].replace(" ", "")):
+            # benchmark/mine_traps.py skips a pair against itself, so this shape
+            # reached a candidate unseen (2026-10-15: 근원 PC→근원 PCE, 8 of 95
+            # corpus matches already read "근원 PCE" and would become "PCEE").
+            # A replacer that does not check what follows the match damages the
+            # correct form. It warns: the fix is upstream, and a person decides.
+            warn(f"{where}: {pair['wrong']!r} sits inside its own correction "
+                 f"{pair['right']!r} — already-correct text re-matches and is damaged")
 
         key = (pair.get("wrong"), pair.get("right"))
         if key in seen:
