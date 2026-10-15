@@ -78,7 +78,8 @@ def edit_changelog(text: str, version: str, when: str) -> str:
 
 
 def edit_citation(text: str, cff_version: str, when: str) -> str:
-    text, n = re.subn(r'^version: .*$', f"version: {cff_version}", text, count=1, flags=re.M)
+    # Quoted: a bare 2026.10 is a YAML float and reads back as 2026.1.
+    text, n = re.subn(r'^version: .*$', f'version: "{cff_version}"', text, count=1, flags=re.M)
     if not n:
         sys.exit("CITATION.cff has no 'version:' line")
     text, n = re.subn(r'^date-released: .*$', f'date-released: "{when}"', text,
