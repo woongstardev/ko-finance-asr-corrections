@@ -14,6 +14,10 @@ section becomes the next release's notes.
 
 ## [Unreleased]
 
+### Benchmark
+- Three over-correction traps: `산업 정책` and `영업 정지` (the key `업정` spans a word
+  boundary) and `근원 PCE` (the key `근원 PC` sits inside its own correction) (2026-10-15)
+
 ## [v0.1] - 2026-09-11
 
 ### Added

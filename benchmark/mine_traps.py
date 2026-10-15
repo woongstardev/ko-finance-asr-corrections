@@ -55,9 +55,15 @@ def cross_pair(pairs: list[dict]) -> list[dict]:
                     the result is neither wrong nor right (a `mangled` outcome).
     retrigger       B.wrong inside A.right: B fires on A's own output, so a
                     correct replacement is immediately damaged.
+    self_embedded   A.wrong inside A.right: text that is already correct
+                    matches the key and is damaged (근원 PC -> 근원 PCEE).
+                    Skipping a pair against itself hid this until 2026-10-15.
     """
     found = []
     for a in pairs:
+        if a["wrong"].replace(" ", "") in a["right"].replace(" ", ""):
+            found.append({"kind": "self_embedded", "key": a["wrong"],
+                          "inside": a["right"], "other": a["right"]})
         for b in pairs:
             if a is b:
                 continue

@@ -243,9 +243,26 @@ def run_gates(candidate_dir: Path, write: bool) -> str:
     return " · ".join(summary)
 
 
+def counterexample_signal(added: list[tuple[str, str]]) -> dict[str, dict] | None:
+    """Sweep the added keys against the corpus; None when there is no corpus here.
+
+    Never fatal: the sweep advises a person, it does not gate the snapshot.
+    """
+    corpus = os.environ.get("OSS_CORPUS_DIR")
+    if not added or not corpus or not Path(corpus).expanduser().is_dir():
+        return None
+    try:
+        sys.path.insert(0, str(REPO / "scripts"))
+        from counterexample_scan import risk_counts
+        return risk_counts(Path(corpus).expanduser(), added)
+    except Exception as exc:  # advisory only
+        sys.stderr.write(f"WARNING: counterexample signal failed: {exc}\n")
+        return None
+
+
 def render_report(
     today: str, diff: dict, export_report: dict, new_person: list[str], old_count: int,
-    new_count: int, gates: str = ""
+    new_count: int, gates: str = "", signal: dict[str, dict] | None = None
 ) -> str:
     lines = [
         f"# oss-refresh dry-run — {today}",
@@ -259,6 +276,18 @@ def render_report(
     if diff["added"]:
         lines.append("## Added")
         lines += [f"- {fmt_pair(k)}" for k in diff["added"]]
+        lines.append("")
+    if signal:
+        lines.append("## Counterexample signal (added pairs, corpus-wide)")
+        lines.append("spanning = the match joins two words · already = the text was "
+                     "already correct. ⚠ = any already, or 10%+ spanning; sweep it before --write "
+                     "(scripts/counterexample_scan.py --pairs <candidate>).")
+        for k in diff["added"]:
+            row = signal.get(k[0])
+            if row:
+                lines.append(f"- {'⚠ ' if row['flag'] else ''}{fmt_pair(k)}: "
+                             f"{row['matches']} matches · {row['spanning']} spanning · "
+                             f"{row['already']} already")
         lines.append("")
     if diff["removed"]:
         lines.append("## Removed")
@@ -412,7 +441,10 @@ def main() -> None:
         seen_person = set(state.get("seen_person", []))
         new_person = [s for s in export_report.get("dropped_person", []) if s not in seen_person]
 
-        report = render_report(today, diff, export_report, new_person, len(old), len(new), gates)
+        signal = counterexample_signal(diff["added"])
+        flagged = sum(1 for row in (signal or {}).values() if row["flag"])
+        report = render_report(today, diff, export_report, new_person, len(old), len(new),
+                               gates, signal)
         REPORT_DIR.mkdir(parents=True, exist_ok=True)
         report_path = REPORT_DIR / f"{today}.md"
         report_path.write_text(report, encoding="utf-8")
@@ -428,7 +460,8 @@ def main() -> None:
                 send_telegram(
                     "📊 ko-finance-asr 주간 스냅숏 점검\n"
                     f"+{len(diff['added'])} / -{len(diff['removed'])} / "
-                    f"변경 {len(diff['meta_changed'])} · 신규 인물 후보 {len(new_person)}건\n"
+                    f"변경 {len(diff['meta_changed'])} · 신규 인물 후보 {len(new_person)}건 · "
+                    f"반례 신호 {flagged}건\n"
                     f"리포트: {report_path}"
                 )
                 state["last_notified"] = now

@@ -269,5 +269,37 @@ class WeeklyDiffTests(unittest.TestCase):
         self.assertEqual(diff["meta_changed"], [(self.key, ["category"])])
 
 
+class CounterexampleSignalTests(unittest.TestCase):
+    """The weekly sweep's two shapes, on a corpus small enough to read."""
+
+    def counts(self, lines: list[str], pairs: list[tuple[str, str]]) -> dict:
+        sys.path.insert(0, str(REPO / "scripts"))
+        from counterexample_scan import risk_counts
+        with tempfile.TemporaryDirectory() as tmp:
+            video = Path(tmp) / "v1"
+            video.mkdir()
+            (video / "transcript_labeled.json").write_text(
+                json.dumps([{"text": t} for t in lines], ensure_ascii=False),
+                encoding="utf-8")
+            return risk_counts(Path(tmp), pairs)
+
+    def test_spanning_match_is_flagged(self):
+        row = self.counts(["보험 업정 강세", "산업 정책 발표"], [("업정", "업종")])["업정"]
+        self.assertEqual((row["matches"], row["spanning"], row["already"]), (2, 1, 0))
+        self.assertTrue(row["flag"])
+
+    def test_already_correct_text_is_flagged(self):
+        row = self.counts(["근원 PC 둔화", "근원 PCE 상승"],
+                          [("근원 PC", "근원 PCE")])["근원 PC"]
+        self.assertEqual((row["matches"], row["spanning"], row["already"]), (2, 0, 1))
+        self.assertTrue(row["flag"])
+
+    def test_key_own_space_is_not_spanning(self):
+        row = self.counts(["삼성자 SK 하이닉스 동반 상승"] * 20,
+                          [("삼성자 SK 하이닉스", "삼성전자 SK하이닉스")])["삼성자 SK 하이닉스"]
+        self.assertEqual((row["matches"], row["spanning"]), (20, 0))
+        self.assertFalse(row["flag"])
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

@@ -437,6 +437,39 @@
    "attested": true,
    "corpus_matches": 124,
    "of": 124
+  },
+  {
+   "id": "trp-industrial-policy",
+   "text": "정부의 산업 정책 방향이 반도체 설비 투자 계획에 그대로 반영됐습니다.",
+   "triggers": [
+    "업정"
+   ],
+   "why": "'산업 정책' is ordinary Korean and the whitespace-flexible key 업정 spans its boundary; 업정→업종 produces '산업종책'. Found by the 2026-10-15 candidate sweep before the pair shipped: at least 193 of 699 corpus matches were this spanning shape.",
+   "attested": true,
+   "corpus_matches": 32,
+   "of": 699
+  },
+  {
+   "id": "trp-business-suspension",
+   "text": "영업 정지 처분이 알려지면서 주가가 장중에 크게 흔들렸습니다.",
+   "triggers": [
+    "업정"
+   ],
+   "why": "'영업 정지' (business suspension) is market news vocabulary; 업정→업종 turns it into '영업종지'. Same spanning shape as trp-industrial-policy, kept separate because it also occurs written solid (영업정지).",
+   "attested": true,
+   "corpus_matches": 14,
+   "of": 699
+  },
+  {
+   "id": "trp-core-pce-already-right",
+   "text": "이번 달 근원 PCE 상승률은 시장 예상치와 같은 수준이었습니다.",
+   "triggers": [
+    "근원 PC"
+   ],
+   "why": "The key 근원 PC sits inside its own correction, so text that already reads '근원 PCE' re-matches and becomes '근원 PCEE'. 8 of 95 corpus matches were already correct. mine_traps.py did not list it because it never compared a pair with itself.",
+   "attested": true,
+   "corpus_matches": 8,
+   "of": 95
   }
  ]
 }

@@ -71,6 +71,42 @@ def load_keys(max_len: int, path: Path) -> list[tuple[str, str]]:
             if len(p["wrong"].replace(" ", "")) <= max_len]
 
 
+# A key is flagged when this share of its matches spans a word boundary.
+# 08-28's withdrawals ran 40-63%; the pairs kept on purpose ran 2-12%.
+# 10% sits where a person should look.
+SIGNAL_SHARE = 0.10
+
+
+def risk_counts(root: Path, pairs: list[tuple[str, str]]) -> dict[str, dict]:
+    """Numbers only — no caption text — so the result may go in any report.
+
+    spanning  the match has more whitespace than the key: the key joined two
+              words (2026-10-15: 업정 inside 산업 정책, 185 of 699 matches).
+    already   the text at the match already reads `right`, so replacing damages
+              correct text (근원 PC inside 근원 PCE -> PCEE, 8 of 95).
+    Neither proves harm on its own; together they are what a person had to
+    find by hand on 2026-10-15, and a check done by hand is skipped next time.
+    """
+    keys = {wrong: (ws_flexible(wrong), ws_flexible(right), wrong.count(" "))
+            for wrong, right in pairs}
+    out = {w: {"matches": 0, "spanning": 0, "already": 0} for w in keys}
+    for text in transcripts(root):
+        for wrong, (pattern, right_pattern, own_spaces) in keys.items():
+            for match in pattern.finditer(text):
+                row = out[wrong]
+                row["matches"] += 1
+                if sum(ch.isspace() for ch in match.group()) > own_spaces:
+                    row["spanning"] += 1
+                if right_pattern.match(text, match.start()):
+                    row["already"] += 1
+    for row in out.values():
+        # `already` is damage by definition, so one is enough; `spanning` is only
+        # a shape (captions drop and add spaces), so it needs a share.
+        row["flag"] = row["already"] > 0 or (
+            bool(row["matches"]) and row["spanning"] / row["matches"] >= SIGNAL_SHARE)
+    return out
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--corpus", default=os.environ.get("OSS_CORPUS_DIR"))
