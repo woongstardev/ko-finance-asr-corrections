@@ -180,7 +180,9 @@ def check_pairs(payload: dict, fail, warn) -> None:
             # reached a candidate unseen (2026-10-15: 근원 PC→근원 PCE, 8 of 95
             # corpus matches already read "근원 PCE" and would become "PCEE").
             # A replacer that does not check what follows the match damages the
-            # correct form. It warns: the fix is upstream, and a person decides.
+            # correct form. Upstream skips such matches since 2026-10-16 (ask 6),
+            # but a consumer applying the snapshot with its own replacer does
+            # not get that guard, so this still warns.
             warn(f"{where}: {pair['wrong']!r} sits inside its own correction "
                  f"{pair['right']!r} — already-correct text re-matches and is damaged")
 

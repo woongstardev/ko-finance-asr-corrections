@@ -104,10 +104,23 @@ K뷰T	K뷰티	term	sector theme
 근원 PC	근원 PCE	term	core PCE; the Fed's preferred inflation gauge
 대공항	대공황	term	the Great Depression; macroeconomic history
 브랜트	브렌트	term	Brent crude; oil price benchmark
-업정	업종	term	industry sector; market classification
 #
 # Added 2026-10-15 from the 2026-10-12 dry-run (219-pair candidate).
 다오가	다우가	term	the Dow (Jones index) + subject particle; an index, not a listed company
 마이크로 테크놀로지	마이크론 테크놀로지	stock	Micron Technology; matches the existing 마이콘/마이크 테크놀로지 pairs
 미스비C	미쓰비시	stock	Mitsubishi; listed Japanese conglomerate
 삼성자 SK 하이닉스	삼성전자 SK하이닉스	stock	Samsung Electronics + SK hynix; two listed tickers in one span
+#
+# Added 2026-10-16 from the 2026-10-16 dry-run (228-pair candidate). Upstream
+# withdrew the bare 업정 key (ask 6: spaced matches hit 산업 정책 and the like)
+# and shipped ending-enumerated keys instead, so its 2026-09-24 row is gone.
+업정이	업종이	term	industry sector + particle; ending-enumerated replacement for 업정
+업정들	업종들	term	industry sector, plural
+업정별	업종별	term	by industry sector
+업정은	업종은	term	industry sector + topic particle
+업정에	업종에	term	industry sector + locative particle
+업정을	업종을	term	industry sector + object particle
+업정으로	업종으로	term	industry sector + instrumental particle
+업정입니다	업종입니다	term	industry sector + copula
+업정과	업종과	term	industry sector + conjunctive particle
+업정인	업종인	term	industry sector + copula modifier
