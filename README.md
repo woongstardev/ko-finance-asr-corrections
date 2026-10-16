@@ -205,6 +205,7 @@ need to pin a specific snapshot — it always resolves to the latest one:
 
 - Concept DOI (all versions): [`10.5281/zenodo.22700919`](https://doi.org/10.5281/zenodo.22700919)
 - v0.1 (2026-09-11, 210 pairs): [`10.5281/zenodo.22700920`](https://doi.org/10.5281/zenodo.22700920)
+- v2026.10 (2026-10-16, 228 pairs): [`10.5281/zenodo.23406708`](https://doi.org/10.5281/zenodo.23406708)
 
 Machine-readable metadata is in [CITATION.cff](CITATION.cff). A short technical report is
 planned.
