@@ -24,7 +24,7 @@ tuple plus the snapshot version.
 | `market` | string \| null | Listing venue for that identity (`KOSPI`, `KOSDAQ`, `NASDAQ`, `NYSE`, …). Same nullability as `ticker`; the two always travel together |
 | `auditor_models` | string[] | Model identifiers of the independent auditors that agreed. **Orthogonal to `tier`**: it is non-empty whenever two auditors agreed, which can also happen on a tier A pair that a person then approved on top of that consensus (one shipped pair, `업항 → 업황`, is exactly this). Do not infer tier from this field |
 | `approved_at` | date | Promotion date |
-| `word_boundary` | bool | Whether replacement requires word-boundary match |
+| `word_boundary` | bool | Whether replacement requires word-boundary match. In the production replacer (and the benchmark's `boundary` baseline) this means: when the key with spaces removed is **entirely** ASCII letters/digits, the match must not touch another ASCII letter or digit on either side (`FMC` does not fire inside `FMCG`). Keys that mix Hangul and ASCII get no boundary at all, so `근원 PC` also matches the start of an already-correct `근원 PCE` — a replacer of your own should skip a match that already continues into `right` |
 | `apply_scope` | string | Application scope constraint used in production (`unique`, …) |
 
 ### Why `general` exists
